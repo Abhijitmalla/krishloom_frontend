@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KrishLoom – My Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --c: #b01a3a;
+      --c2: #8a1230;
+      --g: #c8860a;
+      --g2: #f0c040;
+      --ivory: #fdf8f2;
+      --card: #fff;
+      --border: #e8ddd4;
+      --muted: #7a6e79;
+      --text: #1a0a10;
+      --r: 10px;
+      --sw: 252px;
+      --nh: 58px;
+
+      /* Sidebar — warm cream/rose palette */
+      --sb-bg: #fff5f0;
+      --sb-border: #f0ddd5;
+      --sb-section: #b5876a;
+      --sb-link: rgba(80, 20, 30, 0.45);
+      --sb-link-hover: #7a1228;
+      --sb-active-bg: rgba(176, 26, 58, 0.07);
+      --sb-active-txt: #b01a3a;
+      --sb-active-bar: #b01a3a;
+      --sb-footer: #fdeee8;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--ivory);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-size: 14px
+    }
+
+    .promo {
+      background: var(--c);
+      color: #fff;
+      text-align: center;
+      padding: 7px 16px;
+      font-size: 11.5px;
+      font-weight: 500;
+      letter-spacing: .6px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 300
+    }
+
+    .promo strong {
+      color: var(--g2)
+    }
+
+    .nav {
+      position: fixed;
+      top: 30px;
+      left: 0;
+      right: 0;
+      height: var(--nh);
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px 0 0;
+      z-index: 200
+    }
+
+    .nav-brand {
+      width: var(--sw);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 0 20px;
+      flex-shrink: 0;
+      text-decoration: none;
+      border-right: 1px solid var(--border)
+    }
+
+    .nav-logo {
+      height: 50px;
+      width: auto;
+      max-width: 180px;
+      object-fit: contain;
+      display: block
+    }
+
+    .nav-logo-ring {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      flex-shrink: 0
+    }
+
+    .nav-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--c);
+      letter-spacing: -.2px;
+      line-height: 1
+    }
+
+    .nav-wordmark span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-top: 1px
+    }
+
+    .nav-search-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 20px
+    }
+
+    .nav-search {
+      position: relative;
+      max-width: 360px;
+      width: 100%
+    }
+
+    .nav-search input {
+      width: 100%;
+      padding: 8px 14px 8px 36px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 13px;
+      background: var(--ivory);
+      outline: none;
+      font-family: inherit;
+      color: var(--text);
+      transition: border .15s
+    }
+
+    .nav-search input:focus {
+      border-color: var(--c);
+      background: #fff
+    }
+
+    .nav-search i {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto
+    }
+
+    .nav-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--text);
+      transition: background .15s;
+      font-size: 18px
+    }
+
+    .nav-btn:hover {
+      background: var(--ivory)
+    }
+
+    .nav-pip {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 16px;
+      height: 16px;
+      background: var(--c);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 2px solid #fff
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 22px;
+      background: var(--border);
+      margin: 0 6px
+    }
+
+    .nav-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color .15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-avatar:hover {
+      border-color: var(--c)
+    }
+
+    .nav-user-info {
+      line-height: 1.2;
+      cursor: pointer;
+      margin-left: 8px
+    }
+
+    .nav-user-info .name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text)
+    }
+
+    .nav-user-info .role {
+      font-size: 10.5px;
+      color: var(--muted)
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      place-items: center;
+      color: var(--text);
+      font-size: 22px;
+      margin-right: 4px
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      position: fixed;
+      top: calc(30px + var(--nh));
+      left: 0;
+      width: var(--sw);
+      height: calc(100vh - 30px - var(--nh));
+      background: var(--sb-bg);
+      border-right: 1px solid var(--sb-border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 100;
+      scrollbar-width: none;
+      transition: transform .2s ease
+    }
+
+    .sidebar::-webkit-scrollbar {
+      display: none
+    }
+
+    .sb-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .4);
+      z-index: 99;
+      pointer-events: none
+    }
+
+    .sb-overlay.active {
+      pointer-events: all
+    }
+
+    .sb-user-card {
+      padding: 18px 16px 14px;
+      border-bottom: 1px solid var(--sb-border);
+      background: #fff;
+    }
+
+    .sb-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 10px;
+      box-shadow: 0 0 0 3px rgba(200, 134, 10, .18)
+    }
+
+    .sb-name {
+      color: var(--text);
+      font-weight: 600;
+      font-size: .9rem
+    }
+
+    .sb-email {
+      color: var(--muted);
+      font-size: .72rem;
+      margin-top: 1px
+    }
+
+    .sb-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      background: rgba(200, 134, 10, .1);
+      color: #92400e;
+      font-size: .65rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      border: 1px solid rgba(200, 134, 10, .22);
+      letter-spacing: .3px
+    }
+
+    .sb-tag i {
+      font-size: 11px
+    }
+
+    .sb-section {
+      padding: 14px 18px 4px;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: var(--sb-section);
+      text-transform: uppercase
+    }
+
+    .sb-nav {
+      list-style: none;
+      padding: 0 8px
+    }
+
+    .sb-nav li {
+      margin-bottom: 1px
+    }
+
+    .sb-nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--sb-link);
+      font-size: .82rem;
+      font-weight: 400;
+      transition: all .15s;
+      cursor: pointer;
+      position: relative
+    }
+
+    .sb-nav a:hover {
+      background: rgba(176, 26, 58, .05);
+      color: var(--sb-link-hover)
+    }
+
+    .sb-nav a.active {
+      background: var(--sb-active-bg);
+      color: var(--sb-active-txt);
+      font-weight: 500
+    }
+
+    .sb-nav a.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 25%;
+      height: 50%;
+      width: 2.5px;
+      background: var(--sb-active-bar);
+      border-radius: 0 2px 2px 0
+    }
+
+    .sb-nav a i {
+      font-size: 16px;
+      flex-shrink: 0;
+      opacity: .75
+    }
+
+    .sb-nav a.active i,
+    .sb-nav a:hover i {
+      opacity: 1
+    }
+
+    .sb-badge {
+      margin-left: auto;
+      background: var(--c);
+      color: #fff;
+      font-size: .6rem;
+      font-weight: 700;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 4px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center
+    }
+
+    .sb-nav a.logout {
+      color: rgba(176, 26, 58, .45)
+    }
+
+    .sb-nav a.logout:hover {
+      background: rgba(176, 26, 58, .07);
+      color: var(--c)
+    }
+
+    .sb-footer {
+      padding: 14px 16px;
+      border-top: 1px solid var(--sb-border);
+      margin-top: auto;
+      background: var(--sb-footer)
+    }
+
+    .sb-footer-inner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--sb-border)
+    }
+
+    .sb-footer-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgba(200, 134, 10, .1);
+      display: grid;
+      place-items: center;
+      color: var(--g);
+      font-size: 14px;
+      flex-shrink: 0
+    }
+
+    .sb-footer-text {
+      font-size: .72rem;
+      color: var(--muted);
+      line-height: 1.4
+    }
+
+    .sb-footer-text strong {
+      color: #7a5210;
+      font-weight: 600;
+      display: block;
+      font-size: .75rem
+    }
+
+    /* ── Main ── */
+    .main {
+      margin-left: var(--sw);
+      padding-top: calc(30px + var(--nh));
+      min-height: 100vh
+    }
+
+    .main-inner {
+      padding: 28px 30px
+    }
+
+    /* ── Promo Banner ── */
+    .promo-banner {
+      background: linear-gradient(110deg, #4a0e1c 0%, #7a1228 55%, #9e3a10 100%);
+      border-radius: var(--r);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 22px
+    }
+
+    .promo-banner::before {
+      content: '';
+      position: absolute;
+      right: -20px;
+      top: -30px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(240, 192, 64, .08)
+    }
+
+    .promo-banner::after {
+      content: '';
+      position: absolute;
+      right: 60px;
+      bottom: -40px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .04)
+    }
+
+    .pb-text h3 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px
+    }
+
+    .pb-text p {
+      color: rgba(255, 255, 255, .6);
+      font-size: .78rem
+    }
+
+    .pb-badge {
+      background: var(--g);
+      color: #3a1a00;
+      font-size: 1.4rem;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-family: 'Playfair Display', serif;
+      position: relative;
+      z-index: 1;
+      white-space: nowrap
+    }
+
+    .pb-btn {
+      background: rgba(255, 255, 255, .13);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, .22);
+      padding: 7px 16px;
+      border-radius: 7px;
+      font-size: .75rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .15s;
+      position: relative;
+      z-index: 1;
+      white-space: nowrap
+    }
+
+    .pb-btn:hover {
+      background: rgba(255, 255, 255, .24)
+    }
+
+    /* ── Page head ── */
+    .pg-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      gap: 16px
+    }
+
+    .pg-head-left h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #1a0a10;
+      line-height: 1.2
+    }
+
+    .pg-head-left p {
+      color: var(--muted);
+      font-size: .82rem;
+      margin-top: 4px
+    }
+
+    .pg-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--c);
+      color: #fff;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: .8rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background .15s;
+      font-family: inherit
+    }
+
+    .pg-cta:hover {
+      background: var(--c2)
+    }
+
+    .pg-cta i {
+      font-size: 16px
+    }
+
+    /* ── Stats ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 22px
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: box-shadow .15s, transform .15s
+    }
+
+    .stat:hover {
+      box-shadow: 0 4px 18px rgba(176, 26, 58, .09);
+      transform: translateY(-1px)
+    }
+
+    .stat-ico {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      flex-shrink: 0
+    }
+
+    .stat-ico.red {
+      background: rgba(176, 26, 58, .08);
+      color: var(--c)
+    }
+
+    .stat-ico.gold {
+      background: rgba(200, 134, 10, .08);
+      color: var(--g)
+    }
+
+    .stat-ico.grn {
+      background: rgba(22, 163, 74, .08);
+      color: #15a34a
+    }
+
+    .stat-ico.pur {
+      background: rgba(109, 40, 217, .08);
+      color: #7c3aed
+    }
+
+    .stat-val {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #1a0a10;
+      line-height: 1
+    }
+
+    .stat-lbl {
+      font-size: .72rem;
+      color: var(--muted);
+      margin-top: 3px
+    }
+
+    .stat-delta {
+      font-size: .68rem;
+      font-weight: 500;
+      margin-top: 4px
+    }
+
+    .stat-delta.up {
+      color: #15a34a
+    }
+
+    .stat-delta.neutral {
+      color: var(--g)
+    }
+
+    /* ── Two-col layout ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 310px;
+      gap: 16px;
+      margin-bottom: 16px
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden
+    }
+
+    .card-hd {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .card-hd h2 {
+      font-size: .88rem;
+      font-weight: 600;
+      color: #1a0a10
+    }
+
+    .card-hd a {
+      font-size: .75rem;
+      color: var(--c);
+      text-decoration: none;
+      font-weight: 500
+    }
+
+    .card-hd a:hover {
+      text-decoration: underline
+    }
+
+    /* ── Orders table ── */
+    table {
+      width: 100%;
+      border-collapse: collapse
+    }
+
+    th {
+      background: var(--ivory);
+      padding: 9px 18px;
+      text-align: left;
+      font-size: .67rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: .5px;
+      text-transform: uppercase
+    }
+
+    td {
+      padding: 13px 18px;
+      font-size: .8rem;
+      border-top: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: middle
+    }
+
+    tr:hover td {
+      background: #fdf5f7
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: .66rem;
+      font-weight: 600
+    }
+
+    .pill.delivered {
+      background: rgba(22, 163, 74, .1);
+      color: #15803d
+    }
+
+    .pill.shipped {
+      background: rgba(59, 130, 246, .1);
+      color: #1d4ed8
+    }
+
+    .pill.processing {
+      background: rgba(200, 134, 10, .1);
+      color: #92400e
+    }
+
+    .pill.cancelled {
+      background: rgba(176, 26, 58, .1);
+      color: var(--c)
+    }
+
+    .order-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .order-thumb {
+      width: 34px;
+      height: 34px;
+      border-radius: 7px;
+      background: var(--ivory);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+      color: var(--muted);
+      flex-shrink: 0
+    }
+
+    .order-name {
+      font-weight: 500;
+      color: #1a0a10;
+      font-size: .8rem
+    }
+
+    .order-sub {
+      font-size: .7rem;
+      color: var(--muted);
+      margin-top: 1px
+    }
+
+    /* ── Wishlist ── */
+    .wishlist-body {
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px
+    }
+
+    .w-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 6px;
+      border-radius: 8px;
+      transition: background .15s;
+      cursor: pointer
+    }
+
+    .w-item:hover {
+      background: var(--ivory)
+    }
+
+    .w-thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f7e6ef, #e8d0dc);
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      border: 1px solid #f0d4df
+    }
+
+    .w-info {
+      flex: 1;
+      min-width: 0
+    }
+
+    .w-name {
+      font-size: .77rem;
+      font-weight: 500;
+      color: #1a0a10;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .w-price {
+      font-size: .71rem;
+      color: var(--c);
+      font-weight: 600;
+      margin-top: 2px
+    }
+
+    .w-old {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: .67rem;
+      text-decoration: line-through;
+      margin-left: 4px
+    }
+
+    .w-cart {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: .67rem;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text);
+      font-family: inherit;
+      transition: all .15s;
+      white-space: nowrap
+    }
+
+    .w-cart:hover {
+      background: var(--c);
+      color: #fff;
+      border-color: var(--c)
+    }
+
+    /* ── Bottom row ── */
+    .bot-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px
+    }
+
+    .activity-body {
+      padding: 4px 16px 8px;
+      display: flex;
+      flex-direction: column
+    }
+
+    .act-item {
+      display: flex;
+      gap: 12px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .act-item:last-child {
+      border-bottom: none
+    }
+
+    .act-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px
+    }
+
+    .act-dot.red {
+      background: rgba(176, 26, 58, .09);
+      color: var(--c)
+    }
+
+    .act-dot.grn {
+      background: rgba(22, 163, 74, .09);
+      color: #15a34a
+    }
+
+    .act-dot.gold {
+      background: rgba(200, 134, 10, .09);
+      color: var(--g)
+    }
+
+    .act-dot.blue {
+      background: rgba(59, 130, 246, .09);
+      color: #2563eb
+    }
+
+    .act-title {
+      font-size: .8rem;
+      font-weight: 500;
+      color: #1a0a10
+    }
+
+    .act-sub {
+      font-size: .72rem;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    .act-time {
+      font-size: .68rem;
+      color: var(--muted);
+      margin-left: auto;
+      flex-shrink: 0;
+      padding-top: 3px
+    }
+
+    /* ── Ratings ── */
+    .rating-body {
+      padding: 16px 20px
+    }
+
+    .rate-stars {
+      font-size: 21px;
+      color: var(--g);
+      margin-bottom: 8px;
+      letter-spacing: 2px
+    }
+
+    .rate-num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a0a10;
+      line-height: 1
+    }
+
+    .rate-lbl {
+      font-size: .72rem;
+      color: var(--muted);
+      margin-top: 2px;
+      margin-bottom: 14px
+    }
+
+    .rate-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 7px
+    }
+
+    .rate-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .7rem;
+      color: var(--muted)
+    }
+
+    .rate-bar-track {
+      flex: 1;
+      height: 5px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden
+    }
+
+    .rate-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--g)
+    }
+
+    .rate-count {
+      min-width: 16px;
+      text-align: right
+    }
+
+    /* ── Loyalty card ── */
+    .loyalty-card {
+      background: linear-gradient(120deg, #4a0e1c, #7a1228 60%, #9e3a10);
+      border-radius: var(--r);
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden
+    }
+
+    .loyalty-card::before {
+      content: '';
+      position: absolute;
+      right: -20px;
+      bottom: -20px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(240, 192, 64, .07)
+    }
+
+    .lc-left .lc-label {
+      font-size: .68rem;
+      color: rgba(255, 255, 255, .55);
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      margin-bottom: 4px
+    }
+
+    .lc-left .lc-pts {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--g2);
+      line-height: 1
+    }
+
+    .lc-left .lc-sub {
+      font-size: .7rem;
+      color: rgba(255, 255, 255, .5);
+      margin-top: 3px
+    }
+
+    .lc-right {
+      text-align: right;
+      position: relative;
+      z-index: 1
+    }
+
+    .lc-tier {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(240, 192, 64, .18);
+      color: var(--g2);
+      border: 1px solid rgba(240, 192, 64, .3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: .7rem;
+      font-weight: 600;
+      margin-bottom: 8px
+    }
+
+    .lc-redeem {
+      background: var(--g);
+      color: #3a1a00;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 7px;
+      font-size: .72rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .15s;
+      display: block;
+      width: 100%
+    }
+
+    .lc-redeem:hover {
+      opacity: .88
+    }
+
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 45px;
+      right: 0;
+      width: 180px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
+      display: none;
+      overflow: hidden;
+      z-index: 500;
+    }
+
+    .dropdown-menu.show {
+      display: block;
+    }
+
+    .dropdown-menu a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: .8rem;
+    }
+
+    .dropdown-menu a:hover {
+      background: var(--ivory);
+    }
+
+    .dropdown-menu a:last-child {
+      color: var(--c);
+    }
+
+    /* ── Responsive ── */
+    @media(max-width:1100px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .two-col {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media(max-width:900px) {
+      .sidebar {
+        transform: translateX(-100%)
+      }
+
+      .sidebar.open {
+        transform: translateX(0)
+      }
+
+      .sb-overlay {
+        display: block
+      }
+
+      .main {
+        margin-left: 0
+      }
+
+      .hamburger {
+        display: grid
+      }
+
+      .nav-brand {
+        border-right: none;
+        width: auto
+      }
+    }
+
+    @media(max-width:640px) {
+      .stats {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .bot-row {
+        grid-template-columns: 1fr
+      }
+
+      .main-inner {
+        padding: 18px 16px
+      }
+
+      .promo-banner {
+        flex-wrap: wrap
+      }
+
+      .nav-user-info {
+        display: none
+      }
+
+      .pg-head {
+        flex-direction: column;
+        gap: 10px
+      }
+    }
+
+    @media(max-width:400px) {
+      .stats {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+  <div class="promo">✦ <strong>20% Off</strong> — Auto Applied at Checkout &nbsp;·&nbsp; Limited Time Only ✦</div>
+
+  <nav class="nav">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><i class="ti ti-menu-2"></i></button>
+    <a class="nav-brand" href="#">
+      <img src="assets/images/KRISHLOOM (2).png" alt="KrishLoom Logo" class="nav-logo">
+    </a>
+    <div class="nav-search-wrap">
+      <div class="nav-search">
+        <i class="ti ti-search"></i>
+        <input type="text" placeholder="Search sarees, kurtis, blouses…" />
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" aria-label="Wishlist"><i class="ti ti-heart"></i><span class="nav-pip">4</span></button>
+      <button class="nav-btn" aria-label="Notifications"><i class="ti ti-bell"></i><span
+          class="nav-pip">7</span></button>
+      <button class="nav-btn" aria-label="Cart"><i class="ti ti-shopping-cart"></i><span
+          class="nav-pip">6</span></button>
+      <div class="nav-divider"></div>
+      <div class="nav-avatar" id="navAvatar">PS
+        <img id="navAvatarImg" src="" alt=""
+          style="display:none; width:100%; height:100%; border-radius:50%; object-fit:cover; position:absolute; top:0; left:0;">
+      </div>
+      <div class="nav-user-info">
+        <div class="name">Priya S.</div>
+        <div class="role">Gold Member ✦</div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="nav-btn" id="navMenuBtn" aria-label="More">
+          <i class="ti ti-chevron-down"></i>
+        </button>
+
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="profile.html" id="navProfileLink"><i class="ti ti-user"></i> Profile</a>
+          <a href="#"><i class="ti ti-settings"></i> Settings</a>
+          <a href="#" id="navbarLogout">
+            <i class="ti ti-logout"></i> Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sb-overlay" id="overlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-user-card">
+      <div class="sb-avatar" id="sbAvatar" style="position:relative; overflow:hidden;">PS
+        <img id="sbAvatarImg" src="" alt=""
+          style="display:none; width:100%; height:100%; border-radius:50%; object-fit:cover; position:absolute; top:0; left:0;">
+      </div>
+      <div class="sb-name">Priya Sharma</div>
+      <div class="sb-email">priya.sharma@gmail.com</div>
+      <div class="sb-tag"><i class="ti ti-crown"></i> Gold Member</div>
+    </div>
+
+    <div class="sb-section">Menu</div>
+    <ul class="sb-nav">
+      <li><a class="active" onclick="setActive(this)" href="user-dashboard.html" id="sidebarDashboardLink"><i
+            class="ti ti-layout-dashboard"></i> Dashboard</a></li>
+      <li><a onclick="setActive(this)" href="profile.html" id="sidebarProfileLink"><i class="ti ti-user-circle"></i>
+          Profile</a>
+      </li>
+      <li>
+        <a onclick="setActive(this)" href="myorder.html" id="sidebarMyOrdersLink">
+          <i class="ti ti-package"></i> Order
+        </a>
+      </li>
+      <li>
+        <a onclick="setActive(this)" href="address.html" id="sidebarAddressLink">
+          <i class="ti ti-home"></i> Address
+        </a>
+      </li>
+      <li>
+        <a onclick="setActive(this)" href="review.html" id="sidebarReviewLink">
+          <i class="ti ti-star"></i> Reviews
+        </a>
+      </li>
+    </ul>
+
+    <div class="sb-footer">
+      <div class="sb-footer-inner">
+        <div class="sb-footer-icon"><i class="ti ti-shield-check"></i></div>
+        <div class="sb-footer-text"><strong>Secure &amp; Trusted</strong>100% authentic ethnic wear</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="main-inner">
+      <div id="dashboardView">
+        <div class="promo-banner">
+          <div class="pb-text">
+            <h3>Festive Season Sale is Live 🎉</h3>
+            <p>Shop curated picks — discount applied instantly at checkout</p>
+          </div>
+          <div class="pb-badge">20% OFF</div>
+          <button class="pb-btn">Shop Now →</button>
+        </div>
+
+        <div class="pg-head">
+          <div class="pg-head-left">
+            <h1 id="greetingText">Good morning, <span id="userName">Priya</span> </h1>
+            <p>Here's everything happening in your account today.</p>
+          </div>
+          <a class="pg-cta" href="#"><i class="ti ti-shopping-bag"></i> Shop New Arrivals</a>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-ico red"><i class="ti ti-package"></i></div>
+            <div>
+              <div class="stat-val">24</div>
+              <div class="stat-lbl">Total Orders</div>
+              <div class="stat-delta up">↑ 3 this month</div>
+            </div>
+          </div>
+          <div class="stat">
+            <div class="stat-ico gold"><i class="ti ti-heart"></i></div>
+            <div>
+              <div class="stat-val">4</div>
+              <div class="stat-lbl">Wishlist Items</div>
+              <div class="stat-delta neutral">2 on sale now</div>
+            </div>
+          </div>
+          <div class="stat">
+            <div class="stat-ico grn"><i class="ti ti-circle-check"></i></div>
+            <div>
+              <div class="stat-val">18</div>
+              <div class="stat-lbl">Delivered</div>
+              <div class="stat-delta up">↑ 95% on time</div>
+            </div>
+          </div>
+          <div class="stat">
+            <div class="stat-ico pur"><i class="ti ti-star"></i></div>
+            <div>
+              <div class="stat-val">4.8</div>
+              <div class="stat-lbl">Avg. Rating</div>
+              <div class="stat-delta up">Top reviewer</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loyalty points card -->
+        <div class="loyalty-card">
+          <div class="lc-left">
+            <div class="lc-label">Loyalty Points</div>
+            <div class="lc-pts">2,840 pts</div>
+            <div class="lc-sub">≈ ₹284 redeemable value</div>
+          </div>
+          <div class="lc-right">
+            <div class="lc-tier"><i class="ti ti-crown" style="font-size:12px"></i> Gold Member</div>
+            <button class="lc-redeem">Redeem Points</button>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-hd">
+              <h2>Recent Orders</h2><a href="#">View all →</a>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="order-cell">
+                      <div class="order-thumb"><i class="ti ti-shirt"></i></div>
+                      <div>
+                        <div class="order-name">Banarasi Silk Saree</div>
+                        <div class="order-sub">#KL-8821 · Deep Plum</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="color:var(--muted)">18 Jun</td>
+                  <td style="font-weight:600">₹4,299</td>
+                  <td><span class="pill delivered">Delivered</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="order-cell">
+                      <div class="order-thumb"><i class="ti ti-shirt"></i></div>
+                      <div>
+                        <div class="order-name">Embroidered Lehenga</div>
+                        <div class="order-sub">#KL-8750 · Maroon</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="color:var(--muted)">10 Jun</td>
+                  <td style="font-weight:600">₹7,850</td>
+                  <td><span class="pill shipped">Shipped</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="order-cell">
+                      <div class="order-thumb"><i class="ti ti-shirt"></i></div>
+                      <div>
+                        <div class="order-name">Cotton Kurti</div>
+                        <div class="order-sub">#KL-8710 · Indigo Print</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="color:var(--muted)">3 Jun</td>
+                  <td style="font-weight:600">₹1,199</td>
+                  <td><span class="pill processing">Processing</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="order-cell">
+                      <div class="order-thumb"><i class="ti ti-shirt"></i></div>
+                      <div>
+                        <div class="order-name">Chiffon Saree</div>
+                        <div class="order-sub">#KL-8680 · Emerald</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="color:var(--muted)">25 May</td>
+                  <td style="font-weight:600">₹2,599</td>
+                  <td><span class="pill delivered">Delivered</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <div class="card-hd">
+              <h2>Wishlist picks</h2><a href="#">See all →</a>
+            </div>
+            <div class="wishlist-body">
+              <div class="w-item">
+                <div class="w-thumb">🥻</div>
+                <div class="w-info">
+                  <div class="w-name">Kanjivaram Silk Saree</div>
+                  <div class="w-price">₹8,400 <span class="w-old">₹10,500</span></div>
+                </div><button class="w-cart">Add</button>
+              </div>
+              <div class="w-item">
+                <div class="w-thumb">👗</div>
+                <div class="w-info">
+                  <div class="w-name">Anarkali Suit — Royal Blue</div>
+                  <div class="w-price">₹3,200</div>
+                </div><button class="w-cart">Add</button>
+              </div>
+              <div class="w-item">
+                <div class="w-thumb">🥻</div>
+                <div class="w-info">
+                  <div class="w-name">Georgette Saree — Peach</div>
+                  <div class="w-price">₹2,800 <span class="w-old">₹3,500</span></div>
+                </div><button class="w-cart">Add</button>
+              </div>
+              <div class="w-item">
+                <div class="w-thumb">👘</div>
+                <div class="w-info">
+                  <div class="w-name">Bandhani Dupatta Set</div>
+                  <div class="w-price">₹1,600</div>
+                </div><button class="w-cart">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bot-row">
+          <div class="card">
+            <div class="card-hd">
+              <h2>Recent activity</h2><a href="#">All activity →</a>
+            </div>
+            <div class="activity-body">
+              <div class="act-item">
+                <div class="act-dot grn"><i class="ti ti-circle-check"></i></div>
+                <div style="flex:1">
+                  <div class="act-title">Order delivered</div>
+                  <div class="act-sub">Banarasi Silk Saree — #KL-8821</div>
+                </div>
+                <div class="act-time">Today</div>
+              </div>
+              <div class="act-item">
+                <div class="act-dot blue"><i class="ti ti-truck"></i></div>
+                <div style="flex:1">
+                  <div class="act-title">Shipped out</div>
+                  <div class="act-sub">Embroidered Lehenga — #KL-8750</div>
+                </div>
+                <div class="act-time">2d ago</div>
+              </div>
+              <div class="act-item">
+                <div class="act-dot gold"><i class="ti ti-star"></i></div>
+                <div style="flex:1">
+                  <div class="act-title">Review posted</div>
+                  <div class="act-sub">You rated Chiffon Saree ★★★★★</div>
+                </div>
+                <div class="act-time">5d ago</div>
+              </div>
+              <div class="act-item">
+                <div class="act-dot red"><i class="ti ti-heart"></i></div>
+                <div style="flex:1">
+                  <div class="act-title">Added to wishlist</div>
+                  <div class="act-sub">Kanjivaram Silk Saree</div>
+                </div>
+                <div class="act-time">1w ago</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-hd">
+              <h2>Your ratings</h2>
+            </div>
+            <div class="rating-body">
+              <div class="rate-stars">★★★★★</div>
+              <div class="rate-num">4.8</div>
+              <div class="rate-lbl">Average across 12 reviews</div>
+              <div class="rate-bar-wrap">
+                <div class="rate-bar-row"><span>5★</span>
+                  <div class="rate-bar-track">
+                    <div class="rate-bar-fill" style="width:75%"></div>
+                  </div><span class="rate-count">9</span>
+                </div>
+                <div class="rate-bar-row"><span>4★</span>
+                  <div class="rate-bar-track">
+                    <div class="rate-bar-fill" style="width:17%"></div>
+                  </div><span class="rate-count">2</span>
+                </div>
+                <div class="rate-bar-row"><span>3★</span>
+                  <div class="rate-bar-track">
+                    <div class="rate-bar-fill" style="width:8%"></div>
+                  </div><span class="rate-count">1</span>
+                </div>
+                <div class="rate-bar-row"><span>2★</span>
+                  <div class="rate-bar-track">
+                    <div class="rate-bar-fill" style="width:0%"></div>
+                  </div><span class="rate-count">0</span>
+                </div>
+                <div class="rate-bar-row"><span>1★</span>
+                  <div class="rate-bar-track">
+                    <div class="rate-bar-fill" style="width:0%"></div>
+                  </div><span class="rate-count">0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="iframeView" style="display:none; padding: 0;">
+        <iframe id="contentIframe"
+          style="width: 100%; height: calc(100vh - 100px); border: none; border-radius: 8px;"></iframe>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    hamburger.addEventListener('click', () => {
+      const open = sidebar.classList.toggle('open');
+      overlay.classList.toggle('active', open);
+    });
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+
+    const navMenuBtn = document.getElementById('navMenuBtn');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    if (navMenuBtn && dropdownMenu) {
+      navMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('show');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!dropdownMenu.contains(e.target) && !navMenuBtn.contains(e.target)) {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+    }
+
+    function setActive(el) {
+      document.querySelectorAll('.sb-nav a').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      if (window.innerWidth <= 900) {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+      }
+      return false;
+    }
+
+    function getInitials(name) {
+      const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+      if (!parts.length) return '';
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    function updateDashboardUser(user) {
+      const navName = document.querySelector('.nav-user-info .name');
+      const sbName = document.querySelector('.sb-name');
+      const sbEmail = document.querySelector('.sb-email');
+      const navAvatar = document.querySelector('.nav-avatar');
+      const sbAvatar = document.querySelector('.sb-avatar');
+      const userNameEl = document.getElementById('userName');
+      const initials = getInitials(user.name);
+
+      if (navName && user.name) navName.textContent = user.name;
+      if (sbName && user.name) sbName.textContent = user.name;
+      if (sbEmail && user.email) sbEmail.textContent = user.email;
+      if (navAvatar && initials) navAvatar.childNodes[0].textContent = initials;
+      if (sbAvatar && initials) sbAvatar.childNodes[0].textContent = initials;
+      if (userNameEl && user.name) userNameEl.textContent = user.name;
+
+      if (user.profile_image) {
+        const imgUrl = "http://localhost/krishloom-vastram/backend/uploads/" + user.profile_image + "?t=" + Date.now();
+
+        const navImg = document.getElementById('navAvatarImg');
+        if (navImg) {
+          navImg.src = imgUrl;
+          navImg.style.display = 'block';
+          if (navAvatar) navAvatar.childNodes[0].textContent = '';
+        }
+
+        const sbImg = document.getElementById('sbAvatarImg');
+        if (sbImg) {
+          sbImg.src = imgUrl;
+          sbImg.style.display = 'block';
+          if (sbAvatar) sbAvatar.childNodes[0].textContent = '';
+        }
+      }
+    }
+
+    async function loadDashboardUser() {
+      const storedUser = sessionStorage.getItem('user');
+      if (storedUser) {
+        try {
+          updateDashboardUser(JSON.parse(storedUser));
+        } catch (err) {
+          console.warn('Could not parse stored user from sessionStorage:', err);
+        }
+      }
+
+      const userId = sessionStorage.getItem('user_id');
+      if (!userId) {
+        console.warn('No user_id found in sessionStorage. User may need to log in.');
+        return;
+      }
+
+      try {
+        const apiUrl = `http://localhost/krishloom-vastram/backend/routes/api.php?route=getUser&id=${encodeURIComponent(userId)}`;
+        const headers = { 'Accept': 'application/json' };
+        const authToken = sessionStorage.getItem('authToken');
+        if (authToken) {
+          headers.Authorization = `Bearer ${authToken}`;
+        }
+
+        const response = await fetch(apiUrl, { headers });
+        if (!response.ok) {
+          console.warn('Dashboard user API returned non-ok status:', response.status);
+          return;
+        }
+
+        const data = await response.json();
+        if (data.status === true && data.user) {
+          updateDashboardUser(data.user);
+          sessionStorage.setItem('user', JSON.stringify(data.user));
+        } else {
+          console.warn('Dashboard user API returned an error:', data);
+        }
+      } catch (err) {
+        console.error('Dashboard user fetch error:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadDashboardUser);
+
+    function logout() {
+      sessionStorage.clear();
+      window.location.href = "../krishloom3/krishloom3/user_login_sign.html";
+    }
+
+    function handleLogoutClick(e) {
+      e.preventDefault();
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You will be logged out of your account.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#b01a3a',
+        cancelButtonColor: '#7a6e79',
+        confirmButtonText: 'Yes, log out!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          logout();
+        }
+      });
+    }
+
+    document.getElementById("navbarLogout")?.addEventListener("click", handleLogoutClick);
+
+    document.getElementById("sidebarLogout")?.addEventListener("click", handleLogoutClick);
+
+    function loadProfile(e) {
+      if (e) e.preventDefault();
+      document.getElementById('dashboardView').style.display = 'none';
+      const iframeView = document.getElementById('iframeView');
+      iframeView.style.display = 'block';
+      document.getElementById('contentIframe').src = 'profile.html?embed=true';
+      document.querySelector('.main-inner').style.padding = '0';
+    }
+
+    function loadMyOrders(e) {
+      if (e) e.preventDefault();
+
+      document.getElementById('dashboardView').style.display = 'none';
+
+      const iframeView = document.getElementById('iframeView');
+      iframeView.style.display = 'block';
+
+      document.getElementById('contentIframe').src = 'myorder.html?embed=true';
+
+      document.querySelector('.main-inner').style.padding = '0';
+    }
+
+    function loadDashboard(e) {
+      if (e) e.preventDefault();
+      document.getElementById('iframeView').style.display = 'none';
+      document.getElementById('dashboardView').style.display = 'block';
+      document.getElementById('contentIframe').src = '';
+      document.querySelector('.main-inner').style.padding = '28px 30px';
+    }
+
+    function loadAddress(e) {
+      if (e) e.preventDefault();
+      document.getElementById('dashboardView').style.display = 'none';
+      const iframeView = document.getElementById('iframeView');
+      iframeView.style.display = 'block';
+      document.getElementById('contentIframe').src = 'address.html?embed=true';
+      document.querySelector('.main-inner').style.padding = '0';
+    }
+
+    function loadReview(e) {
+      if (e) e.preventDefault();
+      document.getElementById('dashboardView').style.display = 'none';
+      const iframeView = document.getElementById('iframeView');
+      iframeView.style.display = 'block';
+      document.getElementById('contentIframe').src = 'review.html?embed=true';
+      document.querySelector('.main-inner').style.padding = '0';
+    }
+
+    document.getElementById('sidebarMyOrdersLink')?.addEventListener('click', loadMyOrders);
+    document.getElementById('sidebarAddressLink')?.addEventListener('click', loadAddress);
+    document.getElementById('sidebarReviewLink')?.addEventListener('click', loadReview);
+    document.getElementById('navProfileLink')?.addEventListener('click', loadProfile);
+    document.getElementById('sidebarProfileLink')?.addEventListener('click', loadProfile);
+    document.getElementById('sidebarDashboardLink')?.addEventListener('click', loadDashboard);
+
+    /* ── Address Modal – full screen from parent ── */
+    window.addEventListener('message', function (event) {
+      if (event.data && event.data.type === 'OPEN_ADDRESS_MODAL') {
+        const mode = event.data.mode;
+        const data = event.data.data || {};
+        const overlay = document.getElementById('globalAddressModal');
+        const title = document.getElementById('globalModalTitle');
+        const sub = document.getElementById('globalModalSub');
+
+        title.textContent = mode === 'edit' ? 'Edit Address' : 'Add New Address';
+        sub.textContent = mode === 'edit' ? 'Update your delivery details below.' : 'Fill in your delivery details below.';
+
+        if (mode === 'edit') {
+          document.getElementById('gAddrName').value = data.name || '';
+          document.getElementById('gAddrPhone').value = data.phone || '';
+          const lines = data.addressLines || [];
+          document.getElementById('gAddrLine').value = lines.slice(1).join(' ') || '';
+          const cityLine = (lines[2] || '').split(',');
+          document.getElementById('gAddrCity').value = cityLine[0]?.trim() || '';
+          document.getElementById('gAddrPincode').value = (cityLine[1] || '').replace(/\D/g, '') || '';
+          document.getElementById('gAddrState').value = (cityLine[1] || '').replace(/[^A-Za-z ]/g, '').trim() || '';
+        } else {
+          document.getElementById('gAddrName').value = '';
+          document.getElementById('gAddrPhone').value = '';
+          document.getElementById('gAddrLine').value = '';
+          document.getElementById('gAddrCity').value = '';
+          document.getElementById('gAddrPincode').value = '';
+          document.getElementById('gAddrState').value = '';
+          document.getElementById('gAddrCountry').value = 'India';
+        }
+
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+
+    function closeGlobalModal() {
+      document.getElementById('globalAddressModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    /* Attach close listeners after DOM is fully loaded (modal HTML is below this script) */
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('globalModalClose').addEventListener('click', closeGlobalModal);
+      document.getElementById('globalModalCancel').addEventListener('click', closeGlobalModal);
+      document.getElementById('globalModalSave').addEventListener('click', closeGlobalModal);
+      document.getElementById('globalAddressModal').addEventListener('click', function (e) {
+        if (e.target === this) closeGlobalModal();
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeGlobalModal();
+    });
+
+    /* ── Snackbar Logic ── */
+    function showSnackbar(message, type = 'success') {
+      const snackbar = document.getElementById('globalSnackbar');
+      if (!snackbar) return;
+      snackbar.textContent = message;
+      snackbar.className = 'show ' + type;
+      setTimeout(() => {
+        snackbar.className = snackbar.className.replace('show', '').trim();
+      }, 4000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const snackData = sessionStorage.getItem('snackbar');
+      if (snackData) {
+        try {
+          const { message, type } = JSON.parse(snackData);
+          showSnackbar(message, type);
+          sessionStorage.removeItem('snackbar');
+        } catch (e) { }
+      }
+
+      /* ── Logout Logic ── */
+      const logoutBtn = document.getElementById('navbarLogout');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          sessionStorage.clear(); // Clear all user data
+          sessionStorage.setItem('snackbar', JSON.stringify({ message: '👋 You have been logged out successfully.', type: 'success' }));
+          window.location.href = '../krishloom3/krishloom3/user_login_sign.html';
+        });
+      }
+    });
+
+  </script>
+
+  <!-- ═══ GLOBAL ADDRESS MODAL (full-screen, covers sidebar + navbar) ═══ -->
+  <div id="globalAddressModal" style="
+    display:none; position:fixed; inset:0; z-index:99999;
+    background:rgba(10,0,5,0.55); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    align-items:center; justify-content:center;
+    animation: none;
+  ">
+    <div style="
+      background:#fff; border-radius:14px; width:90%; max-width:520px;
+      padding:36px 32px; box-shadow:0 24px 60px rgba(0,0,0,0.25);
+      max-height:90vh; overflow-y:auto; position:relative;
+      animation: slideUpIn .25s ease;
+    ">
+      <!-- Close X -->
+      <button id="globalModalClose" style="
+        position:absolute; top:18px; right:18px;
+        background:none; border:none; font-size:20px; cursor:pointer;
+        color:#888; line-height:1;
+      ">&#10005;</button>
+
+      <h2 id="globalModalTitle" style="font-size:22px;font-weight:800;margin-bottom:6px;color:#1a1a1a;">Add New Address
+      </h2>
+      <p id="globalModalSub" style="font-size:14px;color:#6c6c6c;margin-bottom:24px;">Fill in your delivery details
+        below.</p>
+
+      <form id="globalAddressForm" onsubmit="return false;">
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:13px;font-weight:700;margin-bottom:6px;">Full Name</label>
+          <input id="gAddrName" type="text" placeholder="e.g. Priya Sharma"
+            style="width:100%;border:1.5px solid #e8dde0;border-radius:8px;padding:11px 14px;font-size:14px;font-family:inherit;background:#fafafa;outline:none;"
+            onfocus="this.style.borderColor='rgb(172,43,64)';this.style.boxShadow='0 0 0 4px rgba(172,43,64,0.08)'"
+            onblur="this.style.borderColor='#e8dde0';this.style.boxShadow='none'" />
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:13px;font-weight:700;margin-bottom:6px;">Phone Number</label>
+          <input id="gAddrPhone" type="tel" placeholder="e.g. 9876543210"
+            style="width:100%;border:1.5px solid #e8dde0;border-radius:8px;padding:11px 14px;font-size:14px;font-family:inherit;background:#fafafa;outline:none;"
+            onfocus="this.style.borderColor='rgb(172,43,64)';this.style.boxShadow='0 0 0 4px rgba(172,43,64,0.08)'"
+            onblur="this.style.borderColor='#e8dde0';this.style.boxShadow='none'" />
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:13px;font-weight:700;margin-bottom:6px;">Address Line</label>
+          <textarea id="gAddrLine" placeholder="Street, colony, landmark…"
+            style="width:100%;border:1.5px solid #e8dde0;border-radius:8px;padding:11px 14px;font-size:14px;font-family:inherit;background:#fafafa;outline:none;resize:vertical;min-height:72px;"
+            onfocus="this.style.borderColor='rgb(172,43,64)';this.style.boxShadow='0 0 0 4px rgba(172,43,64,0.08)'"
+            onblur="this.style.borderColor='#e8dde0';this.style.boxShadow='none'"></textarea>
+        </div>
+        <div style="display:flex;gap:14px;margin-bottom:14px;">
+          <div style="flex:1;">
+            <label style="display:block;font-size:13px;font-weight:700;margin-bottom:6px;">City</label>
+            <input id="gAddrCity" type="text" placeholder="e.g. Bhubaneswar"
+              style="width:100%;border:1.5px solid #e8dde0;border-radius:8px;padding:11px 14px;font-size:14px;font-family:inherit;background:#fafafa;outline:none;"
+              onfocus="this.style.borderColor='rgb(172,43,64)';this.style.boxShadow='0 0 0 4px rgba(172,43,64,0.08)'"
+              onblur="this.style.borderColor='#e8dde0';this.style.boxShadow='none'" />
+          </div>
+          <div style="flex:1;">
+            <label style="display:block;font-size:13px;font-weight:700;margin-bottom:6px;">Pincode</label>
+            <input id="gAddrPincode" type="text" placeholder="e.g. 751010"
+              style="width:100%;border:1.5px solid #e8dde0;border-radius:8px;padding:11px 14px;font-size:14px;font-family:inherit;background:#fafafa;outline:none;"
+              onfocus="this.style.borderColor='rgb(172,43,64)';this.style.boxShadow='0 0 0 4px rgba(172,43,64,0.08)'"
+              onblur="this.style.borderColor='#e8dde0';this.style.boxShadow='none'" />
+          </div>
+        </div>
+        <div style="display:flex;gap:14px;margin-bottom:14px;">
+          <div style="flex:1;">
+            <label style="display:block;font-size:13px;font-weight:700;margin-bottom:6px;">State</label>
+            <input id="gAddrState" type="text" placeholder="e.g. Odisha"
+              style="width:100%;border:1.5px solid #e8dde0;border-radius:8px;padding:11px 14px;font-size:14px;font-family:inherit;background:#fafafa;outline:none;"
+              onfocus="this.style.borderColor='rgb(172,43,64)';this.style.boxShadow='0 0 0 4px rgba(172,43,64,0.08)'"
+              onblur="this.style.borderColor='#e8dde0';this.style.boxShadow='none'" />
+          </div>
+          <div style="flex:1;">
+            <label style="display:block;font-size:13px;font-weight:700;margin-bottom:6px;">Country</label>
+            <input id="gAddrCountry" type="text" value="India"
+              style="width:100%;border:1.5px solid #e8dde0;border-radius:8px;padding:11px 14px;font-size:14px;font-family:inherit;background:#fafafa;outline:none;"
+              onfocus="this.style.borderColor='rgb(172,43,64)';this.style.boxShadow='0 0 0 4px rgba(172,43,64,0.08)'"
+              onblur="this.style.borderColor='#e8dde0';this.style.boxShadow='none'" />
+          </div>
+        </div>
+        <label
+          style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;margin:20px 0;cursor:pointer;">
+          <input type="checkbox" id="gAddrDefault"
+            style="width:17px;height:17px;accent-color:rgb(172,43,64);cursor:pointer;"> Set as default address
+        </label>
+        <div
+          style="display:flex;justify-content:flex-end;gap:10px;border-top:1px solid #e8dde0;padding-top:20px;margin-top:4px;">
+          <button id="globalModalCancel" type="button"
+            style="padding:10px 22px;border-radius:8px;border:1.5px solid #e8dde0;background:transparent;font-weight:700;font-size:14px;cursor:pointer;color:#1a1a1a;">Cancel</button>
+          <button id="globalModalSave" type="button"
+            style="padding:10px 24px;border-radius:8px;border:none;background:rgb(172,43,64);color:#fff;font-weight:700;font-size:14px;cursor:pointer;">Save
+            Address</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    #globalAddressModal.open {
+      display: flex !important;
+    }
+
+    @keyframes slideUpIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <!-- ═══ GLOBAL SNACKBAR (top right) ═══ -->
+  <div id="globalSnackbar"></div>
+  <style>
+    #globalSnackbar {
+      visibility: hidden;
+      min-width: 280px;
+      background-color: #333;
+      color: #fff;
+      text-align: left;
+      border-radius: 8px;
+      padding: 16px 20px;
+      position: fixed;
+      z-index: 1000000;
+      right: 24px;
+      top: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(-20px);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    #globalSnackbar.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #globalSnackbar.success {
+      background-color: #fff;
+      color: #1e8449;
+      border-left: 6px solid #2ecc71;
+    }
+
+    #globalSnackbar.error {
+      background-color: #fff;
+      color: #c0392b;
+      border-left: 6px solid #e74c3c;
+    }
+  </style>
+
+</body>
+
+</html>

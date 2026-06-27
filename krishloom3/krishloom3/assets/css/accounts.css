@@ -1,0 +1,276 @@
+/* user login css */
+
+/* Container */
+.user_content {
+    height: auto;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    /* Background */
+    background: linear-gradient(rgba(255, 245, 230, 0.85), rgba(255, 245, 230, 0.85)),
+                url('assets/images/slider/bg.jpg') no-repeat center/cover;
+}
+
+
+
+/* Button */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: #ac8007;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #c99a20;
+}
+
+/* Extra Options */
+.extra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #fff;
+}
+
+.extra a {
+    color: #f8d7da;
+    text-decoration: none;
+}
+
+.extra a:hover {
+    text-decoration: underline;
+}
+
+/* Toggle (Signup) */
+
+
+.toggle a {
+    color: #ffd369;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.toggle a:hover {
+    text-decoration: underline;
+}
+
+/* Back Link */
+.back {
+    margin-top: 15px;
+}
+
+.back a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back a:hover {
+    text-decoration: underline;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+    .form-box {
+        width: 90%;
+        padding: 20px 20px;
+         margin:10px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .form-box {
+        width: 95%;
+        padding: 25px 15px;
+       margin:10px;
+    }
+
+    .extra {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .extra a {
+        align-self: flex-end;
+    }
+}
+/* end user login */
+
+/* Form Box */
+.form-box{
+    background:#742432;
+    padding:35px;
+    width:500px;
+    border-radius:10px;
+    color:#fff;
+    box-shadow:0 10px 25px rgba(0,0,0.4,0.5);
+    margin: 100px 0 100px 0;
+}
+
+.form-box h2{
+    text-align:center;
+    margin-bottom:20px;
+    font-family: Poppins;
+}
+
+/* Inputs */
+.input-box{
+    margin-bottom:15px;
+}
+
+.input-box input,
+.input-box textarea,
+.input-box select{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:6px;
+    background:#fbcfa165;
+    color:#fff;
+    font-size:14px;
+    outline:none;
+}
+
+/* Placeholder */
+input::placeholder,
+textarea::placeholder{
+    color:#e3e0e09a;
+}
+
+/* Select fix */
+select{
+    appearance:none;
+}
+
+.extra label{
+    display:flex;
+    align-items:flex-start;
+    gap:6px;
+    line-height:1.4;
+}
+
+.extra input{
+    margin-top:2px;
+}
+
+/* Toggle */
+
+.toggle span{
+    color:#fff;
+    cursor:pointer;
+    font-weight:bold;
+}
+.back {
+    margin-top:18px;
+    font-size:13px;
+    text-align:center;
+}
+.back a{
+    color:#fff;
+    cursor:pointer;
+    font-weight:bold;
+    text-decoration:none;
+    
+}
+
+/* Responsive */
+@media(max-width:768px){
+   
+    .form-box{
+        width:90%;
+        padding:25px;
+    }
+.header{
+    top:5px;
+   
+    left:43%;
+}
+
+.header img{
+    max-width: 180px;
+    
+}
+}
+/* otp box */
+
+    .otp-box {
+      width: 350px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+/* affiliate css */
+/* Grid for 2 inputs in one row */
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+/* Full width fields */
+.full{
+    grid-column:1 / -1;
+}
+
+/* Responsive */
+@media(max-width:768px){
+    .form-row{
+        grid-template-columns:1fr;
+    }
+}
+
+.toggle {
+    padding: 12px 15px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.209);
+    text-align: center;
+    color: #f3dca7;
+    font-size: 14px;
+    margin-top: 17px;
+}
+/* Highlight Sign Up */
+.signup-link {
+    color: #e0be4f; /* Gold highlight */
+    font-weight: 700;
+    margin-left: 5px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Underline animation */
+.signup-link::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -2px;
+    background-color: #ffd54f;
+    transition: 0.3s;
+}
+
+.signup-link:hover {
+    color: #ffffff;
+}
+
+.signup-link:hover::after {
+    width: 100%;
+}
+/* account page */
+
+

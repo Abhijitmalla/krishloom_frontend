@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <title>My Reviews – Krishloom Vastram</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/icon:icomoon/style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+
+    <style>
+        /* ── Brand Tokens ── */
+        :root {
+            --brand: rgb(172, 43, 64);
+            --brand-dark: rgb(119, 5, 41);
+            --brand-light: rgba(172, 43, 64, 0.08);
+            --surface: #fff;
+            --bg: #f7f4f5;
+            --text: #1a1a1a;
+            --muted: #6c6c6c;
+            --border: #e8dde0;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 2px 16px rgba(172, 43, 64, .08);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* ── Topbar ── */
+        .tf-topbar {
+            background: #101010;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 13px;
+            color: #fff;
+        }
+
+        .tf-topbar span {
+            color: var(--brand);
+            margin-right: 6px;
+        }
+
+        /* ── Header ── */
+        .site-header {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, .06);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            max-width: 1320px;
+            margin: 0 auto;
+        }
+
+        .logo-site img {
+            height: 44px;
+        }
+
+        .nav-icon-list {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            list-style: none;
+        }
+
+        .nav-icon-list a {
+            color: var(--text);
+            font-size: 18px;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-icon-list a:hover {
+            color: var(--brand);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background: var(--brand);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 50%;
+            width: 17px;
+            height: 17px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Breadcrumb ── */
+        .breadcrumb-bar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 20px 0;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .breadcrumb-bar a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .breadcrumb-bar a:hover {
+            color: var(--brand);
+        }
+
+        .breadcrumb-bar span {
+            color: var(--brand);
+            font-weight: 600;
+        }
+
+        /* ── Page layout ── */
+        .page-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 28px;
+        }
+
+        /* ══════════════ SIDEBAR ══════════════ */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .profile-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 28px 20px 20px;
+            text-align: center;
+            border-top: 4px solid var(--brand);
+        }
+
+        .avatar-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 14px;
+        }
+
+        .avatar-wrap img {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--brand);
+        }
+
+        .profile-name {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .profile-email {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+
+        .member-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--brand-light);
+            color: var(--brand);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* Sidebar nav */
+        .sidebar-nav {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 18px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all .2s;
+        }
+
+        .sidebar-nav li a:hover,
+        .sidebar-nav li.active a {
+            color: var(--brand);
+            background: var(--brand-light);
+            border-left-color: var(--brand);
+        }
+
+        .sidebar-nav li a i {
+            width: 18px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .sidebar-nav li+li {
+            border-top: 1px solid var(--border);
+        }
+
+        /* ══════════════ MAIN PANEL ══════════════ */
+        .main-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .page-header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .page-header p {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .stats-mini {
+            display: flex;
+            background: var(--surface);
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            gap: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat .num {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--brand);
+        }
+
+        .stat .lbl {
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .divider {
+            width: 1px;
+            background: var(--border);
+        }
+
+        /* ── Reviews Table ── */
+        .table-wrap {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #fdf8f9;
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover td {
+            background-color: #fafafa;
+        }
+
+        .rating-stars {
+            color: #f39c12;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .rating-stars i.empty {
+            color: #e0e0e0;
+        }
+
+        .review-text {
+            color: var(--text);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .product-name {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-approved {
+            background: #eafaf1;
+            color: #1e8449;
+        }
+
+        .status-pending {
+            background: #fef9e7;
+            color: #b7770d;
+        }
+
+        .status-rejected {
+            background: #fdf0f0;
+            color: #c0392b;
+        }
+
+        .product-img {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+            border: 1px solid var(--border);
+        }
+
+        @media (max-width: 900px) {
+            .page-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .table-wrap {
+                overflow-x: auto;
+            }
+            th, td {
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Topbar -->
+    <div class="tf-topbar">
+        <span>⚡</span> Midseason Sale: 20% Off – Auto Applied at Checkout – Limited Time Only
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo-site">
+                <img src="assets/images/logo/logo.png" alt="Krishloom Vastram">
+            </a>
+            <ul class="nav-icon-list">
+                <li><a href="#" title="Search"><i class="fas fa-search"></i></a></li>
+                <li><a href="wishlist.html" title="Wishlist"><i class="fas fa-heart"></i></a></li>
+                <li>
+                    <a href="#" title="Cart" style="position:relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html" title="Profile">
+                        <i class="fas fa-user-circle" style="color:var(--brand)"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+        <a href="index.html">Home</a> &nbsp;/&nbsp;
+        <a href="user-dashboard.html">My Account</a> &nbsp;/&nbsp;
+        <span>My Reviews</span>
+    </div>
+
+    <!-- Page -->
+    <div class="page-wrapper">
+
+        <!-- ════ SIDEBAR ════ -->
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="avatar-wrap">
+                    <img src="https://ui-avatars.com/api/?name=Priya+Sharma&background=ac2b40&color=fff&size=100" alt="Priya Sharma">
+                </div>
+                <p class="profile-name">Priya Sharma</p>
+                <p class="profile-email">priya.sharma@email.com</p>
+                <span class="member-badge"><i class="fas fa-star" style="font-size:10px"></i> Premium Member</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+                    <li><a href="myorder.html"><i class="fas fa-box"></i> My Orders</a></li>
+                    <li><a href="wishlist.html"><i class="fas fa-heart"></i> Wishlist</a></li>
+                    <li><a href="address.html"><i class="fas fa-map-marker-alt"></i> Addresses</a></li>
+                    <li class="active"><a href="review.html"><i class="fas fa-star"></i> Reviews</a></li>
+                    <li><a href="profile.html#notifications"><i class="fas fa-bell"></i> Notifications</a></li>
+                    <li><a href="user_login_sign.html" style="color:#c0392b"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- ════ MAIN ════ -->
+        <div class="main-panel">
+            
+            <div class="page-header">
+                <div>
+                    <h1>My Reviews</h1>
+                    <p>Manage all your product feedback and ratings.</p>
+                </div>
+                <div class="stats-mini">
+                    <div class="stat">
+                        <div class="num">12</div>
+                        <div class="lbl">Total</div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat">
+                        <div class="num">9</div>
+                        <div class="lbl">Approved</div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat">
+                        <div class="num">2</div>
+                        <div class="lbl">Pending</div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat">
+                        <div class="num">1</div>
+                        <div class="lbl">Rejected</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">No.</th>
+                            <th style="width: 120px;">Date</th>
+                            <th style="width: 140px;">Rating</th>
+                            <th>Review</th>
+                            <th style="width: 120px;">Status</th>
+                            <th style="width: 100px;">Product</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>18 Jun 2026</td>
+                            <td>
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="review-text">Absolutely stunning! The fabric is rich and the zari work is exquisite. Perfect for weddings. I received so many compliments.</div>
+                                <div class="product-name">Kanjivaram Silk Saree</div>
+                            </td>
+                            <td><span class="status-pill status-approved">Approved</span></td>
+                            <td><img src="https://via.placeholder.com/60/ffebee/ac2b40?text=Saree" class="product-img" alt="Product"></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>10 Jun 2026</td>
+                            <td>
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star empty"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="review-text">Beautiful lehenga, very well embroidered. Slightly heavier than expected but overall great value.</div>
+                                <div class="product-name">Embroidered Lehenga</div>
+                            </td>
+                            <td><span class="status-pill status-approved">Approved</span></td>
+                            <td><img src="https://via.placeholder.com/60/fff3e0/ef6c00?text=Lehenga" class="product-img" alt="Product"></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>03 Jun 2026</td>
+                            <td>
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="review-text">Loved the cotton kurti! The print is vibrant and the fabric is breathable. Perfect for summer.</div>
+                                <div class="product-name">Cotton Kurti</div>
+                            </td>
+                            <td><span class="status-pill status-pending">Pending</span></td>
+                            <td><img src="https://via.placeholder.com/60/e3f2fd/1565c0?text=Kurti" class="product-img" alt="Product"></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>25 May 2026</td>
+                            <td>
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star empty"></i><i class="fas fa-star empty"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="review-text">Decent saree but the color was slightly dull compared to the photos online. Still a good buy for the price.</div>
+                                <div class="product-name">Georgette Saree</div>
+                            </td>
+                            <td><span class="status-pill status-approved">Approved</span></td>
+                            <td><img src="https://via.placeholder.com/60/f3e5f5/8e24aa?text=Saree" class="product-img" alt="Product"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <script>
+        /* ── Handle Embed Mode ── */
+        if (window.self !== window.top || new URLSearchParams(window.location.search).get('embed') === 'true') {
+            const hideSelectors = ['.tf-topbar', '.site-header', '.breadcrumb-bar', '.sidebar'];
+            hideSelectors.forEach(sel => {
+                const el = document.querySelector(sel);
+                if (el) el.style.display = 'none';
+            });
+            const pageWrapper = document.querySelector('.page-wrapper');
+            if (pageWrapper) {
+                pageWrapper.style.gridTemplateColumns = '1fr';
+                pageWrapper.style.padding = '0';
+                pageWrapper.style.marginTop = '0';
+            }
+            document.body.style.background = 'transparent';
+        }
+    </script>
+</body>
+</html>

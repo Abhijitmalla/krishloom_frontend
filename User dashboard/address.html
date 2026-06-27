@@ -1,0 +1,721 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <title>My Addresses – Krishloom Vastram</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/icon:icomoon/style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+
+    <style>
+        /* ── Brand Tokens ── */
+        :root {
+            --brand: rgb(172, 43, 64);
+            --brand-dark: rgb(119, 5, 41);
+            --brand-light: rgba(172, 43, 64, 0.08);
+            --surface: #fff;
+            --bg: #f7f4f5;
+            --text: #1a1a1a;
+            --muted: #6c6c6c;
+            --border: #e8dde0;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 2px 16px rgba(172, 43, 64, .08);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* ── Topbar ── */
+        .tf-topbar {
+            background: #101010;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 13px;
+            color: #fff;
+        }
+
+        .tf-topbar span {
+            color: var(--brand);
+            margin-right: 6px;
+        }
+
+        /* ── Header ── */
+        .site-header {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, .06);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            max-width: 1320px;
+            margin: 0 auto;
+        }
+
+        .logo-site img {
+            height: 44px;
+        }
+
+        .nav-icon-list {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            list-style: none;
+        }
+
+        .nav-icon-list a {
+            color: var(--text);
+            font-size: 18px;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-icon-list a:hover {
+            color: var(--brand);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background: var(--brand);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 50%;
+            width: 17px;
+            height: 17px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Breadcrumb ── */
+        .breadcrumb-bar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 20px 0;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .breadcrumb-bar a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .breadcrumb-bar a:hover {
+            color: var(--brand);
+        }
+
+        .breadcrumb-bar span {
+            color: var(--brand);
+            font-weight: 600;
+        }
+
+        /* ── Page layout ── */
+        .page-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 28px;
+        }
+
+        /* ══════════════ SIDEBAR ══════════════ */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .profile-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 28px 20px 20px;
+            text-align: center;
+            border-top: 4px solid var(--brand);
+        }
+
+        .avatar-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 14px;
+        }
+
+        .avatar-wrap img {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--brand);
+        }
+
+        .profile-name {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .profile-email {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+
+        .member-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--brand-light);
+            color: var(--brand);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* Sidebar nav */
+        .sidebar-nav {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 18px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all .2s;
+        }
+
+        .sidebar-nav li a:hover,
+        .sidebar-nav li.active a {
+            color: var(--brand);
+            background: var(--brand-light);
+            border-left-color: var(--brand);
+        }
+
+        .sidebar-nav li a i {
+            width: 18px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .sidebar-nav li+li {
+            border-top: 1px solid var(--border);
+        }
+
+        /* ══════════════ MAIN PANEL ══════════════ */
+        .main-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .page-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .page-title-row h4 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .btn-add {
+            background: var(--brand);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-add:hover {
+            background: var(--brand-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(172, 43, 64, 0.2);
+        }
+
+        /* ── Address Grid ── */
+        .address-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .address-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .address-card:hover {
+            border-color: var(--brand);
+            box-shadow: 0 8px 24px rgba(172, 43, 64, 0.12);
+        }
+
+        .address-card.default {
+            border-color: var(--brand);
+            background: #fffafa;
+        }
+
+        .badge-default {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: var(--brand);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+            padding-right: 70px;
+        }
+
+        .phone {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .address-detail {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .address-detail .label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+            margin-top: auto;
+        }
+
+        .btn-action {
+            background: transparent;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .btn-edit {
+            color: var(--brand);
+        }
+        .btn-edit:hover {
+            color: var(--brand-dark);
+        }
+
+        .btn-delete {
+            color: #e74c3c;
+        }
+        .btn-delete:hover {
+            color: #c0392b;
+        }
+
+        .btn-set-default {
+            color: var(--muted);
+            margin-left: auto;
+        }
+        .btn-set-default:hover {
+            color: var(--text);
+        }
+
+        /* ── Modal ── */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+            animation: fadeIn 0.2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: var(--surface);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            padding: 32px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .modal p.sub {
+            color: var(--muted);
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s;
+            background: #fafafa;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--brand);
+            background: #fff;
+            box-shadow: 0 0 0 4px var(--brand-light);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 24px 0;
+        }
+
+        .form-check input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--brand);
+            cursor: pointer;
+        }
+
+        .form-check label {
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel:hover {
+            background: #f5f5f5;
+        }
+
+        .btn-save {
+            background: var(--brand);
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-save:hover {
+            background: var(--brand-dark);
+        }
+
+        @media (max-width: 900px) {
+            .page-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Topbar -->
+    <div class="tf-topbar">
+        <span>⚡</span> Midseason Sale: 20% Off – Auto Applied at Checkout – Limited Time Only
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo-site">
+                <img src="assets/images/logo/logo.png" alt="Krishloom Vastram">
+            </a>
+            <ul class="nav-icon-list">
+                <li><a href="#" title="Search"><i class="fas fa-search"></i></a></li>
+                <li><a href="wishlist.html" title="Wishlist"><i class="fas fa-heart"></i></a></li>
+                <li>
+                    <a href="#" title="Cart" style="position:relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html" title="Profile">
+                        <i class="fas fa-user-circle" style="color:var(--brand)"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+        <a href="index.html">Home</a> &nbsp;/&nbsp;
+        <a href="user-dashboard.html">My Account</a> &nbsp;/&nbsp;
+        <span>My Addresses</span>
+    </div>
+
+    <!-- Page -->
+    <div class="page-wrapper">
+
+        <!-- ════ SIDEBAR ════ -->
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="avatar-wrap">
+                    <img src="https://ui-avatars.com/api/?name=Priya+Sharma&background=ac2b40&color=fff&size=100" alt="Priya Sharma">
+                </div>
+                <p class="profile-name">Priya Sharma</p>
+                <p class="profile-email">priya.sharma@email.com</p>
+                <span class="member-badge"><i class="fas fa-star" style="font-size:10px"></i> Premium Member</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+                    <li><a href="myorder.html"><i class="fas fa-box"></i> My Orders</a></li>
+                    <li><a href="wishlist.html"><i class="fas fa-heart"></i> Wishlist</a></li>
+                    <li class="active"><a href="address.html"><i class="fas fa-map-marker-alt"></i> Addresses</a></li>
+                    <li><a href="review.html"><i class="fas fa-star"></i> Reviews</a></li>
+                    <li><a href="profile.html#notifications"><i class="fas fa-bell"></i> Notifications</a></li>
+                    <li><a href="user_login_sign.html" style="color:#c0392b"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- ════ MAIN ════ -->
+        <div class="main-panel">
+            <div class="page-title-row">
+                <h4>My Addresses</h4>
+                <button class="btn-add" id="addAddressBtn"><i class="fas fa-plus"></i> Add New Address</button>
+            </div>
+
+            <div class="address-grid" id="addressGrid">
+                <!-- Address Card 1 -->
+                <div class="address-card default">
+                    <span class="badge-default">Default</span>
+                    <div class="name">Priya Sharma</div>
+                    <div class="phone"><i class="fas fa-phone-alt"></i> +91 9876543210</div>
+                    <div class="address-detail">
+                        <span class="label">Delivery Address</span>
+                        Satya Vihar, Rasulgarh, Near Big Bazaar<br>
+                        Bhubaneswar, Odisha - 751010<br>
+                        India
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn-action btn-delete"><i class="fas fa-trash-alt"></i> Delete</button>
+                    </div>
+                </div>
+
+                <!-- Address Card 2 -->
+                <div class="address-card">
+                    <div class="name">Priya Sharma</div>
+                    <div class="phone"><i class="fas fa-phone-alt"></i> +91 9988776655</div>
+                    <div class="address-detail">
+                        <span class="label">Delivery Address</span>
+                        Flat 201, Green Valley Apartments, Patia<br>
+                        Bhubaneswar, Odisha - 751024<br>
+                        India
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn-action btn-delete"><i class="fas fa-trash-alt"></i> Delete</button>
+                        <button class="btn-action btn-set-default">Set as default</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal is handled by parent dashboard via postMessage -->
+
+    <script>
+        const isEmbedded = window.self !== window.top || new URLSearchParams(window.location.search).get('embed') === 'true';
+
+        /* ── Handle Embed Mode ── */
+        if (isEmbedded) {
+            const hideSelectors = ['.tf-topbar', '.site-header', '.breadcrumb-bar', '.sidebar'];
+            hideSelectors.forEach(sel => {
+                const el = document.querySelector(sel);
+                if (el) el.style.display = 'none';
+            });
+            const pageWrapper = document.querySelector('.page-wrapper');
+            if (pageWrapper) {
+                pageWrapper.style.gridTemplateColumns = '1fr';
+                pageWrapper.style.padding = '0';
+                pageWrapper.style.marginTop = '0';
+            }
+            document.body.style.background = 'transparent';
+        }
+
+        /* ── Edit / Add buttons → send message to parent ── */
+        document.querySelectorAll('.btn-edit').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const card = btn.closest('.address-card');
+                const name = card.querySelector('.name')?.innerText || '';
+                const phone = card.querySelector('.phone')?.innerText.replace(/[^0-9]/g, '') || '';
+                const lines = card.querySelector('.address-detail')?.innerText?.split('\n').map(s => s.trim()).filter(Boolean) || [];
+                const target = isEmbedded ? window.parent : window;
+                target.postMessage({ type: 'OPEN_ADDRESS_MODAL', mode: 'edit', data: { name, phone, addressLines: lines } }, '*');
+            });
+        });
+
+        document.getElementById('addAddressBtn').addEventListener('click', () => {
+            const target = isEmbedded ? window.parent : window;
+            target.postMessage({ type: 'OPEN_ADDRESS_MODAL', mode: 'add', data: {} }, '*');
+        });
+    </script>
+</body>
+</html>

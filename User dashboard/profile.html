@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <title>My Profile – Krishloom Vastram</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/icon:icomoon/style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+
+    <style>
+        /* ── Brand tokens ── */
+        :root {
+            --brand: rgb(172, 43, 64);
+            --brand-dark: rgb(119, 5, 41);
+            --brand-light: rgba(172, 43, 64, 0.08);
+            --surface: #fff;
+            --bg: #f7f4f5;
+            --text: #1a1a1a;
+            --text-muted: #6c6c6c;
+            --border: #e8dde0;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 2px 16px rgba(172, 43, 64, .08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ── Top-bar (matches dashboard) ── */
+        .tf-topbar {
+            background: #101010;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 13px;
+            color: #fff;
+            letter-spacing: .3px;
+        }
+
+        .tf-topbar span {
+            color: var(--brand);
+            margin-right: 6px;
+        }
+
+        /* ── Header ── */
+        .site-header {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, .06);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            max-width: 1320px;
+            margin: 0 auto;
+        }
+
+        .logo-site img {
+            height: 44px;
+        }
+
+        .nav-icon-list {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            list-style: none;
+        }
+
+        .nav-icon-list a {
+            color: var(--text);
+            font-size: 18px;
+            position: relative;
+        }
+
+        .nav-icon-list a:hover {
+            color: var(--brand);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background: var(--brand);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 50%;
+            width: 17px;
+            height: 17px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Page layout ── */
+        .page-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 36px 20px 60px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 28px;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .profile-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 32px 24px 24px;
+            text-align: center;
+            border-top: 4px solid var(--brand);
+        }
+
+        .avatar-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .avatar-wrap img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--brand);
+        }
+
+        .avatar-edit {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background: var(--brand);
+            color: #fff;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            border: 2px solid #fff;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .member-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--brand-light);
+            color: var(--brand);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* Sidebar nav */
+        .sidebar-nav {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all .2s;
+        }
+
+        .sidebar-nav li a:hover,
+        .sidebar-nav li.active a {
+            color: var(--brand);
+            background: var(--brand-light);
+            border-left-color: var(--brand);
+        }
+
+        .sidebar-nav li a i {
+            width: 18px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .sidebar-nav li+li {
+            border-top: 1px solid var(--border);
+        }
+
+        /* Stats strip */
+        .stat-strip {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+        }
+
+        .stat-item {
+            padding: 18px 16px;
+            text-align: center;
+        }
+
+        .stat-item+.stat-item {
+            border-left: 1px solid var(--border);
+        }
+
+        .stat-item:nth-child(3),
+        .stat-item:nth-child(4) {
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-num {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--brand);
+        }
+
+        .stat-lbl {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        /* ── Main panel ── */
+        .main-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .panel-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .panel-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-head h5 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-head h5 i {
+            color: var(--brand);
+            font-size: 16px;
+        }
+
+        .btn-edit {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--brand);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background .2s;
+        }
+
+        .btn-edit:hover {
+            background: var(--brand-dark);
+            color: #fff;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--brand);
+            border: 1.5px solid var(--brand);
+        }
+
+        .btn-outline:hover {
+            background: var(--brand);
+            color: #fff;
+        }
+
+        /* Info grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .info-cell {
+            padding: 18px 24px;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-cell:nth-child(even) {
+            border-right: none;
+        }
+
+        .info-cell:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+
+        .info-cell label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            margin-bottom: 6px;
+        }
+
+        .info-cell p {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .info-cell p.placeholder {
+            color: #bbb;
+            font-style: italic;
+        }
+
+        /* Edit form (hidden by default, shown when editing) */
+        .edit-form {
+            padding: 24px;
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .edit-form.active {
+            display: flex;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            font-size: 14px;
+            color: var(--text);
+            outline: none;
+            transition: border-color .2s;
+            font-family: inherit;
+            background: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--brand);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            padding-top: 4px;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
+            border-color: var(--brand);
+            color: var(--brand);
+        }
+
+        .btn-save {
+            background: var(--brand);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 8px 22px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background: var(--brand-dark);
+        }
+
+        /* Address cards */
+        .address-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            padding: 20px 24px;
+        }
+
+        .address-card {
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            position: relative;
+        }
+
+        .address-card.default-addr {
+            border-color: var(--brand);
+        }
+
+        .addr-badge {
+            position: absolute;
+            top: -10px;
+            left: 14px;
+            background: var(--brand);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            padding: 2px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .address-card h6 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            margin-top: 6px;
+        }
+
+        .address-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .addr-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .addr-btn {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .addr-btn-edit {
+            background: var(--brand-light);
+            color: var(--brand);
+            border: none;
+        }
+
+        .addr-btn-del {
+            background: #fdf0f2;
+            color: #c0392b;
+            border: none;
+        }
+
+        .addr-btn:hover {
+            opacity: .85;
+        }
+
+        .add-addr-card {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: border-color .2s;
+            text-align: center;
+        }
+
+        .add-addr-card:hover {
+            border-color: var(--brand);
+            color: var(--brand);
+        }
+
+        .add-addr-card i {
+            font-size: 24px;
+        }
+
+        .add-addr-card span {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Orders table */
+        .orders-wrap {
+            padding: 0 24px 24px;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 4px;
+        }
+
+        .orders-table th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            padding: 14px 12px 10px;
+            border-bottom: 1.5px solid var(--border);
+        }
+
+        .orders-table td {
+            padding: 14px 12px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .orders-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .order-id {
+            font-weight: 700;
+            color: var(--brand);
+        }
+
+        .status-pill {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: .3px;
+        }
+
+        .status-delivered {
+            background: #eafaf1;
+            color: #1e8449;
+        }
+
+        .status-processing {
+            background: #fef9e7;
+            color: #b7770d;
+        }
+
+        .status-shipped {
+            background: #ebf5fb;
+            color: #1a5276;
+        }
+
+        .status-cancelled {
+            background: #fdf0f0;
+            color: #c0392b;
+        }
+
+        .view-btn {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--brand);
+            text-decoration: none;
+            border: 1px solid var(--brand);
+            border-radius: 6px;
+            padding: 4px 12px;
+        }
+
+        .view-btn:hover {
+            background: var(--brand);
+            color: #fff;
+        }
+
+        /* Password section */
+        .pass-form {
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .pass-form .form-group:last-of-type {
+            grid-column: 1 / -1;
+        }
+
+        .strength-bar {
+            height: 5px;
+            border-radius: 4px;
+            background: #e8e8e8;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0;
+            border-radius: 4px;
+            background: var(--brand);
+            transition: width .4s;
+        }
+
+        .pass-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Wishlist mini-grid */
+        .wish-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 20px 24px;
+        }
+
+        .wish-item {
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .wish-item img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            display: block;
+        }
+
+        .wish-remove {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, .9);
+            color: var(--brand);
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .wish-info {
+            padding: 10px 10px 12px;
+        }
+
+        .wish-info p {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .wish-info span {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--brand);
+        }
+
+        /* Notifications */
+        .notif-list {
+            padding: 0 24px 20px;
+        }
+
+        .notif-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .notif-item:last-child {
+            border-bottom: none;
+        }
+
+        .notif-icon {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .notif-icon.order {
+            background: #eafaf1;
+            color: #1e8449;
+        }
+
+        .notif-icon.promo {
+            background: var(--brand-light);
+            color: var(--brand);
+        }
+
+        .notif-icon.ship {
+            background: #ebf5fb;
+            color: #1a5276;
+        }
+
+        .notif-text p {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .notif-text span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .notif-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--brand);
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+
+        /* Toggle switch */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .toggle-row:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-label p {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .toggle-label span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ddd;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .toggle-slider:before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: .3s;
+        }
+
+        .toggle input:checked+.toggle-slider {
+            background: var(--brand);
+        }
+
+        .toggle input:checked+.toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb-bar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 20px 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb-bar a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .breadcrumb-bar a:hover {
+            color: var(--brand);
+        }
+
+        .breadcrumb-bar span {
+            color: var(--brand);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: #101010;
+            color: #bbb;
+            padding: 40px 0 16px;
+            margin-top: 40px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .footer-col h6 {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li+li {
+            margin-top: 8px;
+        }
+
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--brand);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .footer-social a {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        .footer-social a:hover {
+            background: var(--brand);
+            border-color: var(--brand);
+            color: #fff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2a2a2a;
+            padding-top: 16px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer-bottom a {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 992px) {
+            .page-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: -1;
+            }
+
+            .stat-strip {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .stat-item:nth-child(3) {
+                border-top: none;
+            }
+
+            .stat-item:nth-child(4) {
+                border-top: none;
+            }
+
+            .stat-item:nth-child(n+2) {
+                border-left: 1px solid var(--border);
+            }
+
+            .wish-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-cell {
+                border-right: none;
+            }
+
+            .info-cell:nth-last-child(-n+2) {
+                border-bottom: 1px solid var(--border);
+            }
+
+            .info-cell:last-child {
+                border-bottom: none;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .address-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wish-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat-strip {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat-item:nth-child(3) {
+                border-top: 1px solid var(--border);
+            }
+
+            .stat-item:nth-child(4) {
+                border-top: 1px solid var(--border);
+            }
+
+            .stat-item:nth-child(3),
+            .stat-item:nth-child(4) {
+                border-left: none;
+            }
+
+            .stat-item:nth-child(even) {
+                border-left: 1px solid var(--border);
+            }
+
+            .pass-form {
+                grid-template-columns: 1fr;
+            }
+
+            .pass-form .form-group:last-of-type {
+                grid-column: 1;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .orders-table th:nth-child(3),
+            .orders-table td:nth-child(3) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top bar -->
+    <div class="tf-topbar">
+        <span>⚡</span> Midseason Sale: 20% Off – Auto Applied at Checkout – Limited Time Only
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo-site">
+                <img src="assets/images/logo/logo.png" alt="Krishloom Vastram">
+            </a>
+            <ul class="nav-icon-list">
+                <li><a href="#search" title="Search"><i class="fas fa-search"></i></a></li>
+                <li><a href="wishlist.html" title="Wishlist"><i class="fas fa-heart"></i></a></li>
+                <li>
+                    <a href="#shoppingCart" title="Cart" style="position:relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html" title="Profile" style="display:flex; align-items:center; gap:5px;">
+                        <i class="fas fa-user-circle" style="color:var(--brand)" id="navProfileIcon"></i>
+                        <img src="" id="navProfileImg"
+                            style="display:none; width:24px; height:24px; border-radius:50%; object-fit:cover;">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+        <a href="index.html">Home</a> &nbsp;/&nbsp;
+        <a href="account.html">My Account</a> &nbsp;/&nbsp;
+        <span>My Profile</span>
+    </div>
+
+    <!-- Page -->
+    <div class="page-wrapper">
+
+        <!-- ════ SIDEBAR ════ -->
+        <aside class="sidebar">
+
+            <!-- Profile card -->
+            <div class="profile-card">
+                <div class="avatar-wrap">
+                    <img src="assets/images/collection/test.png" alt="Priya Sharma" id="avatarImg">
+                    <label class="avatar-edit" for="avatarUpload" title="Change photo">
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input type="file" id="avatarUpload" accept="image/*" style="display:none"
+                        onchange="previewAvatar(event)">
+                </div>
+                <p class="profile-name" id="profileName">Loading...</p>
+                <p class="profile-email" id="profileEmail">Loading...</p>
+                <span class="member-badge"><i class="fas fa-star" style="font-size:10px"></i> Premium Member</span>
+            </div>
+
+            <!-- Stats -->
+            <div class="stat-strip">
+                <div class="stat-item">
+                    <div class="stat-num">12</div>
+                    <div class="stat-lbl">Orders</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">5</div>
+                    <div class="stat-lbl">Wishlist</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">3</div>
+                    <div class="stat-lbl">Reviews</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">2</div>
+                    <div class="stat-lbl">Returns</div>
+                </div>
+            </div>
+
+            <!-- Nav -->
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                    </li>
+                    <li>
+                        <a href="my_orders.html"><i class="fas fa-box"></i> My Orders</a>
+                    </li>
+                    <li>
+                        <a href="wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
+                    </li>
+                    <li>
+                        <a href="#addresses"><i class="fas fa-map-marker-alt"></i> Addresses</a>
+                    </li>
+                    <li>
+                        <a href="#notifications"><i class="fas fa-bell"></i> Notifications</a>
+                    </li>
+                    <li>
+                        <a href="#security"><i class="fas fa-lock"></i> Security</a>
+                    </li>
+                    <li>
+                        <a href="user_login_sign.html" style="color:#c0392b"><i class="fas fa-sign-out-alt"></i>
+                            Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- ════ MAIN ════ -->
+        <div class="main-panel">
+
+            <!-- ── Personal Info ── -->
+            <div class="panel-card" id="personal">
+                <div class="panel-head">
+                    <h5><i class="fas fa-user-circle"></i> Personal Information</h5>
+                    <button class="btn-edit" onclick="toggleEdit('personalInfo','editPersonalForm',this)">
+                        <i class="fas fa-pen"></i> Edit
+                    </button>
+                </div>
+
+                <!-- Info view -->
+                <div class="info-grid" id="personalInfo">
+                    <div class="info-cell"
+                        style="grid-column: 1 / -1; display: flex; justify-content: flex-start; align-items: center; gap: 18px;">
+                        <img id="profileInfoImg" src="assets/images/collection/test.png" alt="Profile"
+                            style="width:90px; height:90px; border-radius:50%; object-fit:cover; border:3px solid var(--brand, #ac2b40); box-shadow: 0 2px 12px rgba(0,0,0,0.15);">
+                        <div>
+                            <label style="display:block;">Profile Photo</label>
+                            <p style="margin:0; color:#888; font-size:13px;">Updated from sidebar camera icon or Edit
+                                form</p>
+                        </div>
+                    </div>
+                    <div class="info-cell">
+                        <label>Name</label>
+                        <p id="firstName">Loading...</p>
+                    </div>
+
+                    <div class="info-cell">
+                        <label>Email Address</label>
+                        <p id="emailText">Loading...</p>
+                    </div>
+
+                    <div class="info-cell">
+                        <label>Phone Number</label>
+                        <p id="phoneText">Loading...</p>
+                    </div>
+                    <div class="info-cell">
+                        <label>Date of Birth</label>
+                        <p id="dobText">Not Added</p>
+                    </div>
+                    <div class="info-cell">
+                        <label>Gender</label>
+                        <p id="genderText">Not Added</p>
+                    </div>
+                    <div class="info-cell">
+                        <label>Address</label>
+                        <p id="addressText">Not Added</p>
+                    </div>
+                </div>
+
+                <!-- Edit form -->
+                <div class="edit-form" id="editPersonalForm">
+                    <div class="form-row">
+                        <div class="form-group" style="width: 100%;">
+                            <label>Profile Image</label>
+                            <input type="file" id="editProfileImage" accept="image/*" onchange="previewAvatar(event)">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="width: 100%;">
+                            <label>Name</label>
+                            <input type="text" id="editName" value="" placeholder="Name" readonly
+                                style="cursor: not-allowed;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="editEmail" value="" readonly style="cursor: not-allowed;">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="editPhone" value="" readonly style="cursor: not-allowed;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <input type="date" id="editDob">
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select id="editGender">
+                                <option selected>Female</option>
+                                <option>Male</option>
+                                <option>Prefer not to say</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="width: 100%;">
+                            <label>Address</label>
+                            <input type="text" id="editAddress" placeholder="Address">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-cancel"
+                            onclick="toggleEdit('personalInfo','editPersonalForm',null)">Cancel</button>
+                        <button class="btn-save" onclick="saveInfo('personalInfo','editPersonalForm')">Save
+                            Changes</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div><!-- /main-panel -->
+    </div><!-- /page-wrapper -->
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h6>Follow Us</h6>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/krishloomvastram" target="_blank"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/krishloomvastram/" target="_blank"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@KrishloomVastram" target="_blank"><i
+                                class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h6>Quick Access</h6>
+                    <ul>
+                        <li><a href="contact-us.html">Contact Us</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="my_orders.html">My Orders</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h6>Policies</h6>
+                    <ul>
+                        <li><a href="shipping-policy.html">Shipping Policy</a></li>
+                        <li><a href="return-policy.html">Return &amp; Refund</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h6>Contact</h6>
+                    <p style="font-size:13px; line-height:1.7; color:#999">
+                        Krishloom Vastram (OPC) Pvt. Ltd.<br>
+                        Satya Vihar, Rasulgarh<br>
+                        Bhubaneswar, Odisha – 751010<br>
+                        <a href="mailto:support@krishloomvastram.com"
+                            style="color:#bbb">support@krishloomvastram.com</a><br>
+                        +91 6372642893
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                ©2026 <a href="index.html">Krishloom Vastram</a>. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* ── Toggle edit/view ── */
+        function toggleEdit(viewId, formId, btn) {
+            const view = document.getElementById(viewId);
+            const form = document.getElementById(formId);
+            const isEditing = form.classList.contains('active');
+            if (isEditing) {
+                form.classList.remove('active');
+                view.style.display = '';
+                if (btn) { btn.innerHTML = '<i class="fas fa-pen"></i> Edit'; }
+            } else {
+                view.style.display = 'none';
+                form.classList.add('active');
+                if (btn) { btn.innerHTML = '<i class="fas fa-times"></i> Cancel'; }
+            }
+        }
+
+        function saveInfo(viewId, formId) {
+            const view = document.getElementById(viewId);
+            const form = document.getElementById(formId);
+
+            const userId = sessionStorage.getItem("user_id");
+            const dob = document.getElementById("editDob").value;
+            const gender = document.getElementById("editGender").value;
+            const address = document.getElementById("editAddress").value;
+
+            fetch("http://localhost/krishloom-vastram/backend/routes/api.php?route=updateProfile", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: userId,
+                    dob: dob,
+                    gender: gender,
+                    address: address
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status) {
+                        document.getElementById("dobText").textContent =
+                            dob || "Not Added";
+                        document.getElementById("genderText").textContent =
+                            gender || "Not Added";
+                        document.getElementById("addressText").textContent =
+                            address || "Not Added";
+
+                        form.classList.remove("active");
+                        view.style.display = "";
+
+                        showToast("Profile updated successfully!");
+                    } else {
+                        showToast(data.message || "Update failed");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    showToast("Something went wrong.");
+                });
+        }
+        /* ── Avatar preview ── */
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append("id", sessionStorage.getItem("user_id"));
+            formData.append("profile_image", file);
+
+            fetch(
+                "http://localhost/krishloom-vastram/backend/routes/api.php?route=uploadProfileImage",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            )
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status) {
+                        const newImgUrl = "http://localhost/krishloom-vastram/backend/uploads/" +
+                            data.image +
+                            "?t=" + new Date().getTime();
+                        document.getElementById("avatarImg").src = newImgUrl;
+
+                        // Also update the circular image in Personal Info view
+                        const infoImg = document.getElementById("profileInfoImg");
+                        if (infoImg) infoImg.src = newImgUrl;
+
+                        const navImg = document.getElementById("navProfileImg");
+                        const navIcon = document.getElementById("navProfileIcon");
+                        if (navImg) {
+                            navImg.src = newImgUrl;
+                            navImg.style.display = "inline-block";
+                            if (navIcon) navIcon.style.display = "none";
+                        }
+
+                        showToast("Profile image updated successfully!");
+                    } else {
+                        showToast(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    showToast("Image upload failed.");
+                });
+        }
+
+        /* ── Password strength ── */
+        function checkStrength(val) {
+            const fill = document.getElementById('strengthFill');
+            const label = document.getElementById('strengthLabel');
+            let score = 0;
+            if (val.length >= 8) score++;
+            if (/[A-Z]/.test(val)) score++;
+            if (/[0-9]/.test(val)) score++;
+            if (/[^A-Za-z0-9]/.test(val)) score++;
+            const widths = ['0%', '25%', '50%', '75%', '100%'];
+            const colors = ['#ccc', '#e74c3c', '#e67e22', '#f1c40f', '#27ae60'];
+            const labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+            fill.style.width = widths[score];
+            fill.style.background = colors[score];
+            label.textContent = score > 0 ? labels[score] : 'Use 8+ characters with letters, numbers & symbols.';
+        }
+
+        /* ── Toast ── */
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.style.cssText = `
+            position:fixed; bottom:28px; right:28px; z-index:9999;
+            background:#1a1a1a; color:#fff;
+            padding:14px 22px; border-radius:10px;
+            font-size:14px; font-weight:600;
+            border-left:4px solid rgb(172,43,64);
+            box-shadow:0 4px 20px rgba(0,0,0,.2);
+            animation: slideIn .3s ease;
+        `;
+            t.textContent = '✓ ' + msg;
+            document.body.appendChild(t);
+            setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .4s'; }, 2500);
+            setTimeout(() => t.remove(), 3000);
+        }
+
+        /* ── Smooth scroll for sidebar links ── */
+        document.querySelectorAll('.sidebar-nav a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        /* ── Handle Embed Mode ── */
+        if (window.self !== window.top || new URLSearchParams(window.location.search).get('embed') === 'true') {
+            const hideSelectors = ['.tf-topbar', '.site-header', '.breadcrumb-bar', '.sidebar', '.site-footer'];
+            hideSelectors.forEach(sel => {
+                const el = document.querySelector(sel);
+                if (el) el.style.display = 'none';
+            });
+
+            const pageWrapper = document.querySelector('.page-wrapper');
+            if (pageWrapper) {
+                pageWrapper.style.gridTemplateColumns = '1fr';
+                pageWrapper.style.padding = '0';
+                pageWrapper.style.marginTop = '0';
+            }
+            document.body.style.background = 'transparent';
+        }
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const userId = sessionStorage.getItem("user_id");
+
+            if (!userId) {
+                console.log("User ID not found");
+                return;
+            }
+
+            fetch(`http://localhost/krishloom-vastram/backend/routes/api.php?route=getUser&id=${encodeURIComponent(userId)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status) {
+                        const user = data.user;
+
+                        document.getElementById("profileName").textContent = user.name;
+                        document.getElementById("profileEmail").textContent = user.email;
+
+                        document.getElementById("firstName").textContent = user.name;
+                        document.getElementById("emailText").textContent = user.email;
+                        document.getElementById("phoneText").textContent = user.phone;
+                        if (user.profile_image) {
+                            const profileImgUrl =
+                                "http://localhost/krishloom-vastram/backend/uploads/" +
+                                user.profile_image +
+                                "?t=" + new Date().getTime();
+                            // Sidebar avatar
+                            document.getElementById("avatarImg").src = profileImgUrl;
+
+                            // Circular image in Personal Info view
+                            const infoImg = document.getElementById("profileInfoImg");
+                            if (infoImg) infoImg.src = profileImgUrl;
+
+                            // Navbar profile icon → replace icon with image
+                            const navImg = document.getElementById("navProfileImg");
+                            const navIcon = document.getElementById("navProfileIcon");
+                            if (navImg) {
+                                navImg.src = profileImgUrl;
+                                navImg.style.display = "inline-block";
+                                if (navIcon) navIcon.style.display = "none";
+                            }
+                        }
+
+                        document.getElementById("dobText").textContent =
+                            user.dob || "Not Added";
+
+                        document.getElementById("genderText").textContent =
+                            user.gender || "Not Added";
+
+                        document.getElementById("addressText").textContent =
+                            user.address || "Not Added";
+
+                        document.getElementById("editDob").value =
+                            user.dob || "";
+
+                        document.getElementById("editGender").value =
+                            user.gender || "";
+
+                        document.getElementById("editAddress").value =
+                            user.address || "";
+
+                        if (document.getElementById("editName")) document.getElementById("editName").value = user.name;
+                        if (document.getElementById("editEmail")) document.getElementById("editEmail").value = user.email;
+                        if (document.getElementById("editPhone")) document.getElementById("editPhone").value = user.phone;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        });
+    </script>
+</body>
+
+</html>

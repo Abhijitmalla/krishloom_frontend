@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>KYC Verification</title>
+
+<!-- Bootstrap 5 CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family: "Segoe UI", sans-serif;
+  background:#fff6dc;
+}
+
+/* MAIN WRAPPER */
+.kyc-wrapper{
+  min-height:100vh;
+  display:flex;
+}
+
+/* LEFT PANEL */
+.kyc-left{
+  width:45%;
+  background:linear-gradient(180deg,#80032f,#46021a);
+  color:#fff;
+  padding:60px 40px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items: center;
+}
+
+.kyc-left h2{
+  font-size:34px;
+  font-weight:700;
+  margin-bottom:30px;
+}
+
+.logo-box{
+  width:130px;
+  height:130px;
+  background:#fff;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:30px;
+}
+
+.logo-box img{
+  max-width:150px;
+}
+
+.kyc-left p{
+  font-size:18px;
+  margin-top:20px;
+  line-height:1.6;
+}
+
+/* RIGHT PANEL */
+.kyc-right{
+  width:55%;
+  background:#fdf3d8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px;
+}
+
+.kyc-card{
+  background:#fff;
+  width:100%;
+  max-width:550px;
+  border-radius:20px;
+  padding:40px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.1);
+}
+
+.kyc-card h1{
+  font-size:32px;
+  font-weight:700;
+  text-align:center;
+}
+
+.kyc-card h6{
+  text-align:center;
+  color:#555;
+  margin-bottom:20px;
+}
+
+.kyc-title{
+  text-align:center;
+  color:#80032f;
+  font-weight:700;
+  margin-bottom:30px;
+}
+
+.form-label{
+  font-weight:600;
+}
+
+.btn-validate{
+  background:#80032f;
+  color:#fff;
+  border:none;
+  padding:8px 22px;
+  border-radius:8px;
+}
+
+.btn-validate:hover{
+  background:#46021a;
+}
+
+/* RESPONSIVE */
+@media(max-width:991px){
+  .kyc-wrapper{
+    flex-direction:column;
+  }
+  .kyc-left,.kyc-right{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="kyc-wrapper">
+
+  <!-- LEFT SIDE -->
+  <div class="kyc-left">
+    <h2>Agency Verification</h2>
+
+    <div class="logo-box">
+      <img src="./image/KRISHLOOM (2).png" alt="Logo">
+    </div>
+
+    <h5><i>KYC: The First Step Towards Growth.</i></h5>
+
+    <p>
+      Once all details are validated, then you can start your affiliate journey safely.
+    </p>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="kyc-right">
+    <div class="kyc-card">
+
+      <h1>Thank you for Registering</h1>
+      <h6>Complete your Onboarding Today</h6>
+
+      <div class="kyc-title" style="color:#7b0022;">KYC Verification</div>
+
+
+      <!-- AADHAR -->
+      <div class="mb-3">
+        <label class="form-label">Aadhar Verification :</label>
+        <div class="d-flex gap-2">
+          <input type="text" class="form-control" id="aadhar" placeholder="Aadhar Number (12 digits)">
+          
+        </div>
+        <div class="mt-2 text-end">
+          <button class="btn btn-validate" onclick="validateAadhar()">Validate</button>
+        </div>
+      </div>
+
+      <!-- PAN -->
+      <div class="mb-3">
+        <label class="form-label">PAN Verification :</label>
+        <div class="d-flex gap-2">
+          <input type="text" class="form-control" id="pan" placeholder="PAN Number (ABCDE1234F)">
+          
+        </div>
+        <div class="mt-2 text-end">
+          <button class="btn btn-validate" onclick="validatePAN()">Validate</button>
+        </div>
+      </div>
+
+      <!-- BANK -->
+      <div class="mb-3">
+        <label class="form-label">Bank Verification :</label>
+        <div class="row g-2">
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="account" placeholder="Account Number">
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="ifsc" placeholder="IFSC Code">
+          </div>
+        </div>
+        <div class="mt-2 text-end">
+          <button class="btn btn-validate" onclick="validateBank()">Validate</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- JS -->
+<script>
+function validateAadhar(){
+  let aadhar=document.getElementById("aadhar").value;
+  if(/^\d{12}$/.test(aadhar)){
+    alert("Aadhar Valid ✅");
+  }else{
+    alert("Invalid Aadhar ❌");
+  }
+}
+
+function validatePAN(){
+  let pan=document.getElementById("pan").value.toUpperCase();
+  if(/[A-Z]{5}[0-9]{4}[A-Z]{1}/.test(pan)){
+    alert("PAN Valid ✅");
+  }else{
+    alert("Invalid PAN ❌");
+  }
+}
+
+function validateBank(){
+  let acc=document.getElementById("account").value;
+  let ifsc=document.getElementById("ifsc").value.toUpperCase();
+  if(acc!=="" && /^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifsc)){
+    alert("Bank Details Valid ✅");
+  }else{
+    alert("Invalid Bank Details ❌");
+  }
+}
+</script>
+
+</body>
+</html>
