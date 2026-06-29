@@ -134,6 +134,16 @@
                                     </span>
                                 </a>
                             </li>
+                            <!-- Profile Icon (shown when logged in) -->
+                            <li id="profileIconItem" style="display:none">
+                                <a href="../../User%20dashboard/user-dashboard.html" class="nav-icon-item link"
+                                    id="profileIconLink" title="My Profile" style="position:relative">
+                                    <img id="profileImg" src="" alt="Profile"
+                                        style="width:32px;height:32px;border-radius:50%;object-fit:cover;display:none;border:2px solid #b01a3a">
+                                    <i id="profileDefaultIcon" class="fas fa-user-circle"
+                                        style="font-size:24px;display:block"></i>
+                                </a>
+                            </li>
                         </ul>
             </div>
 
@@ -898,7 +908,7 @@
                         </nav>
                     </div>
                     <div>
-                        <ul>
+                        <ul id="desktopAuthButtons">
                     <li class="log_but hide">
                         
                          <button class="header_button">
@@ -4396,6 +4406,62 @@ $(document).ready(function () {
 <script src="assets/js/main.js"></script>
 
 
+    <!-- Auth-aware header logic -->
+    <style>
+        #profileIconItem {
+            display: none !important;
+        }
+
+        #profileIconItem.auth-visible {
+            display: list-item !important;
+        }
+
+        #profileImg {
+            display: none;
+        }
+
+        #profileImg.has-photo {
+            display: block !important;
+        }
+
+        #profileDefaultIcon.has-photo {
+            display: none !important;
+        }
+    </style>
+    <script>
+        window.addEventListener('load', function () {
+            var userData = sessionStorage.getItem('user');
+            if (!userData) return;
+
+            try {
+                var user = JSON.parse(userData);
+
+                // Hide Register / Login buttons (desktop + mobile)
+                var desktopAuth = document.getElementById('desktopAuthButtons');
+                var mobileAuth = document.getElementById('mobileAuthButtons');
+                if (desktopAuth) desktopAuth.style.setProperty('display', 'none', 'important');
+                if (mobileAuth) mobileAuth.style.setProperty('display', 'none', 'important');
+
+                // Show profile icon in header using class
+                var profileItem = document.getElementById('profileIconItem');
+                if (profileItem) profileItem.classList.add('auth-visible');
+
+                // If user has a profile image stored (profile_image is just filename)
+                var profileFilename = (user && user.profile_image) || sessionStorage.getItem('profile_image') || '';
+                if (profileFilename) {
+                    // Build full URL the same way user-dashboard.html does
+                    var profilePicUrl = 'http://localhost/krishloom-vastram/backend/uploads/' + profileFilename + '?t=' + Date.now();
+                    var img = document.getElementById('profileImg');
+                    var ico = document.getElementById('profileDefaultIcon');
+                    if (img) {
+                        img.src = profilePicUrl;
+                        img.classList.add('has-photo');
+                    }
+                    if (ico) ico.classList.add('has-photo');
+                }
+            } catch (e) { console.error('Auth check error', e); }
+        });
+    </script>
 </body>
 
 </html>

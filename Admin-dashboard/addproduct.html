@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Add Product – KrishLoom Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --c: #b01a3a;
+            --c2: #8a1230;
+            --g: #c8860a;
+            --g2: #f0c040;
+            --ivory: #fdf8f2;
+            --card: #fff;
+            --border: #e8ddd4;
+            --muted: #7a6e79;
+            --text: #1a0a10;
+            --r: 10px;
+            --sw: 260px;
+            --nh: 58px;
+            --sb-bg: #fff5f0;
+            --sb-border: #f0ddd5;
+            --sb-section: #b5876a;
+            --sb-link: rgba(80, 20, 30, .45);
+            --sb-link-hover: #7a1228;
+            --sb-active-bg: rgba(176, 26, 58, .07);
+            --sb-active-txt: #b01a3a;
+            --sb-active-bar: #b01a3a;
+            --sb-footer: #fdeee8;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 15px;
+            background: var(--ivory);
+            color: var(--text)
+        }
+
+        /* ─── Layout ─── */
+        .layout {
+            display: flex;
+            min-height: 100vh
+        }
+
+        /* ─── PROMO BAR ─── */
+        .promo {
+            background: var(--c);
+            color: #fff;
+            text-align: center;
+            padding: 7px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .6px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 300
+        }
+
+        .promo strong {
+            color: var(--g2)
+        }
+
+        /* ─── TOP NAVBAR ─── */
+        .nav {
+            position: fixed;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: var(--nh);
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 20px 0 0;
+            z-index: 200
+        }
+
+        .nav-brand {
+            width: var(--sw);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 18px;
+            flex-shrink: 0;
+            text-decoration: none;
+            border-right: 1px solid var(--border)
+        }
+
+        .nav-logo-ring {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--c), var(--g));
+            display: grid;
+            place-items: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(176, 26, 58, .25)
+        }
+
+        .nav-wordmark {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--c);
+            letter-spacing: -.1px;
+            line-height: 1
+        }
+
+        .nav-wordmark span {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 10.5px;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            margin-top: 2px
+        }
+
+        .nav-search-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 20px
+        }
+
+        .nav-search {
+            position: relative;
+            max-width: 340px;
+            width: 100%
+        }
+
+        .nav-search input {
+            width: 100%;
+            padding: 8px 14px 8px 36px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 14.5px;
+            background: var(--ivory);
+            outline: none;
+            font-family: inherit;
+            color: var(--text);
+            transition: border .15s
+        }
+
+        .nav-search input:focus {
+            border-color: var(--c);
+            background: #fff
+        }
+
+        .nav-search i {
+            position: absolute;
+            left: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 15px
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto
+        }
+
+        .nav-btn {
+            position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: var(--muted);
+            font-size: 18px;
+            transition: background .15s, color .15s
+        }
+
+        .nav-btn:hover {
+            background: var(--ivory);
+            color: var(--text)
+        }
+
+        .nav-pip {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--c);
+            color: #fff;
+            font-size: 8px;
+            font-weight: 700;
+            display: grid;
+            place-items: center;
+            border: 1.5px solid #fff
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 26px;
+            background: var(--border);
+            margin: 0 6px
+        }
+
+        .nav-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--c), var(--g));
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            display: grid;
+            place-items: center
+        }
+
+        .nav-user-info {
+            margin-left: 4px
+        }
+
+        .aname {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text)
+        }
+
+        .arole {
+            font-size: 11.5px;
+            color: var(--muted)
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            place-items: center;
+            color: var(--text);
+            font-size: 20px;
+            margin-left: 10px
+        }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar {
+            position: fixed;
+            top: calc(30px + var(--nh));
+            left: 0;
+            width: var(--sw);
+            bottom: 0;
+            background: var(--sb-bg);
+            border-right: 1px solid var(--sb-border);
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 100;
+            display: flex;
+            flex-direction: column
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--sb-border);
+            border-radius: 4px
+        }
+
+        .sb-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .35);
+            z-index: 99
+        }
+
+        .sb-overlay.active {
+            display: block
+        }
+
+        .sb-admin {
+            padding: 14px 16px 12px;
+            border-bottom: 1px solid var(--sb-border)
+        }
+
+        .sb-admin-inner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px
+        }
+
+        .sb-admin-av {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--c), var(--g));
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0
+        }
+
+        .sb-admin-name {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text)
+        }
+
+        .sb-admin-role {
+            font-size: 10.5px;
+            color: var(--muted)
+        }
+
+        .sb-admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: .68rem;
+            font-weight: 600;
+            color: var(--c);
+            background: rgba(176, 26, 58, .08);
+            border: 1px solid rgba(176, 26, 58, .14);
+            border-radius: 20px;
+            padding: 3px 10px
+        }
+
+        .sb-admin-badge i {
+            font-size: 12px
+        }
+
+        .sb-section {
+            padding: 14px 18px 5px;
+            font-size: .63rem;
+            font-weight: 700;
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+            color: var(--sb-section)
+        }
+
+        .sb-section::after {
+            content: '';
+            display: block;
+            height: 1px;
+            background: var(--sb-border);
+            margin-top: 6px;
+            margin-left: -2px
+        }
+
+        .sb-nav {
+            list-style: none;
+            padding: 4px 0
+        }
+
+        .sb-item {
+            position: relative
+        }
+
+        .sb-link {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 18px 8px 16px;
+            color: var(--sb-link);
+            font-size: .8rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 0;
+            transition: color .15s, background .15s;
+            cursor: pointer;
+            position: relative
+        }
+
+        .sb-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: var(--sb-active-bar);
+            border-radius: 0 3px 3px 0;
+            transition: height .15s
+        }
+
+        .sb-link:hover {
+            background: rgba(176, 26, 58, .04);
+            color: var(--sb-link-hover)
+        }
+
+        .sb-link.active {
+            background: var(--sb-active-bg);
+            color: var(--sb-active-txt)
+        }
+
+        .sb-link.active::before {
+            height: 22px
+        }
+
+        .sb-link i.icon {
+            font-size: 17px;
+            flex-shrink: 0;
+            opacity: .7;
+            transition: opacity .15s
+        }
+
+        .sb-link:hover i.icon,
+        .sb-link.active i.icon {
+            opacity: 1
+        }
+
+        .sb-link .lbl {
+            flex: 1;
+            white-space: nowrap
+        }
+
+        .chev {
+            font-size: 13px;
+            transition: transform .2s;
+            margin-left: auto
+        }
+
+        .sb-link:hover .chev {
+            color: var(--sb-link-hover)
+        }
+
+        .sb-item.open>.sb-link .chev {
+            transform: rotate(180deg)
+        }
+
+        .sb-badge {
+            background: rgba(176, 26, 58, .1);
+            color: var(--c);
+            font-size: .6rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 20px;
+            line-height: 1.4
+        }
+
+        .sb-badge.green {
+            background: rgba(22, 163, 74, .1);
+            color: #16a34a
+        }
+
+        .sb-badge.amber {
+            background: rgba(200, 134, 10, .1);
+            color: var(--g)
+        }
+
+        .sb-dropdown {
+            display: none;
+            list-style: none;
+            background: rgba(176, 26, 58, .02);
+            border-top: 1px solid var(--sb-border)
+        }
+
+        .sb-item.open>.sb-dropdown {
+            display: block
+        }
+
+        .sb-sub {
+            position: relative
+        }
+
+        .sb-sub-link {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 7px 18px 7px 36px;
+            font-size: .77rem;
+            font-weight: 500;
+            color: var(--sb-link);
+            text-decoration: none;
+            transition: color .15s, background .15s;
+            position: relative;
+            cursor: pointer
+        }
+
+        .sb-sub-link::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+            opacity: .3;
+            transition: opacity .15s
+        }
+
+        .sb-sub-link:hover {
+            color: var(--sb-link-hover);
+            background: rgba(176, 26, 58, .04)
+        }
+
+        .sb-sub-link:hover::before {
+            opacity: .6
+        }
+
+        .sb-sub-link.active {
+            color: var(--sb-active-txt);
+            background: var(--sb-active-bg)
+        }
+
+        .sb-sub-link.active::before {
+            opacity: 1;
+            background: var(--sb-active-bar)
+        }
+
+        .sb-sub-link i {
+            font-size: 14px;
+            opacity: .7
+        }
+
+        .sb-sub-link:hover i,
+        .sb-sub-link.active i {
+            opacity: 1
+        }
+
+        .sb-sub-link .lbl {
+            flex: 1
+        }
+
+        /* ─── MAIN ─── */
+        .main {
+            margin-left: var(--sw);
+            padding-top: calc(30px + var(--nh));
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh
+        }
+
+        .content {
+            padding: 28px 30px;
+            flex: 1
+        }
+
+        /* ─── Page Header ─── */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text)
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: .72rem;
+            color: var(--muted);
+            margin-top: 3px
+        }
+
+        .breadcrumb a {
+            color: var(--c);
+            text-decoration: none
+        }
+
+        .breadcrumb i {
+            font-size: 11px
+        }
+
+        /* ─── Form Card ─── */
+        .form-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+            margin-bottom: 18px
+        }
+
+        .form-card-header {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 9px
+        }
+
+        .form-card-header i {
+            font-size: 18px;
+            color: var(--c)
+        }
+
+        .form-card-header h3 {
+            font-size: .85rem;
+            font-weight: 600;
+            color: var(--text)
+        }
+
+        .form-card-body {
+            padding: 20px
+        }
+
+        /* ─── Grid layouts ─── */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 16px
+        }
+
+        .col-span-2 {
+            grid-column: span 2
+        }
+
+        /* ─── Form Fields ─── */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px
+        }
+
+        .form-label {
+            font-size: .74rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: .2px
+        }
+
+        .form-label .req {
+            color: var(--c);
+            margin-left: 2px
+        }
+
+        .form-control {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            font-size: .8rem;
+            font-family: inherit;
+            color: var(--text);
+            background: var(--ivory);
+            outline: none;
+            transition: border .15s, box-shadow .15s
+        }
+
+        .form-control:focus {
+            border-color: var(--c);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(176, 26, 58, .08)
+        }
+
+        .form-control::placeholder {
+            color: #b8adb5
+        }
+
+        select.form-control {
+            cursor: pointer
+        }
+
+        .form-hint {
+            font-size: .68rem;
+            color: var(--muted)
+        }
+
+        /* ─── Toggle ─── */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .toggle {
+            position: relative;
+            width: 40px;
+            height: 22px;
+            flex-shrink: 0
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: #d5cdd2;
+            border-radius: 22px;
+            transition: .2s
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: .2s;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .18)
+        }
+
+        .toggle input:checked+.toggle-slider {
+            background: var(--c)
+        }
+
+        .toggle input:checked+.toggle-slider::before {
+            transform: translateX(18px)
+        }
+
+        .toggle-label {
+            font-size: .8rem;
+            font-weight: 500;
+            color: var(--text)
+        }
+
+        /* ─── Image Upload ─── */
+        .upload-zone {
+            border: 2px dashed var(--border);
+            border-radius: 9px;
+            padding: 24px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: border .15s, background .15s;
+            background: var(--ivory);
+            position: relative
+        }
+
+        .upload-zone:hover {
+            border-color: var(--c);
+            background: rgba(176, 26, 58, .03)
+        }
+
+        .upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%
+        }
+
+        .upload-zone i {
+            font-size: 28px;
+            color: var(--muted);
+            margin-bottom: 6px
+        }
+
+        .upload-zone p {
+            font-size: .75rem;
+            color: var(--muted);
+            margin-bottom: 2px
+        }
+
+        .upload-zone span {
+            font-size: .67rem;
+            color: #b8adb5
+        }
+
+        .upload-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px
+        }
+
+        .upload-thumb {
+            width: 68px;
+            height: 68px;
+            border-radius: 7px;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border)
+        }
+
+        .upload-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .upload-thumb .remove-thumb {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 18px;
+            height: 18px;
+            background: var(--c);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: none;
+            place-items: center;
+            color: #fff;
+            font-size: 10px
+        }
+
+        .upload-thumb:hover .remove-thumb {
+            display: grid
+        }
+
+        /* ─── Rich Text Editor ─── */
+        .editor-wrap {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff
+        }
+
+        .editor-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            background: var(--ivory)
+        }
+
+        .editor-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            border-radius: 5px;
+            display: grid;
+            place-items: center;
+            color: var(--muted);
+            font-size: 14px;
+            transition: background .12s, color .12s;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600
+        }
+
+        .editor-btn:hover {
+            background: rgba(176, 26, 58, .08);
+            color: var(--c)
+        }
+
+        .editor-btn.active {
+            background: rgba(176, 26, 58, .1);
+            color: var(--c)
+        }
+
+        .editor-sep {
+            width: 1px;
+            height: 22px;
+            background: var(--border);
+            margin: 0 4px;
+            align-self: center
+        }
+
+        .editor-body {
+            min-height: 160px;
+            padding: 12px 14px;
+            font-size: .82rem;
+            line-height: 1.6;
+            outline: none;
+            color: var(--text)
+        }
+
+        .editor-body:focus {
+            background: #fff
+        }
+
+        .editor-body[data-placeholder]:empty::before {
+            content: attr(data-placeholder);
+            color: #b8adb5;
+            pointer-events: none
+        }
+
+        /* ─── Two-column rich editor section ─── */
+        .editor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px
+        }
+
+        /* ─── Price section highlight ─── */
+        .price-derived {
+            background: rgba(200, 134, 10, .05);
+            border: 1px solid rgba(200, 134, 10, .2);
+            border-radius: 8px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .price-derived i {
+            font-size: 18px;
+            color: var(--g)
+        }
+
+        .price-derived p {
+            font-size: .74rem;
+            color: #7a6310
+        }
+
+        .price-derived p strong {
+            color: var(--g);
+            font-weight: 700
+        }
+
+        /* ─── Chips (size / color) ─── */
+        .chip-input-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: var(--ivory);
+            min-height: 40px;
+            align-items: center;
+            cursor: text;
+            transition: border .15s, box-shadow .15s
+        }
+
+        .chip-input-wrap:focus-within {
+            border-color: var(--c);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(176, 26, 58, .08)
+        }
+
+        .chip {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(176, 26, 58, .09);
+            color: var(--c);
+            border-radius: 20px;
+            padding: 3px 9px 3px 10px;
+            font-size: .72rem;
+            font-weight: 600
+        }
+
+        .chip button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--c);
+            font-size: 13px;
+            line-height: 1;
+            padding: 0;
+            display: flex
+        }
+
+        .chip-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: .8rem;
+            color: var(--text);
+            min-width: 80px
+        }
+
+        /* ─── Save / Reset Buttons ─── */
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 18px 20px;
+            border-top: 1px solid var(--border);
+            background: var(--ivory)
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 22px;
+            border-radius: 8px;
+            font-size: .8rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            transition: background .15s, box-shadow .15s, transform .1s
+        }
+
+        .btn:active {
+            transform: scale(.98)
+        }
+
+        .btn-primary {
+            background: var(--c);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(176, 26, 58, .25)
+        }
+
+        .btn-primary:hover {
+            background: var(--c2);
+            box-shadow: 0 4px 16px rgba(176, 26, 58, .35)
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border)
+        }
+
+        .btn-ghost:hover {
+            background: var(--border);
+            color: var(--text)
+        }
+
+        .btn i {
+            font-size: 16px
+        }
+
+        /* ─── Snackbar ─── */
+  #globalSnackbar {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    padding: 14px 22px;
+    border-radius: 8px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    opacity: 0;
+    transition: all .3s ease;
+    z-index: 9999;
+}
+
+#globalSnackbar.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+#globalSnackbar.success {
+    background: #22c55e; /* Green */
+}
+
+#globalSnackbar.error {
+    background: #dc2626; /* Red */
+}
+
+#globalSnackbar i {
+    font-size: 20px;
+}
+
+        /* ─── Responsive ─── */
+        @media(max-width:1100px) {
+            .grid-4 {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .editor-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                transform: translateX(-100%)
+            }
+
+            .sidebar.open {
+                transform: translateX(0)
+            }
+
+            .sb-overlay {
+                display: block
+            }
+
+            .main {
+                margin-left: 0
+            }
+
+            .hamburger {
+                display: grid
+            }
+
+            .nav-brand {
+                border-right: none;
+                width: auto
+            }
+
+            .nav-user-info {
+                display: none
+            }
+        }
+
+        @media(max-width:700px) {
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr
+            }
+
+            .col-span-2 {
+                grid-column: span 1
+            }
+
+            .content {
+                padding: 18px 14px
+            }
+        }
+
+        @media(max-width:500px) {
+            .grid-4 {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PROMO BAR -->
+    <div class="promo">✦ <strong>20% Off</strong> — Auto Applied at Checkout &nbsp;·&nbsp; Limited Time Only ✦</div>
+
+    <!-- TOP NAVBAR -->
+    <nav class="nav">
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu"><i class="ti ti-menu-2"></i></button>
+        <a class="nav-brand" href="index.html">
+            <div class="nav-logo-ring">KL</div>
+            <div class="nav-wordmark">KrishLoom<span>Admin Panel</span></div>
+        </a>
+        <div class="nav-search-wrap">
+            <div class="nav-search">
+                <i class="ti ti-search"></i>
+                <input type="text" placeholder="Search orders, products, users…" />
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn" aria-label="Notifications"><i class="ti ti-bell"></i><span
+                    class="nav-pip">7</span></button>
+            <button class="nav-btn" aria-label="Settings"><i class="ti ti-settings"></i></button>
+            <div class="nav-divider"></div>
+            <div class="nav-avatar">AD</div>
+            <div class="nav-user-info">
+                <div class="aname">Admin User</div>
+                <div class="arole">Super Admin</div>
+            </div>
+            <button class="nav-btn" aria-label="More"><i class="ti ti-chevron-down"></i></button>
+        </div>
+    </nav>
+
+    <!-- OVERLAY -->
+    <div class="sb-overlay" id="overlay"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sb-admin">
+            <div class="sb-admin-inner">
+                <div class="sb-admin-av">AD</div>
+                <div>
+                    <div class="sb-admin-name">Admin User</div>
+                    <div class="sb-admin-role">admin@krishloom.com</div>
+                </div>
+            </div>
+            <div class="sb-admin-badge"><i class="ti ti-shield-check"></i> Super Admin</div>
+        </div>
+
+        <div class="sb-section">Main</div>
+        <ul class="sb-nav">
+            <li class="sb-item"><a class="sb-link" onclick="setActive(this)" href="index.html"><i
+                        class="ti ti-layout-dashboard icon"></i><span class="lbl">Dashboard</span></a></li>
+            <li class="sb-item"><a class="sb-link" onclick="setActive(this)" href="#"><i
+                        class="ti ti-shield-lock icon"></i><span class="lbl">Role &amp; Rights</span><span
+                        class="sb-badge">4</span></a></li>
+        </ul>
+
+        <div class="sb-section">Affiliate</div>
+        <ul class="sb-nav">
+            <li class="sb-item" id="aff">
+                <a class="sb-link" onclick="toggle('aff',this)" href="#"><i class="ti ti-users icon"></i><span
+                        class="lbl">Affiliate</span><i class="ti ti-chevron-down chev"></i></a>
+                <ul class="sb-dropdown">
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-list"></i><span class="lbl">All Affiliate</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-circle-check"></i><span class="lbl">Active</span><span
+                                class="sb-badge green" style="font-size:.54rem">12</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-circle-x"></i><span class="lbl">Inactive</span><span class="sb-badge"
+                                style="font-size:.54rem">3</span></a></li>
+                </ul>
+            </li>
+            <li class="sb-item" id="kyc">
+                <a class="sb-link" onclick="toggle('kyc',this)" href="#"><i class="ti ti-id-badge icon"></i><span
+                        class="lbl">Affiliate KYC</span><i class="ti ti-chevron-down chev"></i></a>
+                <ul class="sb-dropdown">
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-clock"></i><span class="lbl">Pending Requests</span><span
+                                class="sb-badge amber" style="font-size:.54rem">8</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-circle-check"></i><span class="lbl">Accepted Requests</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-circle-x"></i><span class="lbl">Rejected Requests</span></a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="sb-section">Content</div>
+        <ul class="sb-nav">
+            <li class="sb-item" id="review">
+                <a class="sb-link" onclick="toggle('review',this)" href="#"><i class="ti ti-star icon"></i><span
+                        class="lbl">Review</span><span class="sb-badge amber">5</span><i
+                        class="ti ti-chevron-down chev"></i></a>
+                <ul class="sb-dropdown">
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-list"></i><span class="lbl">All Reviews</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-clock"></i><span class="lbl">Pending Reviews</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-check"></i><span class="lbl">Accepted Reviews</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-x"></i><span class="lbl">Rejected Reviews</span></a></li>
+                </ul>
+            </li>
+            <li class="sb-item"><a class="sb-link" onclick="setActive(this)" href="#"><i
+                        class="ti ti-users-group icon"></i><span class="lbl">All Users</span></a></li>
+            <li class="sb-item" id="slider">
+                <a class="sb-link" onclick="toggle('slider',this)" href="#"><i class="ti ti-slideshow icon"></i><span
+                        class="lbl">Slider</span><i class="ti ti-chevron-down chev"></i></a>
+                <ul class="sb-dropdown">
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-plus"></i><span class="lbl">Slider</span></a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="sb-section">Master</div>
+        <ul class="sb-nav">
+            <li class="sb-item" id="master">
+                <a class="sb-link" onclick="toggle('master',this)" href="#"><i
+                        class="ti ti-adjustments-horizontal icon"></i><span class="lbl">Master</span><i
+                        class="ti ti-chevron-down chev"></i></a>
+                <ul class="sb-dropdown">
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-separator-horizontal"></i><span class="lbl">Top Scroll</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-tag"></i><span class="lbl">Type</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-category"></i><span class="lbl">Category</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-building-factory"></i><span class="lbl">Manufacturer</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-truck-delivery"></i><span class="lbl">Delivery Charge</span></a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="sb-section">Store</div>
+        <ul class="sb-nav">
+            <li class="sb-item open" id="products">
+                <a class="sb-link active" onclick="toggle('products',this)" href="#"><i
+                        class="ti ti-package icon"></i><span class="lbl">Products</span><i
+                        class="ti ti-chevron-down chev"></i></a>
+                <ul class="sb-dropdown">
+                    <li class="sb-sub"><a class="sb-sub-link active" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-circle-plus"></i><span class="lbl">Add Product</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-table"></i><span class="lbl">Manage Products</span></a></li>
+                </ul>
+            </li>
+            <li class="sb-item" id="orders">
+                <a class="sb-link" onclick="toggle('orders',this)" href="#"><i class="ti ti-receipt icon"></i><span
+                        class="lbl">Orders</span><span class="sb-badge">24</span><i
+                        class="ti ti-chevron-down chev"></i></a>
+                <ul class="sb-dropdown">
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-list"></i><span class="lbl">All Orders</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-clock"></i><span class="lbl">Pending</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-truck"></i><span class="lbl">Dispatched</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-circle-check"></i><span class="lbl">Delivered</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                                class="ti ti-circle-x"></i><span class="lbl">Cancelled</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- ══════ MAIN CONTENT ══════ -->
+    <div class="main">
+        <div class="content">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div>
+                    <div class="page-title">Add Product</div>
+                    <div class="breadcrumb">
+                        <a href="index.html">Dashboard</a>
+                        <i class="ti ti-chevron-right"></i>
+                        <span>Store</span>
+                        <i class="ti ti-chevron-right"></i>
+                        <span>Add Product</span>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-ghost"><i class="ti ti-package"></i> Manage Products</a>
+            </div>
+
+            <!-- ── SECTION 1: Basic Info ── -->
+            <div class="form-card">
+                <div class="form-card-header">
+                    <i class="ti ti-info-circle"></i>
+                    <h3>Basic Information</h3>
+                </div>
+                <div class="form-card-body">
+                    <div class="grid-3" style="gap:16px;margin-bottom:16px">
+                        <div class="form-group">
+                            <label class="form-label">Product Code <span class="req">*</span></label>
+                            <input type="text" class="form-control" placeholder="e.g. KL-SAR-001" id="productCode" />
+                            <span class="form-hint">Unique identifier for this product</span>
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label class="form-label">Product Title <span class="req">*</span></label>
+                            <input type="text" class="form-control"
+                                placeholder="e.g. Kanjivaram Silk Saree – Deep Crimson" id="productTitle" />
+                        </div>
+                    </div>
+                    <div class="grid-3" style="gap:16px;margin-bottom:16px">
+                        <div class="form-group">
+                            <label class="form-label">Select Type <span class="req">*</span></label>
+                            <select class="form-control" id="productType">
+                                <option value="" disabled selected>— Choose Type —</option>
+                                <option>Saree</option>
+                                <option>Dress Material</option>
+                                <option>Kurti</option>
+                                <option>Lehenga</option>
+                                <option>Dupatta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Select Category <span class="req">*</span></label>
+                            <select class="form-control" id="productCategory">
+                                <option value="" disabled selected>— Choose Category —</option>
+                                <option>Silk</option>
+                                <option>Cotton</option>
+                                <option>Linen</option>
+                                <option>Synthetic</option>
+                                <option>Blended</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Manufacturer</label>
+                            <select class="form-control" id="manufacturer">
+                                <option value="" disabled selected>— Choose Manufacturer —</option>
+                                <option>KrishLoom Weavers</option>
+                                <option>Banarasi Arts</option>
+                                <option>Kanchi Silk House</option>
+                                <option>Mysore Silk Factory</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid-2" style="gap:16px">
+                        <div class="form-group">
+                            <label class="form-label">HSN Code <span class="req">*</span></label>
+                            <input type="text" class="form-control" placeholder="e.g. 5007" id="hsnCode" />
+                            <span class="form-hint">Harmonised System of Nomenclature code</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="display:flex;align-items:center;gap:8px">
+                                Active Status
+                            </label>
+                            <div class="toggle-row" style="margin-top:6px">
+                                <label class="toggle">
+                                    <input type="checkbox" id="activeToggle" checked />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="toggle-label" id="toggleLabel">Product is Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 2: Pricing ── -->
+            <div class="form-card">
+                <div class="form-card-header">
+                    <i class="ti ti-currency-rupee"></i>
+                    <h3>Pricing &amp; Tax</h3>
+                </div>
+                <div class="form-card-body">
+                    <div class="grid-4" style="gap:16px;margin-bottom:16px">
+                        <div class="form-group">
+                            <label class="form-label">MRP (₹) <span class="req">*</span></label>
+                            <input type="number" class="form-control" placeholder="0.00" id="mrp"
+                                oninput="calcPricing()" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Selling Price (₹) <span class="req">*</span></label>
+                            <input type="number" class="form-control" placeholder="0.00" id="price"
+                                oninput="calcPricing()" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">GST % <span class="req">*</span></label>
+                            <select class="form-control" id="gstPercent" onchange="calcPricing()">
+                                <option value="" disabled selected>— GST Rate —</option>
+                                <option value="0">0%</option>
+                                <option value="5">5%</option>
+                                <option value="12">12%</option>
+                                <option value="18">18%</option>
+                                <option value="28">28%</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="color:var(--g)">GST Amount (₹)</label>
+                            <input type="text" class="form-control" id="gstAmount" placeholder="Auto-calculated"
+                                readonly
+                                style="background:#fffbf0;border-color:rgba(200,134,10,.3);color:var(--g);font-weight:600" />
+                        </div>
+                    </div>
+                    <div class="grid-4" style="gap:16px;margin-bottom:16px">
+                        <div class="form-group">
+                            <label class="form-label" style="color:var(--g)">Basic Price (₹)</label>
+                            <input type="text" class="form-control" id="basicPrice" placeholder="Auto-calculated"
+                                readonly
+                                style="background:#fffbf0;border-color:rgba(200,134,10,.3);color:var(--g);font-weight:600" />
+                        </div>
+                    </div>
+                    <div class="price-derived">
+                        <i class="ti ti-calculator"></i>
+                        <p>Basic Price and GST Amount are auto-calculated from <strong>Selling Price ÷ (1 +
+                                GST%)</strong>. Update Selling Price or GST% to recalculate.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 3: Variants ── -->
+            <div class="form-card">
+                <div class="form-card-header">
+                    <i class="ti ti-palette"></i>
+                    <h3>Variants</h3>
+                </div>
+                <div class="form-card-body">
+                    <div class="grid-2" style="gap:16px">
+                        <div class="form-group">
+                            <label class="form-label">Size</label>
+                            <div class="chip-input-wrap" id="sizeWrap" onclick="focusSizeInput()">
+                                <!-- chips appended here -->
+                                <input class="chip-input" id="sizeInput" placeholder="Type size, press Enter…" />
+                            </div>
+                            <span class="form-hint">e.g. S, M, L, XL, Free Size, 5.5m</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Color</label>
+                            <div class="chip-input-wrap" id="colorWrap" onclick="focusColorInput()">
+                                <input class="chip-input" id="colorInput" placeholder="Type color, press Enter…" />
+                            </div>
+                            <span class="form-hint">e.g. Crimson, Ivory, Navy, Emerald</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 4: Images ── -->
+            <div class="form-card">
+                <div class="form-card-header">
+                    <i class="ti ti-photo"></i>
+                    <h3>Product Images</h3>
+                </div>
+                <div class="form-card-body">
+                    <div class="grid-2" style="gap:20px">
+                        <div class="form-group">
+                            <label class="form-label">Main Product Image <span class="req">*</span></label>
+                            <div class="upload-zone" id="mainImgZone">
+                                <input type="file" accept="image/*" id="mainImgInput" onchange="previewMain(event)" />
+                                <i class="ti ti-cloud-upload"></i>
+                                <p>Click or drag to upload</p>
+                                <span>PNG, JPG, WEBP · Max 2MB</span>
+                            </div>
+                            <div class="upload-preview" id="mainPreview"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Gallery Images</label>
+                            <div class="upload-zone" id="galleryZone">
+                                <input type="file" accept="image/*" multiple id="galleryInput"
+                                    onchange="previewGallery(event)" />
+                                <i class="ti ti-photo-plus"></i>
+                                <p>Click or drag to upload multiple</p>
+                                <span>PNG, JPG, WEBP · Max 5 images · 2MB each</span>
+                            </div>
+                            <div class="upload-preview" id="galleryPreview"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 5: Features & Description ── -->
+            <div class="form-card">
+                <div class="form-card-header">
+                    <i class="ti ti-file-text"></i>
+                    <h3>Product Content</h3>
+                </div>
+                <div class="form-card-body">
+                    <div class="editor-grid">
+
+                        <!-- Features -->
+                        <div class="form-group">
+                            <label class="form-label">Product Features</label>
+                            <div class="editor-wrap">
+                                <div class="editor-toolbar">
+                                    <button class="editor-btn" title="Bold"
+                                        onclick="fmt('bold')"><strong>B</strong></button>
+                                    <button class="editor-btn" title="Italic"
+                                        onclick="fmt('italic')"><em>I</em></button>
+                                    <button class="editor-btn" title="Underline" onclick="fmt('underline')"><span
+                                            style="text-decoration:underline">U</span></button>
+                                    <div class="editor-sep"></div>
+                                    <button class="editor-btn" title="Strikethrough"
+                                        onclick="fmt('strikeThrough')"><s>S</s></button>
+                                    <div class="editor-sep"></div>
+                                    <button class="editor-btn" title="Unordered List"
+                                        onclick="fmt('insertUnorderedList')"><i class="ti ti-list"></i></button>
+                                    <button class="editor-btn" title="Ordered List"
+                                        onclick="fmt('insertOrderedList')"><i class="ti ti-list-numbers"></i></button>
+                                    <div class="editor-sep"></div>
+                                    <button class="editor-btn" title="Align Left" onclick="fmt('justifyLeft')"><i
+                                            class="ti ti-align-left"></i></button>
+                                    <button class="editor-btn" title="Align Center" onclick="fmt('justifyCenter')"><i
+                                            class="ti ti-align-center"></i></button>
+                                    <button class="editor-btn" title="Align Right" onclick="fmt('justifyRight')"><i
+                                            class="ti ti-align-right"></i></button>
+                                    <div class="editor-sep"></div>
+                                    <button class="editor-btn" title="Insert Link" onclick="insertLink('feat')"><i
+                                            class="ti ti-link"></i></button>
+                                    <button class="editor-btn" title="Remove Formatting"
+                                        onclick="fmt('removeFormat')"><i class="ti ti-eraser"></i></button>
+                                </div>
+                                <div class="editor-body" id="featEditor" contenteditable="true"
+                                    data-placeholder="• Fabric: Pure Kanjivaram Silk&#10;• Blouse Piece: Included&#10;• Wash Care: Dry Clean Only">
+                                </div>
+                            </div>
+                            <span class="form-hint" style="margin-top:6px">Highlight key specs, fabric details, care
+                                instructions</span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label class="form-label">Product Description</label>
+                            <div class="editor-wrap">
+                                <div class="editor-toolbar">
+                                    <button class="editor-btn" title="Bold"
+                                        onclick="fmt2('bold')"><strong>B</strong></button>
+                                    <button class="editor-btn" title="Italic"
+                                        onclick="fmt2('italic')"><em>I</em></button>
+                                    <button class="editor-btn" title="Underline" onclick="fmt2('underline')"><span
+                                            style="text-decoration:underline">U</span></button>
+                                    <div class="editor-sep"></div>
+                                    <button class="editor-btn" title="Strikethrough"
+                                        onclick="fmt2('strikeThrough')"><s>S</s></button>
+                                    <div class="editor-sep"></div>
+                                    <button class="editor-btn" title="Unordered List"
+                                        onclick="fmt2('insertUnorderedList')"><i class="ti ti-list"></i></button>
+                                    <button class="editor-btn" title="Ordered List"
+                                        onclick="fmt2('insertOrderedList')"><i class="ti ti-list-numbers"></i></button>
+                                    <div class="editor-sep"></div>
+                                    <button class="editor-btn" title="Align Left" onclick="fmt2('justifyLeft')"><i
+                                            class="ti ti-align-left"></i></button>
+                                    <button class="editor-btn" title="Align Center" onclick="fmt2('justifyCenter')"><i
+                                            class="ti ti-align-center"></i></button>
+                                    <button class="editor-btn" title="Align Right" onclick="fmt2('justifyRight')"><i
+                                            class="ti ti-align-right"></i></button>
+                                    <div class="editor-sep"></div>
+                                    <button class="editor-btn" title="Insert Link" onclick="insertLink('desc')"><i
+                                            class="ti ti-link"></i></button>
+                                    <button class="editor-btn" title="Remove Formatting"
+                                        onclick="fmt2('removeFormat')"><i class="ti ti-eraser"></i></button>
+                                </div>
+                                <div class="editor-body" id="descEditor" contenteditable="true"
+                                    data-placeholder="Write a detailed product description here…"></div>
+                            </div>
+                            <span class="form-hint" style="margin-top:6px">Tell the story of this product — occasion,
+                                heritage, craftsmanship</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Save / Reset -->
+                <div class="form-actions">
+                    <button class="btn btn-ghost" onclick="resetForm()"><i class="ti ti-rotate"></i> Reset</button>
+                    <button class="btn btn-primary" onclick="saveProduct()"><i class="ti ti-device-floppy"></i> Save
+                        Product</button>
+                </div>
+            </div>
+
+        </div><!-- /content -->
+    </div><!-- /main -->
+
+    <!-- Snackbar -->
+    <div id="globalSnackbar"></div>
+
+    <script>
+        /* ─── Sidebar ─── */
+        function toggle(id, link) {
+            const item = document.getElementById(id);
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.sb-item.open').forEach(el => { if (el.id !== id) el.classList.remove('open'); });
+            item.classList.toggle('open', !isOpen);
+            return false;
+        }
+        function setActive(el) {
+            document.querySelectorAll('.sb-link.active').forEach(a => a.classList.remove('active'));
+            el.classList.add('active');
+            if (window.innerWidth <= 900) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); }
+            return false;
+        }
+        function setSubActive(el) {
+            document.querySelectorAll('.sb-sub-link.active').forEach(a => a.classList.remove('active'));
+            el.classList.add('active');
+            if (window.innerWidth <= 900) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); }
+            return false;
+        }
+        const ham = document.getElementById('hamburger');
+        const ov = document.getElementById('overlay');
+        const sb = document.getElementById('sidebar');
+        ham.addEventListener('click', () => { const o = sb.classList.toggle('open'); ov.classList.toggle('active', o); });
+        ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('active'); });
+        function checkMob() { ham.style.display = window.innerWidth <= 900 ? 'grid' : 'none'; }
+        window.addEventListener('resize', checkMob); checkMob();
+
+        /* ─── Active Toggle Label ─── */
+        document.getElementById('activeToggle').addEventListener('change', function () {
+            document.getElementById('toggleLabel').textContent = this.checked ? 'Product is Active' : 'Product is Inactive';
+        });
+
+        /* ─── Pricing Calculator ─── */
+        function calcPricing() {
+            const price = parseFloat(document.getElementById('price').value) || 0;
+            const gst = parseFloat(document.getElementById('gstPercent').value) || 0;
+            if (price > 0 && gst >= 0) {
+                const basic = price / (1 + gst / 100);
+                const gstAmt = price - basic;
+                document.getElementById('basicPrice').value = basic.toFixed(2);
+                document.getElementById('gstAmount').value = gstAmt.toFixed(2);
+            } else {
+                document.getElementById('basicPrice').value = '';
+                document.getElementById('gstAmount').value = '';
+            }
+        }
+
+        /* ─── Chip inputs (Size & Color) ─── */
+        function makeChipInput(inputId, wrapId) {
+            const input = document.getElementById(inputId);
+            const wrap = document.getElementById(wrapId);
+            input.addEventListener('keydown', function (e) {
+                if ((e.key === 'Enter' || e.key === ',') && this.value.trim()) {
+                    e.preventDefault();
+                    addChip(this.value.trim(), wrap, input);
+                    this.value = '';
+                } else if (e.key === 'Backspace' && !this.value) {
+                    const chips = wrap.querySelectorAll('.chip');
+                    if (chips.length) chips[chips.length - 1].remove();
+                }
+            });
+        }
+        function addChip(val, wrap, input) {
+            const chip = document.createElement('div');
+            chip.className = 'chip';
+            chip.innerHTML = `${val}<button type="button" onclick="this.parentElement.remove()" title="Remove">×</button>`;
+            wrap.insertBefore(chip, input);
+        }
+        function focusSizeInput() { document.getElementById('sizeInput').focus(); }
+        function focusColorInput() { document.getElementById('colorInput').focus(); }
+        makeChipInput('sizeInput', 'sizeWrap');
+        makeChipInput('colorInput', 'colorWrap');
+
+        /* ─── Image Previews ─── */
+        function previewMain(e) {
+            const file = e.target.files[0]; if (!file) return;
+            const preview = document.getElementById('mainPreview');
+            preview.innerHTML = '';
+            const thumb = document.createElement('div'); thumb.className = 'upload-thumb';
+            const img = document.createElement('img'); img.src = URL.createObjectURL(file);
+            const btn = document.createElement('button'); btn.className = 'remove-thumb'; btn.innerHTML = '×'; btn.onclick = () => { thumb.remove(); document.getElementById('mainImgInput').value = ''; };
+            thumb.appendChild(img); thumb.appendChild(btn); preview.appendChild(thumb);
+        }
+        function previewGallery(e) {
+            const files = Array.from(e.target.files).slice(0, 5);
+            const preview = document.getElementById('galleryPreview');
+            preview.innerHTML = '';
+            files.forEach(file => {
+                const thumb = document.createElement('div'); thumb.className = 'upload-thumb';
+                const img = document.createElement('img'); img.src = URL.createObjectURL(file);
+                const btn = document.createElement('button'); btn.className = 'remove-thumb'; btn.innerHTML = '×'; btn.onclick = () => thumb.remove();
+                thumb.appendChild(img); thumb.appendChild(btn); preview.appendChild(thumb);
+            });
+        }
+
+        /* ─── Rich Text Editors ─── */
+        let lastFocused = null;
+        document.getElementById('featEditor').addEventListener('focus', () => lastFocused = 'feat');
+        document.getElementById('descEditor').addEventListener('focus', () => lastFocused = 'desc');
+
+        function getEditor(id) { return document.getElementById(id === 'feat' ? 'featEditor' : 'descEditor'); }
+        function fmt(cmd) { document.getElementById('featEditor').focus(); document.execCommand(cmd, false, null); }
+        function fmt2(cmd) { document.getElementById('descEditor').focus(); document.execCommand(cmd, false, null); }
+
+        function insertLink(editorId) {
+            const editor = getEditor(editorId);
+            editor.focus();
+            const url = prompt('Enter URL:', 'https://');
+            if (url) document.execCommand('createLink', false, url);
+        }
+
+        async function saveProduct() {
+            const required = [
+                { id: 'productCode', label: 'Product Code' },
+                { id: 'productTitle', label: 'Product Title' },
+                { id: 'productType', label: 'Select Type' },
+                { id: 'productCategory', label: 'Select Category' },
+                { id: 'hsnCode', label: 'HSN Code' },
+                { id: 'mrp', label: 'MRP' },
+                { id: 'price', label: 'Selling Price' },
+                { id: 'gstPercent', label: 'GST %' }
+            ];
+
+            for (const f of required) {
+                const el = document.getElementById(f.id);
+                if (!el || !el.value.trim()) {
+                    if (el) el.focus();
+                    showSnack(`${f.label} is required`, 'error');
+                    return;
+                }
+            }
+
+            // Get sizes from chips
+            const sizes = [...document.querySelectorAll('#sizeWrap .chip')]
+                .map(chip => chip.childNodes[0].textContent.trim())
+                .join(',');
+
+            // Get colors from chips
+            const colors = [...document.querySelectorAll('#colorWrap .chip')]
+                .map(chip => chip.childNodes[0].textContent.trim())
+                .join(',');
+
+            const mainFile = document.getElementById('mainImgInput').files[0];
+            const galleryInput = document.getElementById('galleryInput');
+            const galleryFiles = [...(galleryInput.files || [])];
+
+            const formData = new FormData();
+            formData.append('product_code', document.getElementById('productCode').value.trim());
+            formData.append('product_title', document.getElementById('productTitle').value.trim());
+            formData.append('product_type', document.getElementById('productType').value.trim());
+            formData.append('product_category', document.getElementById('productCategory').value.trim());
+            formData.append('manufacturer', document.getElementById('manufacturer').value.trim());
+            formData.append('hsn_code', document.getElementById('hsnCode').value.trim());
+            formData.append('mrp', parseFloat(document.getElementById('mrp').value) || 0);
+            formData.append('selling_price', parseFloat(document.getElementById('price').value) || 0);
+            formData.append('basic_price', parseFloat(document.getElementById('basicPrice').value) || 0);
+            formData.append('gst_percent', parseFloat(document.getElementById('gstPercent').value) || 0);
+            formData.append('gst_amount', parseFloat(document.getElementById('gstAmount').value) || 0);
+            formData.append('sizes', sizes);
+            formData.append('colors', colors);
+            formData.append('features', document.getElementById('featEditor').innerHTML);
+            formData.append('description', document.getElementById('descEditor').innerHTML);
+            formData.append('status', document.getElementById('activeToggle').checked ? 'Active' : 'Inactive');
+            formData.append('gallery_images', JSON.stringify(galleryFiles.map(file => file.name)));
+
+            if (mainFile) {
+                formData.append('main_image', mainFile);
+            }
+
+            galleryFiles.forEach((file, index) => {
+                formData.append('gallery_images[]', file);
+            });
+
+            try {
+                const response = await fetch(
+                    'http://localhost/krishloom-vastram/backend/routes/productApi.php?route=addProduct',
+                    {
+                        method: 'POST',
+                        body: formData
+                    }
+                );
+
+                const text = await response.text();
+                let result;
+
+                try {
+                    result = JSON.parse(text);
+                    console.log(result);
+                } catch (e) {
+                    console.error("Invalid JSON:", text);
+                    showSnack('Unexpected server response', 'error');
+                    return;
+                }
+
+                if (result.status) {
+                    showSnack("Product added successfully", "success");
+                } else {
+                    showSnack(result.message || "Failed to add product", "error");
+                }
+            } catch (error) {
+                console.error('saveProduct error:', error);
+                showSnack('Server error. Check console for details.', 'error');
+            }
+        }
+
+        function resetForm() {
+            if (!confirm('Reset all fields? This cannot be undone.')) return;
+            document.querySelectorAll('.form-control').forEach(el => el.value = '');
+            document.getElementById('activeToggle').checked = true;
+            document.getElementById('toggleLabel').textContent = 'Product is Active';
+            document.getElementById('featEditor').innerHTML = '';
+            document.getElementById('descEditor').innerHTML = '';
+            document.getElementById('mainPreview').innerHTML = '';
+            document.getElementById('galleryPreview').innerHTML = '';
+            document.querySelectorAll('.chip').forEach(c => c.remove());
+            document.getElementById('basicPrice').value = '';
+            document.getElementById('gstAmount').value = '';
+            showSnack('Form has been reset', 'success');
+        }
+
+     function showSnack(msg, type = "success") {
+    const s = document.getElementById("globalSnackbar");
+
+    if (type === "success") {
+        s.innerHTML = `<i class="ti ti-circle-check-filled"></i> ${msg}`;
+    } else {
+        s.innerHTML = `<i class="ti ti-circle-x-filled"></i> ${msg}`;
+    }
+
+    s.className = type + " show";
+
+    setTimeout(() => {
+        s.classList.remove("show");
+    }, 3000);
+}
+    </script>
+
+</body>
+
+</html>

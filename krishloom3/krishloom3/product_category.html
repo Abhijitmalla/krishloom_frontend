@@ -133,6 +133,16 @@
                                     </span>
                                 </a>
                             </li>
+                            <!-- Profile Icon (shown when logged in) -->
+                            <li id="profileIconItem" style="display:none">
+                                <a href="../../User%20dashboard/user-dashboard.html" class="nav-icon-item link"
+                                    id="profileIconLink" title="My Profile" style="position:relative">
+                                    <img id="profileImg" src="" alt="Profile"
+                                        style="width:32px;height:32px;border-radius:50%;object-fit:cover;display:none;border:2px solid #b01a3a">
+                                    <i id="profileDefaultIcon" class="fas fa-user-circle"
+                                        style="font-size:24px;display:block"></i>
+                                </a>
+                            </li>
                         </ul>
             </div>
 
@@ -897,7 +907,7 @@
                         </nav>
                     </div>
                     <div>
-                        <ul>
+                        <ul id="desktopAuthButtons">
                     <li class="log_but hide">
                         
                          <button class="header_button">
@@ -4951,6 +4961,41 @@
             </div>
         </section>
         <!-- /Gallery -->
+        <!-- Sarees Under 2999 -->
+        <section class="flat-spacing pt-0">
+            <div class="container">
+                <div class="sect-heading type-2 text-center wow fadeInUp">
+                    <h3 class="s-title">
+                       SAREES UNDER 2999
+                    </h3>
+                </div>
+                <div dir="ltr" class="swiper tf-swiper wrap-sw-over" id="swiper-under-2999-container" data-preview="4" data-tablet="3" data-mobile-sm="2"
+                    data-mobile="2" data-space-lg="30" data-space-md="20" data-space="10" data-pagination="2"
+                    data-pagination-sm="2" data-pagination-md="3" data-pagination-lg="4">
+                    <div class="swiper-wrapper" id="sarees-under-2999-wrapper">
+                    </div>
+                    <div class="sw-dot-default tf-sw-pagination"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sarees Under 4999 -->
+        <section class="flat-spacing pt-0">
+            <div class="container">
+                <div class="sect-heading type-2 text-center wow fadeInUp">
+                    <h3 class="s-title">
+                       SAREES UNDER 4999
+                    </h3>
+                </div>
+                <div dir="ltr" class="swiper tf-swiper wrap-sw-over" id="swiper-under-4999-container" data-preview="4" data-tablet="3" data-mobile-sm="2"
+                    data-mobile="2" data-space-lg="30" data-space-md="20" data-space="10" data-pagination="2"
+                    data-pagination-sm="2" data-pagination-md="3" data-pagination-lg="4">
+                    <div class="swiper-wrapper" id="sarees-under-4999-wrapper">
+                    </div>
+                    <div class="sw-dot-default tf-sw-pagination"></div>
+                </div>
+            </div>
+        </section>
          <!-- Box Icon -->
         <div class="flat-spacing">
             <div class="container">
@@ -6842,6 +6887,256 @@
 
     <script src="assets/js/carousel.js"></script>
     <script src="assets/js/main.js"></script>
+    <!-- Auth-aware header logic -->
+    <style>
+        #profileIconItem {
+            display: none !important;
+        }
+
+        #profileIconItem.auth-visible {
+            display: list-item !important;
+        }
+
+        #profileImg {
+            display: none;
+        }
+
+        #profileImg.has-photo {
+            display: block !important;
+        }
+
+        #profileDefaultIcon.has-photo {
+            display: none !important;
+        }
+
+        /* Fix hover bleed for product cards in this page only */
+        .tf-swiper.wrap-sw-over .swiper-wrapper,
+        .tf-swiper.wrap-sw-over .swiper-slide,
+        .tf-swiper.wrap-sw-over .swiper-slide .card-product_wrapper {
+            overflow: hidden;
+        }
+
+        .tf-swiper.wrap-sw-over .swiper-slide {
+            position: relative;
+        }
+
+        .tf-swiper.wrap-sw-over .card-product_wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tf-swiper.wrap-sw-over .card-product_wrapper .img-hover {
+            opacity: 0;
+            transition: transform 0.7s ease, opacity 0.7s ease;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+        }
+
+        .tf-swiper.wrap-sw-over .card-product_wrapper:hover .img-hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .wishlist-btn-top-right {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+
+        .wishlist-btn-top-right:hover {
+            background: #fff;
+            transform: scale(1.1);
+        }
+
+        .wishlist-btn-top-right.active {
+            background: #fff;
+        }
+
+        .wishlist-btn-top-right svg {
+            width: 18px;
+            height: 18px;
+            transition: fill 0.3s ease, stroke 0.3s ease, color 0.3s ease;
+        }
+        
+        .wishlist-btn-top-right:hover svg {
+            stroke: #ff4545;
+            color: #ff4545;
+        }
+
+        .wishlist-btn-top-right.active svg {
+            fill: #ff4545;
+            stroke: #ff4545;
+            color: #ff4545;
+        }
+    </style>
+    <script>
+        window.addEventListener('load', function () {
+            var userData = sessionStorage.getItem('user');
+            if (!userData) return;
+
+            try {
+                var user = JSON.parse(userData);
+
+                // Hide Register / Login buttons (desktop + mobile)
+                var desktopAuth = document.getElementById('desktopAuthButtons');
+                var mobileAuth = document.getElementById('mobileAuthButtons');
+                if (desktopAuth) desktopAuth.style.setProperty('display', 'none', 'important');
+                if (mobileAuth) mobileAuth.style.setProperty('display', 'none', 'important');
+
+                // Show profile icon in header using class
+                var profileItem = document.getElementById('profileIconItem');
+                if (profileItem) profileItem.classList.add('auth-visible');
+
+                // If user has a profile image stored (profile_image is just filename)
+                var profileFilename = (user && user.profile_image) || sessionStorage.getItem('profile_image') || '';
+                if (profileFilename) {
+                    // Build full URL the same way user-dashboard.html does
+                    var profilePicUrl = 'http://localhost/krishloom-vastram/backend/uploads/' + profileFilename + '?t=' + Date.now();
+                    var img = document.getElementById('profileImg');
+                    var ico = document.getElementById('profileDefaultIcon');
+                    if (img) {
+                        img.src = profilePicUrl;
+                        img.classList.add('has-photo');
+                    }
+                    if (ico) ico.classList.add('has-photo');
+                }
+            } catch (e) { console.error('Auth check error', e); }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('http://localhost/krishloom-vastram/backend/routes/productApi.php?route=getProducts')
+                .then(response => response.json())
+                .then(res => {
+                    if (res.status && res.data) {
+                        const under2999 = [];
+                        const under4999 = [];
+
+                        res.data.forEach(product => {
+                            if (product.product_type === 'Saree') {
+                                const price = parseFloat(product.selling_price);
+                                if (!isNaN(price)) {
+                                    if (price < 2999) {
+                                        under2999.push(product);
+                                    } else if (price >= 2999 && price < 4999) {
+                                        under4999.push(product);
+                                    }
+                                }
+                            }
+                        });
+
+                        function renderProducts(products, wrapperId) {
+                            const wrapper = document.getElementById(wrapperId);
+                            if (!wrapper) return;
+
+                            let html = '';
+                            products.forEach(p => {
+                                // Extract first gallery image as hover image or fallback to main image
+                                let hoverImg = p.main_image;
+                                try {
+                                    const gallery = JSON.parse(p.gallery_images);
+                                    if (Array.isArray(gallery) && gallery.length > 0) {
+                                        hoverImg = gallery[0];
+                                    }
+                                } catch (e) {}
+
+                                const mainImageUrl = p.main_image ? 'http://localhost/krishloom-vastram/backend/uploads/' + encodeURIComponent(p.main_image) : '';
+                                const hoverImageUrl = hoverImg ? 'http://localhost/krishloom-vastram/backend/uploads/' + encodeURIComponent(hoverImg) : mainImageUrl;
+                                const productJson = JSON.stringify(p).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                                
+                                // Price formatting
+                                const oldPrice = parseFloat(p.mrp);
+                                const newPrice = parseFloat(p.selling_price);
+
+                                html += `
+                                <div class="swiper-slide wow fadeInUp">
+                                    <div class="card-product">
+                                        <div class="card-product_wrapper" style="position: relative; overflow: hidden;">
+                                            <a href="product-detail.html" class="product-img view-details-link" data-product="${productJson}" style="display: block; overflow: hidden; position: relative;">
+                                                <img class="img-product" loading="lazy" width="330" height="440"
+                                                    src="${mainImageUrl}" alt="Product" style="object-fit: cover; width:100%; height:100%; position: relative; z-index: 1;">
+                                                <img class="img-hover" loading="lazy" width="330" height="440"
+                                                    src="${hoverImageUrl}" alt="Product" style="object-fit: cover; width:100%; height:100%; position: absolute; inset: 0; top: 0; left: 0; z-index: 2; opacity: 0; transition: transform 0.7s ease, opacity 0.7s ease; pointer-events: none;">
+                                            </a>
+                                            <button class="wishlist-btn-top-right" aria-label="Add to wishlist" onclick="event.preventDefault(); this.classList.toggle('active');">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                                </svg>
+                                            </button>
+                                            <ul class="product-action_list">
+                                                <li>
+                                                    <a href="#quickView" data-bs-toggle="offcanvas"
+                                                        class="hover-tooltip tooltip-left box-icon">
+                                                        <span class="icon icon-Eye"></span>
+                                                        <span class="tooltip">Quick view</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div class="product-action_bot">
+                                                <a href="#quickAdd" data-bs-toggle="modal"
+                                                    class="tf-btn btn-white small w-100">
+                                                    Quick Add
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="card-product_info">
+                                            <a href="product-detail.html"
+                                                class="name-product lh-24 fw-medium link-underline-text view-details-link" data-product="${productJson}">
+                                                ${p.product_title}
+                                            </a>
+                                            <div class="price-wrap">
+                                                <span class="price-new text-primary fw-semibold">₹${newPrice.toFixed(2)}</span>
+                                                ${oldPrice > newPrice ? `<span class="price-old text-caption-01 cl-text-3">₹${oldPrice.toFixed(2)}</span>` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                `;
+                            });
+                            wrapper.innerHTML = html;
+                        }
+
+                        renderProducts(under2999, 'sarees-under-2999-wrapper');
+                        renderProducts(under4999, 'sarees-under-4999-wrapper');
+
+                        document.querySelectorAll('.view-details-link').forEach(link => {
+                            link.addEventListener('click', function (event) {
+                                event.preventDefault();
+                                var productData = this.getAttribute('data-product');
+                                if (productData) {
+                                    sessionStorage.setItem('selectedProduct', productData);
+                                }
+                                window.location.href = this.href;
+                            });
+                        });
+
+                        // Reinitialize swipers to recognize newly added slides
+                        setTimeout(() => {
+                            ['swiper-under-2999-container', 'swiper-under-4999-container'].forEach(id => {
+                                const container = document.getElementById(id);
+                                if(container && container.swiper) {
+                                    container.swiper.update();
+                                }
+                            });
+                        }, 500);
+                    }
+                })
+                .catch(err => console.error("Error fetching products:", err));
+        });
+    </script>
 </body>
 
 </html>

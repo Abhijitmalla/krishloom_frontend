@@ -30,6 +30,17 @@
     
 }
 
+.error-text {
+    display: none;
+    color: #c0392b;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.input-box.error input {
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 0.15rem rgba(231, 76, 60, 0.15);
+}
 </style>
     <!-- Favicon and Touch Icons  -->
     <link rel="shortcut icon" href="assets/images/logo/favicon.png">
@@ -996,10 +1007,12 @@
     </div>
 
     <div class="extra">
-        <label>
-            <input type="checkbox" required>
-            I agree to Terms & Conditions and Privacy Policy
-        </label>
+      
+    <label>
+        <input type="checkbox" id="registerTerms" required>
+        I agree to Terms &amp; Conditions and Privacy Policy
+    </label>
+    <small class="error-text" id="termsError">You must agree to the terms</small>
         
     </div>
 
@@ -2893,6 +2906,15 @@
     <script src="assets/js/main.js"></script>
     <script>
 document.getElementById("registerBtn").addEventListener("click", async function () {
+    const termsCheckbox = document.getElementById("registerTerms");
+    const termsError = document.getElementById("termsError");
+
+    if (!termsCheckbox.checked) {
+        termsError.style.display = "block";
+        return; // Prevent form submission
+    } else {
+        termsError.style.display = "none";
+    }
 
  const data = {
     membership_id: document.getElementById("membershipId").value,

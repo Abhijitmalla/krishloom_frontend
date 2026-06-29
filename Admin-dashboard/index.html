@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>KrishLoom – Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    /* ─── Exact tokens from User dashboard ─── */
+    :root {
+      --c: #b01a3a;
+      --c2: #8a1230;
+      --g: #c8860a;
+      --g2: #f0c040;
+      --ivory: #fdf8f2;
+      --card: #fff;
+      --border: #e8ddd4;
+      --muted: #7a6e79;
+      --text: #1a0a10;
+      --r: 10px;
+      --sw: 260px;
+      --nh: 58px;
+
+      /* Sidebar tokens — exact from user dashboard */
+      --sb-bg: #fff5f0;
+      --sb-border: #f0ddd5;
+      --sb-section: #b5876a;
+      --sb-link: rgba(80, 20, 30, 0.45);
+      --sb-link-hover: #7a1228;
+      --sb-active-bg: rgba(176, 26, 58, 0.07);
+      --sb-active-txt: #b01a3a;
+      --sb-active-bar: #b01a3a;
+      --sb-footer: #fdeee8;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      background: var(--ivory);
+      color: var(--text)
+    }
+
+    /* ─── Layout ─── */
+    .layout {
+      display: flex;
+      min-height: 100vh
+    }
+
+    /* ─── PROMO BAR ─── */
+    .promo {
+      background: var(--c);
+      color: #fff;
+      text-align: center;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .6px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 300
+    }
+
+    .promo strong {
+      color: var(--g2)
+    }
+
+    /* ─── TOP NAVBAR ─── */
+    .nav {
+      position: fixed;
+      top: 30px;
+      left: 0;
+      right: 0;
+      height: var(--nh);
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px 0 0;
+      z-index: 200;
+    }
+
+    .nav-brand {
+      width: var(--sw);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 18px;
+      flex-shrink: 0;
+      text-decoration: none;
+      border-right: 1px solid var(--border);
+    }
+
+    .nav-logo-ring {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      display: grid;
+      place-items: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(176, 26, 58, .25);
+    }
+
+    .nav-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--c);
+      letter-spacing: -.1px;
+      line-height: 1
+    }
+
+    .nav-wordmark span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-top: 2px
+    }
+
+    .nav-search-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 20px
+    }
+
+    .nav-search {
+      position: relative;
+      max-width: 340px;
+      width: 100%
+    }
+
+    .nav-search input {
+      width: 100%;
+      padding: 8px 14px 8px 36px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 14.5px;
+      background: var(--ivory);
+      outline: none;
+      font-family: inherit;
+      color: var(--text);
+      transition: border .15s
+    }
+
+    .nav-search input:focus {
+      border-color: var(--c);
+      background: #fff
+    }
+
+    .nav-search i {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto
+    }
+
+    .nav-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--text);
+      font-size: 18px;
+      transition: background .15s
+    }
+
+    .nav-btn:hover {
+      background: var(--ivory)
+    }
+
+    .nav-pip {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 15px;
+      height: 15px;
+      background: var(--c);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 2px solid #fff
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 22px;
+      background: var(--border);
+      margin: 0 6px
+    }
+
+    .nav-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      border: 2px solid var(--sb-border);
+      transition: border-color .15s
+    }
+
+    .nav-avatar:hover {
+      border-color: var(--c)
+    }
+
+    .nav-user-info {
+      margin-left: 8px;
+      line-height: 1.25;
+      cursor: pointer
+    }
+
+    .nav-user-info .aname {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .nav-user-info .arole {
+      font-size: 11.5px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .nav-user-info .arole::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      place-items: center;
+      color: var(--text);
+      font-size: 20px
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      position: fixed;
+      top: calc(30px + var(--nh));
+      left: 0;
+      width: var(--sw);
+      height: calc(100vh - 30px - var(--nh));
+      background: var(--sb-bg);
+      border-right: 1px solid var(--sb-border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 100;
+      scrollbar-width: thin;
+      scrollbar-color: var(--sb-border) transparent;
+      transition: transform .2s ease;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 3px
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--sb-border);
+      border-radius: 2px
+    }
+
+    .sb-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .35);
+      z-index: 99;
+      pointer-events: none
+    }
+
+    .sb-overlay.active {
+      pointer-events: all
+    }
+
+    /* ─── Admin card ─── */
+    .sb-admin {
+      padding: 16px 16px 14px;
+      border-bottom: 1px solid var(--sb-border);
+      background: #fff;
+    }
+
+    .sb-admin-inner {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .sb-admin-av {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      border: 2px solid rgba(176, 26, 58, .2);
+    }
+
+    .sb-admin-name {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .sb-admin-role {
+      font-size: .68rem;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    .sb-admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      background: rgba(176, 26, 58, .07);
+      color: var(--c);
+      font-size: .62rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      border: 1px solid rgba(176, 26, 58, .14);
+      letter-spacing: .3px;
+    }
+
+    .sb-admin-badge i {
+      font-size: 10px
+    }
+
+    /* ─── Section label ─── */
+    .sb-section {
+      padding: 14px 18px 5px;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: var(--sb-section);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sb-section::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--sb-border)
+    }
+
+    /* ─── Nav list ─── */
+    .sb-nav {
+      list-style: none;
+      padding: 0 10px
+    }
+
+    /* ─── Nav item ─── */
+    .sb-item {
+      position: relative;
+      margin-bottom: 1px
+    }
+
+    .sb-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: var(--r);
+      text-decoration: none;
+      color: var(--sb-link);
+      font-size: .82rem;
+      font-weight: 400;
+      transition: background 150ms ease, color 150ms ease;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+    }
+
+    .sb-link:hover {
+      background: rgba(176, 26, 58, .05);
+      color: var(--sb-link-hover)
+    }
+
+    .sb-link.active {
+      background: var(--sb-active-bg);
+      color: var(--sb-active-txt);
+      font-weight: 500
+    }
+
+    .sb-link.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 22%;
+      height: 56%;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background: var(--sb-active-bar);
+    }
+
+    .sb-link i.icon {
+      font-size: 17px;
+      flex-shrink: 0;
+      opacity: .65;
+      transition: opacity 150ms
+    }
+
+    .sb-link:hover i.icon,
+    .sb-link.active i.icon {
+      opacity: 1
+    }
+
+    .sb-link .lbl {
+      flex: 1;
+      line-height: 1.2
+    }
+
+    /* ─── Chevron ─── */
+    .chev {
+      font-size: 13px;
+      color: rgba(80, 20, 30, .3);
+      transition: transform 180ms ease, color 150ms;
+      flex-shrink: 0;
+    }
+
+    .sb-link:hover .chev {
+      color: rgba(80, 20, 30, .5)
+    }
+
+    .sb-item.open>.sb-link .chev {
+      transform: rotate(180deg);
+      color: var(--c)
+    }
+
+    /* ─── Badge ─── */
+    .sb-badge {
+      background: var(--c);
+      color: #fff;
+      font-size: .57rem;
+      font-weight: 700;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 4px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+    }
+
+    .sb-badge.green {
+      background: #16a34a
+    }
+
+    .sb-badge.amber {
+      background: var(--g);
+      color: #3a1a00
+    }
+
+    /* ─── Dropdown (level 2) ─── */
+    .sb-dropdown {
+      list-style: none;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height .26s cubic-bezier(.4, 0, .2, 1), opacity .18s;
+      padding: 0 0 0 28px;
+    }
+
+    .sb-item.open>.sb-dropdown {
+      max-height: 500px;
+      opacity: 1
+    }
+
+    .sb-sub {
+      position: relative;
+      margin-bottom: 1px
+    }
+
+    .sb-sub-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7.5px 10px 7.5px 12px;
+      border-radius: 7px;
+      text-decoration: none;
+      color: rgba(80, 20, 30, .38);
+      font-size: .79rem;
+      font-weight: 400;
+      transition: background 140ms, color 140ms;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .sb-sub-link::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(176, 26, 58, .2);
+      transition: background 140ms;
+    }
+
+    .sb-sub-link:hover {
+      background: rgba(176, 26, 58, .05);
+      color: var(--c2)
+    }
+
+    .sb-sub-link:hover::before {
+      background: var(--c)
+    }
+
+    .sb-sub-link.active {
+      color: var(--c);
+      font-weight: 500
+    }
+
+    .sb-sub-link.active::before {
+      background: var(--c);
+      width: 5px;
+      height: 5px
+    }
+
+    .sb-sub-link i {
+      font-size: 14px;
+      opacity: .6;
+      flex-shrink: 0
+    }
+
+    .sb-sub-link:hover i,
+    .sb-sub-link.active i {
+      opacity: 1
+    }
+
+    .sb-sub-link .lbl {
+      flex: 1
+    }
+
+    /* ─── Sub chevron ─── */
+    .sb-sub.open>.sb-sub-link .chev {
+      transform: rotate(180deg);
+      color: var(--c)
+    }
+
+    /* ─── Level 3 dropdown ─── */
+    .sb-sub-dropdown {
+      list-style: none;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height .22s ease, opacity .16s;
+      padding-left: 14px;
+    }
+
+    .sb-sub.open>.sb-sub-dropdown {
+      max-height: 300px;
+      opacity: 1
+    }
+
+    .sb-l3-link {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6.5px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: rgba(80, 20, 30, .3);
+      font-size: .76rem;
+      transition: background 140ms, color 140ms;
+      cursor: pointer;
+    }
+
+    .sb-l3-link:hover {
+      background: rgba(176, 26, 58, .04);
+      color: var(--c2)
+    }
+
+    .sb-l3-link.active {
+      color: var(--c);
+      font-weight: 500
+    }
+
+    /* ─── Divider ─── */
+    .sb-divider {
+      height: 1px;
+      background: var(--sb-border);
+      margin: 6px 16px
+    }
+
+    /* ─── Logout ─── */
+    .sb-link.logout {
+      color: rgba(176, 26, 58, .45)
+    }
+
+    .sb-link.logout:hover {
+      background: rgba(176, 26, 58, .07);
+      color: var(--c)
+    }
+
+    /* ─── Footer ─── */
+    .sb-footer {
+      margin-top: auto;
+      padding: 14px 16px;
+      border-top: 1px solid var(--sb-border);
+      background: var(--sb-footer);
+      flex-shrink: 0;
+    }
+
+    .sb-footer-pill {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--sb-border);
+    }
+
+    .sb-footer-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgba(200, 134, 10, .1);
+      display: grid;
+      place-items: center;
+      color: var(--g);
+      font-size: 15px;
+      flex-shrink: 0
+    }
+
+    .sb-footer-text {
+      font-size: .7rem;
+      color: var(--muted);
+      line-height: 1.45
+    }
+
+    .sb-footer-text strong {
+      color: var(--text);
+      font-weight: 600;
+      display: block;
+      font-size: .75rem
+    }
+
+    /* ─── MAIN ─── */
+    .main {
+      margin-left: var(--sw);
+      padding-top: calc(30px + var(--nh));
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh
+    }
+
+    .content {
+      padding: 28px 30px;
+      flex: 1
+    }
+
+    /* ─── Sample dashboard content ─── */
+    .welcome-card {
+      border-radius: 12px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: linear-gradient(110deg, var(--c2) 0%, #4a0e1c 100%);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .welcome-card::before {
+      content: '';
+      position: absolute;
+      right: -20px;
+      top: -30px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(240, 192, 64, .07)
+    }
+
+    .welcome-card::after {
+      content: '';
+      position: absolute;
+      right: 70px;
+      bottom: -50px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: rgba(176, 26, 58, .12)
+    }
+
+    .wc-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 5px
+    }
+
+    .wc-text p {
+      color: rgba(255, 255, 255, .5);
+      font-size: .8rem
+    }
+
+    .wc-badge {
+      background: var(--g);
+      color: #3a1a00;
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-family: 'Playfair Display', serif;
+      position: relative;
+      z-index: 1
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px
+    }
+
+    .stat-c {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: box-shadow .15s
+    }
+
+    .stat-c:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .07)
+    }
+
+    .sc-ico {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      flex-shrink: 0
+    }
+
+    .sc-ico.r {
+      background: rgba(176, 26, 58, .09);
+      color: var(--c)
+    }
+
+    .sc-ico.g {
+      background: rgba(22, 163, 74, .09);
+      color: #16a34a
+    }
+
+    .sc-ico.b {
+      background: rgba(59, 130, 246, .09);
+      color: #2563eb
+    }
+
+    .sc-ico.a {
+      background: rgba(200, 134, 10, .09);
+      color: var(--g)
+    }
+
+    .sc-val {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1
+    }
+
+    .sc-lbl {
+      font-size: .7rem;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    /* ─── Responsive ─── */
+    @media(max-width:900px) {
+      .sidebar {
+        transform: translateX(-100%)
+      }
+
+      .sidebar.open {
+        transform: translateX(0)
+      }
+
+      .sb-overlay {
+        display: block
+      }
+
+      .main {
+        margin-left: 0
+      }
+
+      .hamburger {
+        display: grid
+      }
+
+      .nav-brand {
+        border-right: none;
+        width: auto
+      }
+
+      .nav-user-info {
+        display: none
+      }
+    }
+
+    @media(max-width:640px) {
+      .stat-row {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .content {
+        padding: 18px 16px
+      }
+
+      .welcome-card {
+        flex-direction: column;
+        align-items: flex-start
+      }
+    }
+
+    @media(max-width:400px) {
+      .stat-row {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PROMO BAR -->
+  <div class="promo">✦ <strong>20% Off</strong> — Auto Applied at Checkout &nbsp;·&nbsp; Limited Time Only ✦</div>
+
+  <!-- TOP NAVBAR -->
+  <nav class="nav">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><i class="ti ti-menu-2"></i></button>
+    <a class="nav-brand" href="#">
+      <div class="nav-logo-ring">KL</div>
+      <div class="nav-wordmark">KrishLoom<span>Admin Panel</span></div>
+    </a>
+    <div class="nav-search-wrap">
+      <div class="nav-search">
+        <i class="ti ti-search"></i>
+        <input type="text" placeholder="Search orders, products, users…" />
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" aria-label="Notifications"><i class="ti ti-bell"></i><span
+          class="nav-pip">7</span></button>
+      <button class="nav-btn" aria-label="Settings"><i class="ti ti-settings"></i></button>
+      <div class="nav-divider"></div>
+      <div class="nav-avatar">AD</div>
+      <div class="nav-user-info">
+        <div class="aname">Admin User</div>
+        <div class="arole">Super Admin</div>
+      </div>
+      <button class="nav-btn" aria-label="More"><i class="ti ti-chevron-down"></i></button>
+    </div>
+  </nav>
+
+  <!-- OVERLAY -->
+  <div class="sb-overlay" id="overlay"></div>
+
+  <!-- ══════════════════════════════
+     SIDEBAR
+══════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Admin card -->
+    <div class="sb-admin">
+      <div class="sb-admin-inner">
+        <div class="sb-admin-av">AD</div>
+        <div>
+          <div class="sb-admin-name">Admin User</div>
+          <div class="sb-admin-role">admin@krishloom.com</div>
+        </div>
+      </div>
+      <div class="sb-admin-badge"><i class="ti ti-shield-check"></i> Super Admin</div>
+    </div>
+
+    <!-- ── MAIN ── -->
+    <div class="sb-section">Main</div>
+    <ul class="sb-nav">
+
+      <!-- Dashboard -->
+      <li class="sb-item">
+        <a class="sb-link active" onclick="setActive(this)" href="#">
+          <i class="ti ti-layout-dashboard icon"></i>
+          <span class="lbl">Dashboard</span>
+        </a>
+      </li>
+
+      <!-- Role & Rights -->
+      <li class="sb-item">
+        <a class="sb-link" onclick="setActive(this)" href="#">
+          <i class="ti ti-shield-lock icon"></i>
+          <span class="lbl">Role &amp; Rights</span>
+          <span class="sb-badge">4</span>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- ── AFFILIATE ── -->
+    <div class="sb-section">Affiliate</div>
+    <ul class="sb-nav">
+
+      <!-- Affiliate (dropdown) -->
+      <li class="sb-item" id="aff">
+        <a class="sb-link" onclick="toggle('aff',this)" href="#">
+          <i class="ti ti-users icon"></i>
+          <span class="lbl">Affiliate</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-list"></i><span class="lbl">All Affiliate</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-circle-check"></i><span class="lbl">Active</span>
+              <span class="sb-badge green" style="font-size:.54rem">12</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-circle-x"></i><span class="lbl">Inactive</span>
+              <span class="sb-badge" style="font-size:.54rem">3</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Affiliate KYC (dropdown) -->
+      <li class="sb-item" id="kyc">
+        <a class="sb-link" onclick="toggle('kyc',this)" href="#">
+          <i class="ti ti-id-badge icon"></i>
+          <span class="lbl">Affiliate KYC</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-clock"></i><span class="lbl">All KYC</span>
+              <span class="sb-badge amber" style="font-size:.54rem">8</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-clock"></i><span class="lbl">Pending Requests</span>
+              <span class="sb-badge amber" style="font-size:.54rem">8</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-circle-check"></i><span class="lbl">Accepted Requests</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-circle-x"></i><span class="lbl">Rejected Requests</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+
+    <!-- ── CONTENT ── -->
+    <div class="sb-section">Content</div>
+    <ul class="sb-nav">
+
+      <!-- Review (Dropdown) -->
+      <li class="sb-item" id="review">
+        <a class="sb-link" onclick="toggle('review',this)" href="#">
+          <i class="ti ti-star icon"></i>
+          <span class="lbl">Review</span>
+          <span class="sb-badge amber">5</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-list"></i>
+              <span class="lbl">All Reviews</span>
+            </a>
+          </li>
+
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-clock"></i>
+              <span class="lbl">Pending Reviews</span>
+            </a>
+          </li>
+
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-check"></i>
+              <span class="lbl">Accepted Reviews</span>
+            </a>
+          </li>
+
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-x"></i>
+              <span class="lbl">Rejected Reviews</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- All Users -->
+      <li class="sb-item">
+        <a class="sb-link" onclick="setActive(this)" href="#">
+          <i class="ti ti-users-group icon"></i>
+          <span class="lbl">All Users</span>
+        </a>
+      </li>
+
+      <!-- Slider (dropdown) -->
+      <li class="sb-item" id="slider">
+        <a class="sb-link" onclick="toggle('slider',this)" href="#">
+          <i class="ti ti-slideshow icon"></i>
+          <span class="lbl">Slider</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-plus"></i><span class="lbl">Slider</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+    </ul>
+
+    <!-- ── MASTER ── -->
+    <div class="sb-section">Master</div>
+    <ul class="sb-nav">
+
+      <!-- Master (dropdown) -->
+      <li class="sb-item" id="master">
+        <a class="sb-link" onclick="toggle('master',this)" href="#">
+          <i class="ti ti-adjustments-horizontal icon"></i>
+          <span class="lbl">Master</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-separator-horizontal"></i><span class="lbl">Top Scroll</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-tag"></i><span class="lbl">Type</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-category"></i><span class="lbl">Category</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-building-factory"></i><span class="lbl">Manufacturer</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-truck-delivery"></i><span class="lbl">Delivery Charge</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+
+    <!-- ── STORE ── -->
+    <div class="sb-section">Store</div>
+    <ul class="sb-nav">
+
+      <!-- Products (dropdown) -->
+      <li class="sb-item" id="products">
+        <a class="sb-link" onclick="toggle('products',this)" href="#">
+          <i class="ti ti-package icon"></i>
+          <span class="lbl">Products</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" href="Addproduct.html">
+              <i class="ti ti-circle-plus"></i><span class="lbl">Add Product</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-table"></i><span class="lbl">Manage Products</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Orders (dropdown) -->
+      <li class="sb-item" id="orders">
+        <a class="sb-link" onclick="toggle('orders',this)" href="#">
+          <i class="ti ti-receipt icon"></i>
+          <span class="lbl">Orders</span>
+          <span class="sb-badge">24</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-list"></i><span class="lbl">All Orders</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-clock"></i><span class="lbl">Pending</span>
+              <span class="sb-badge amber" style="font-size:.54rem">9</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-truck"></i><span class="lbl">Shipped</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-circle-check"></i><span class="lbl">Delivered</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-x"></i><span class="lbl">Cancelled</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+
+    <!-- ── ACCOUNT ── -->
+    <div class="sb-section">Account</div>
+    <ul class="sb-nav" style="margin-bottom:6px">
+
+      <!-- Password (dropdown) -->
+      <li class="sb-item" id="password">
+        <a class="sb-link" onclick="toggle('password',this)" href="#">
+          <i class="ti ti-lock icon"></i>
+          <span class="lbl">Password</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-key"></i><span class="lbl">Change Password</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Logout -->
+      <li class="sb-item">
+        <a class="sb-link logout" href="#" onclick="return false">
+          <i class="ti ti-logout icon"></i>
+          <span class="lbl">Logout</span>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- Footer -->
+    <div class="sb-footer">
+      <div class="sb-footer-pill">
+        <div class="sb-footer-icon"><i class="ti ti-shield-check"></i></div>
+        <div class="sb-footer-text">
+          <strong>KrishLoom Admin</strong>
+          v2.0 · © 2026
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ══════════════════════════════
+     MAIN CONTENT (sample)
+══════════════════════════════ -->
+  <div class="main">
+    <div class="content">
+      <div class="welcome-card">
+        <div class="wc-text">
+          <h2>Welcome back, Admin 👋</h2>
+          <p>Here's your store's performance at a glance.</p>
+        </div>
+        <div class="wc-badge">20% OFF Live</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-c">
+          <div class="sc-ico r"><i class="ti ti-receipt"></i></div>
+          <div>
+            <div class="sc-val">1,284</div>
+            <div class="sc-lbl">Total Orders</div>
+          </div>
+        </div>
+        <div class="stat-c">
+          <div class="sc-ico g"><i class="ti ti-users"></i></div>
+          <div>
+            <div class="sc-val">3,492</div>
+            <div class="sc-lbl">All Users</div>
+          </div>
+        </div>
+        <div class="stat-c">
+          <div class="sc-ico b"><i class="ti ti-package"></i></div>
+          <div>
+            <div class="sc-val">487</div>
+            <div class="sc-lbl">Products</div>
+          </div>
+        </div>
+        <div class="stat-c">
+          <div class="sc-ico a"><i class="ti ti-currency-rupee"></i></div>
+          <div>
+            <div class="sc-val">₹8.4L</div>
+            <div class="sc-lbl">Revenue</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggle(id, link) {
+      const item = document.getElementById(id);
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.sb-item.open').forEach(el => { if (el.id !== id) el.classList.remove('open'); });
+      item.classList.toggle('open', !isOpen);
+      return false;
+    }
+    function setActive(el) {
+      document.querySelectorAll('.sb-link.active').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      if (window.innerWidth <= 900) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); }
+      return false;
+    }
+    function setSubActive(el) {
+      document.querySelectorAll('.sb-sub-link.active').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      if (window.innerWidth <= 900) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); }
+      return false;
+    }
+    const ham = document.getElementById('hamburger');
+    const ov = document.getElementById('overlay');
+    const sb = document.getElementById('sidebar');
+    ham.addEventListener('click', () => { const o = sb.classList.toggle('open'); ov.classList.toggle('active', o); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('active'); });
+    function checkMob() { ham.style.display = window.innerWidth <= 900 ? 'grid' : 'none'; }
+    window.addEventListener('resize', checkMob); checkMob();
+
+    /* ── Snackbar Logic ── */
+    function showGlobalSnackbar(message, type = 'success') {
+      const snackbar = document.getElementById('globalSnackbar');
+      if (!snackbar) return;
+      snackbar.textContent = message;
+      snackbar.className = 'show ' + type;
+      setTimeout(() => {
+        snackbar.className = snackbar.className.replace('show', '').trim();
+      }, 4000);
+    }
+
+    const snackData = sessionStorage.getItem('snackbar');
+    if (snackData) {
+      try {
+        const { message, type } = JSON.parse(snackData);
+        showGlobalSnackbar(message, type);
+        sessionStorage.removeItem('snackbar');
+      } catch (e) { }
+    }
+  </script>
+
+  <!-- ═══ GLOBAL SNACKBAR (top right) ═══ -->
+  <div id="globalSnackbar"></div>
+  <style>
+    #globalSnackbar {
+      visibility: hidden;
+      min-width: 280px;
+      background-color: #333;
+      color: #fff;
+      text-align: left;
+      border-radius: 8px;
+      padding: 16px 20px;
+      position: fixed;
+      z-index: 1000000;
+      right: 24px;
+      top: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(-20px);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    #globalSnackbar.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #globalSnackbar.success {
+      background-color: #fff;
+      color: #1e8449;
+      border-left: 6px solid #2ecc71;
+    }
+
+    #globalSnackbar.error {
+      background-color: #fff;
+      color: #c0392b;
+      border-left: 6px solid #e74c3c;
+    }
+  </style>
+</body>
+
+</html>
