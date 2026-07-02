@@ -1067,40 +1067,42 @@
         }
 
         /* ─── Snackbar ─── */
-  #globalSnackbar {
-    position: fixed;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%) translateY(60px);
-    padding: 14px 22px;
-    border-radius: 8px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 15px;
-    font-weight: 600;
-    opacity: 0;
-    transition: all .3s ease;
-    z-index: 9999;
-}
+        #globalSnackbar {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(60px);
+            padding: 14px 22px;
+            border-radius: 8px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all .3s ease;
+            z-index: 9999;
+        }
 
-#globalSnackbar.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
+        #globalSnackbar.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
 
-#globalSnackbar.success {
-    background: #22c55e; /* Green */
-}
+        #globalSnackbar.success {
+            background: #22c55e;
+            /* Green */
+        }
 
-#globalSnackbar.error {
-    background: #dc2626; /* Red */
-}
+        #globalSnackbar.error {
+            background: #dc2626;
+            /* Red */
+        }
 
-#globalSnackbar i {
-    font-size: 20px;
-}
+        #globalSnackbar i {
+            font-size: 20px;
+        }
 
         /* ─── Responsive ─── */
         @media(max-width:1100px) {
@@ -1313,9 +1315,10 @@
                         class="ti ti-package icon"></i><span class="lbl">Products</span><i
                         class="ti ti-chevron-down chev"></i></a>
                 <ul class="sb-dropdown">
-                    <li class="sb-sub"><a class="sb-sub-link active" onclick="setSubActive(this)" href="#"><i
-                                class="ti ti-circle-plus"></i><span class="lbl">Add Product</span></a></li>
-                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                    <li class="sb-sub"><a class="sb-sub-link active" onclick="setSubActive(this)"
+                            href="addproduct.html"><i class="ti ti-circle-plus"></i><span class="lbl">Add
+                                Product</span></a></li>
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="manageproduct.html"><i
                                 class="ti ti-table"></i><span class="lbl">Manage Products</span></a></li>
                 </ul>
             </li>
@@ -1324,16 +1327,9 @@
                         class="lbl">Orders</span><span class="sb-badge">24</span><i
                         class="ti ti-chevron-down chev"></i></a>
                 <ul class="sb-dropdown">
-                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="order.html"><i
                                 class="ti ti-list"></i><span class="lbl">All Orders</span></a></li>
-                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
-                                class="ti ti-clock"></i><span class="lbl">Pending</span></a></li>
-                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
-                                class="ti ti-truck"></i><span class="lbl">Dispatched</span></a></li>
-                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
-                                class="ti ti-circle-check"></i><span class="lbl">Delivered</span></a></li>
-                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
-                                class="ti ti-circle-x"></i><span class="lbl">Cancelled</span></a></li>
+             
                 </ul>
             </li>
         </ul>
@@ -1355,7 +1351,7 @@
                         <span>Add Product</span>
                     </div>
                 </div>
-                <a href="#" class="btn btn-ghost"><i class="ti ti-package"></i> Manage Products</a>
+                <a href="manageproduct.html" class="btn btn-ghost"><i class="ti ti-package"></i> Manage Products</a>
             </div>
 
             <!-- ── SECTION 1: Basic Info ── -->
@@ -1726,25 +1722,50 @@
         makeChipInput('colorInput', 'colorWrap');
 
         /* ─── Image Previews ─── */
-        function previewMain(e) {
-            const file = e.target.files[0]; if (!file) return;
+        function getImageSrc(item) {
+            if (!item) return '';
+            if (typeof item === 'string') return item;
+            if (item.url) return item.url;
+            if (item.image_path) return item.image_path.startsWith('http') ? item.image_path : 'http://localhost/krishloom-vastram/backend/' + item.image_path;
+            return '';
+        }
+
+        function renderMainPreview(src) {
+            if (!src) return;
             const preview = document.getElementById('mainPreview');
             preview.innerHTML = '';
             const thumb = document.createElement('div'); thumb.className = 'upload-thumb';
-            const img = document.createElement('img'); img.src = URL.createObjectURL(file);
-            const btn = document.createElement('button'); btn.className = 'remove-thumb'; btn.innerHTML = '×'; btn.onclick = () => { thumb.remove(); document.getElementById('mainImgInput').value = ''; };
+            const img = document.createElement('img'); img.src = src;
+            const btn = document.createElement('button'); btn.className = 'remove-thumb'; btn.innerHTML = '×';
+            btn.onclick = () => {
+                thumb.remove();
+                document.getElementById('mainImgInput').value = '';
+            };
             thumb.appendChild(img); thumb.appendChild(btn); preview.appendChild(thumb);
         }
-        function previewGallery(e) {
-            const files = Array.from(e.target.files).slice(0, 5);
+
+        function renderGalleryPreview(items) {
             const preview = document.getElementById('galleryPreview');
             preview.innerHTML = '';
-            files.forEach(file => {
+            items.slice(0, 5).forEach(item => {
+                const src = getImageSrc(item);
+                if (!src) return;
                 const thumb = document.createElement('div'); thumb.className = 'upload-thumb';
-                const img = document.createElement('img'); img.src = URL.createObjectURL(file);
-                const btn = document.createElement('button'); btn.className = 'remove-thumb'; btn.innerHTML = '×'; btn.onclick = () => thumb.remove();
+                const img = document.createElement('img'); img.src = src;
+                const btn = document.createElement('button'); btn.className = 'remove-thumb'; btn.innerHTML = '×';
+                btn.onclick = () => thumb.remove();
                 thumb.appendChild(img); thumb.appendChild(btn); preview.appendChild(thumb);
             });
+        }
+
+        function previewMain(e) {
+            const file = e.target.files[0]; if (!file) return;
+            renderMainPreview(URL.createObjectURL(file));
+        }
+
+        function previewGallery(e) {
+            const files = Array.from(e.target.files).slice(0, 5);
+            renderGalleryPreview(files.map(file => ({ url: URL.createObjectURL(file) })));
         }
 
         /* ─── Rich Text Editors ─── */
@@ -1784,15 +1805,21 @@
                 }
             }
 
-            // Get sizes from chips
-            const sizes = [...document.querySelectorAll('#sizeWrap .chip')]
+            // Get sizes from chips + any text still typed in the input (not yet Enter'd)
+            const sizeChips = [...document.querySelectorAll('#sizeWrap .chip')]
                 .map(chip => chip.childNodes[0].textContent.trim())
-                .join(',');
+                .filter(Boolean);
+            const sizeInputVal = document.getElementById('sizeInput').value.trim();
+            if (sizeInputVal) sizeChips.push(sizeInputVal);
+            const sizes = sizeChips.join(',');
 
-            // Get colors from chips
-            const colors = [...document.querySelectorAll('#colorWrap .chip')]
+            // Get colors from chips + any text still typed in the input
+            const colorChips = [...document.querySelectorAll('#colorWrap .chip')]
                 .map(chip => chip.childNodes[0].textContent.trim())
-                .join(',');
+                .filter(Boolean);
+            const colorInputVal = document.getElementById('colorInput').value.trim();
+            if (colorInputVal) colorChips.push(colorInputVal);
+            const colors = colorChips.join(',');
 
             const mainFile = document.getElementById('mainImgInput').files[0];
             const galleryInput = document.getElementById('galleryInput');
@@ -1815,7 +1842,7 @@
             formData.append('features', document.getElementById('featEditor').innerHTML);
             formData.append('description', document.getElementById('descEditor').innerHTML);
             formData.append('status', document.getElementById('activeToggle').checked ? 'Active' : 'Inactive');
-            formData.append('gallery_images', JSON.stringify(galleryFiles.map(file => file.name)));
+
 
             if (mainFile) {
                 formData.append('main_image', mainFile);
@@ -1825,35 +1852,102 @@
                 formData.append('gallery_images[]', file);
             });
 
+            // Detect edit mode
+            const editId = document.querySelector('.form-actions .btn-primary').getAttribute('data-edit-id');
+
             try {
-                const response = await fetch(
-                    'http://localhost/krishloom-vastram/backend/routes/productApi.php?route=addProduct',
-                    {
-                        method: 'POST',
-                        body: formData
+                let response;
+
+                if (editId) {
+    formData.append('id', editId);
+
+formData.append('id', editId);
+formData.append('product_code', document.getElementById('productCode').value.trim());
+formData.append('product_title', document.getElementById('productTitle').value.trim());
+formData.append('product_type', document.getElementById('productType').value.trim());
+formData.append('product_category', document.getElementById('productCategory').value.trim());
+formData.append('manufacturer', document.getElementById('manufacturer').value.trim());
+formData.append('hsn_code', document.getElementById('hsnCode').value.trim());
+formData.append('mrp', parseFloat(document.getElementById('mrp').value) || 0);
+formData.append('selling_price', parseFloat(document.getElementById('price').value) || 0);
+formData.append('basic_price', parseFloat(document.getElementById('basicPrice').value) || 0);
+formData.append('gst_percent', parseFloat(document.getElementById('gstPercent').value) || 0);
+formData.append('gst_amount', parseFloat(document.getElementById('gstAmount').value) || 0);
+formData.append('sizes', sizes);
+formData.append('colors', colors);
+formData.append('features', document.getElementById('featEditor').innerHTML);
+formData.append('description', document.getElementById('descEditor').innerHTML);
+formData.append(
+    'status',
+    document.getElementById('activeToggle').checked ? 'Active' : 'Inactive'
+);
+
+// Main image
+const mainFile = document.getElementById('mainImgInput').files[0];
+if (mainFile) {
+    formData.append('main_image', mainFile);
+}
+galleryFiles.forEach(file => {
+    formData.append('gallery_images[]', file);
+});
+response = await fetch(
+    'http://localhost/krishloom-vastram/backend/routes/productApi.php?route=updateProduct',
+    {
+        method: 'POST',
+        body: formData
+    }
+);
+                    if ((mainFile || galleryFiles.length > 0) && response.ok) {
+                        showSnack('Product data updated. Image uploads are not supported through this edit endpoint.', 'success');
                     }
-                );
+                } else {
+                    response = await fetch(
+                        'http://localhost/krishloom-vastram/backend/routes/productApi.php?route=addProduct',
+                        { method: 'POST', body: formData }
+                    );
+                }
 
                 const text = await response.text();
-                let result;
-
+                console.log('Server Response:', text);
                 try {
-                    result = JSON.parse(text);
-                    console.log(result);
+                    const result = JSON.parse(text);
+                    if (result.status) {
+                        if (editId) {
+                            const updatedProduct = {
+                                pid: editId,
+                                code: document.getElementById('productCode').value.trim(),
+                                title: document.getElementById('productTitle').value.trim(),
+                                type: document.getElementById('productType').value.trim(),
+                                group: document.getElementById('productCategory').value.trim(),
+                                mrp: parseFloat(document.getElementById('mrp').value) || 0,
+                                price: parseFloat(document.getElementById('price').value) || 0,
+                                gstPct: parseFloat(document.getElementById('gstPercent').value) || 0,
+                                hsn: document.getElementById('hsnCode').value.trim(),
+                                color: colors.split(',').filter(Boolean),
+                                size: sizes.split(',').filter(Boolean),
+                                active: document.getElementById('activeToggle').checked,
+                                img: document.querySelector('#mainPreview img')?.src || '',
+                                gallery: []
+                            };
+                            sessionStorage.setItem('updatedProductData', JSON.stringify(updatedProduct));
+                        }
+                        showSnack(result.message, 'success');
+                        if (editId) {
+                            setTimeout(() => { window.location.href = 'manageproduct.html'; }, 1500);
+                        } else {
+                            setTimeout(() => { window.location.reload(); }, 1500);
+                        }
+                    } else {
+                        showSnack(result.message, 'error');
+                    }
                 } catch (e) {
-                    console.error("Invalid JSON:", text);
-                    showSnack('Unexpected server response', 'error');
-                    return;
+                    console.error('Invalid JSON:', text);
+                    showSnack('Server returned invalid JSON', 'error');
                 }
 
-                if (result.status) {
-                    showSnack("Product added successfully", "success");
-                } else {
-                    showSnack(result.message || "Failed to add product", "error");
-                }
             } catch (error) {
-                console.error('saveProduct error:', error);
-                showSnack('Server error. Check console for details.', 'error');
+                console.error('Fetch Error:', error);
+                showSnack('Server error', 'error');
             }
         }
 
@@ -1872,21 +1966,110 @@
             showSnack('Form has been reset', 'success');
         }
 
-     function showSnack(msg, type = "success") {
-    const s = document.getElementById("globalSnackbar");
+        function showSnack(msg, type = "success") {
+            const s = document.getElementById("globalSnackbar");
 
-    if (type === "success") {
-        s.innerHTML = `<i class="ti ti-circle-check-filled"></i> ${msg}`;
-    } else {
-        s.innerHTML = `<i class="ti ti-circle-x-filled"></i> ${msg}`;
-    }
+            if (type === "success") {
+                s.innerHTML = `<i class="ti ti-circle-check-filled"></i> ${msg}`;
+            } else {
+                s.innerHTML = `<i class="ti ti-circle-x-filled"></i> ${msg}`;
+            }
 
-    s.className = type + " show";
+            s.className = type + " show";
 
-    setTimeout(() => {
-        s.classList.remove("show");
-    }, 3000);
-}
+            setTimeout(() => {
+                s.classList.remove("show");
+            }, 3000);
+        }
+
+        /* ─── Edit Mode: read product from sessionStorage & populate form ─── */
+        function initEditMode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const editId = urlParams.get('edit');
+            if (!editId) return;
+
+            // Switch page UI to edit mode
+            const titleEl = document.querySelector('.page-title');
+            if (titleEl) titleEl.textContent = 'Edit Product';
+            const saveBtn = document.querySelector('.form-actions .btn-primary');
+            saveBtn.innerHTML = '<i class="ti ti-device-floppy"></i> Update Product';
+            saveBtn.setAttribute('data-edit-id', editId);
+
+            // Read product data stored by manageproduct.html
+            const raw = sessionStorage.getItem('editProductData');
+            if (!raw) {
+                showSnack('Product data not found. Please go back and try again.', 'error');
+                return;
+            }
+            sessionStorage.removeItem('editProductData');
+
+            let p;
+            try { p = JSON.parse(raw); } catch (e) {
+                showSnack('Could not parse product data.', 'error');
+                return;
+            }
+
+            // ── Populate basic text fields ──
+            // manageproduct stores: pid, code, group, type, title, mrp, price, gstPct, hsn, color[], size[]
+            setValue('productCode',     p.code      || p.product_code     || '');
+            setValue('productTitle',    p.title     || p.product_title    || '');
+            setValue('productType',     p.type      || p.product_type     || '');
+            setValue('productCategory', p.group     || p.product_category || '');
+            setValue('manufacturer',    p.manufacturer || '');
+            setValue('hsnCode',         p.hsn       || p.hsn_code         || '');
+            setValue('mrp',             p.mrp       || '');
+            setValue('price',           p.price     || p.selling_price    || '');
+            setValue('gstPercent',      p.gstPct    || p.gst_percent      || '');
+            calcPricing();
+
+            // ── Populate size chips ──
+            const sizeWrap  = document.getElementById('sizeWrap');
+            const sizeInput = document.getElementById('sizeInput');
+            sizeWrap.querySelectorAll('.chip').forEach(c => c.remove());
+            const sizes = Array.isArray(p.size) ? p.size
+                        : typeof p.size === 'string' && p.size ? p.size.split(',')
+                        : typeof p.sizes === 'string' && p.sizes ? p.sizes.split(',')
+                        : [];
+            sizes.forEach(s => { if (s.trim()) addChip(s.trim(), sizeWrap, sizeInput); });
+
+            // ── Populate color chips ──
+            const colorWrap  = document.getElementById('colorWrap');
+            const colorInput = document.getElementById('colorInput');
+            colorWrap.querySelectorAll('.chip').forEach(c => c.remove());
+            const colors = Array.isArray(p.color) ? p.color
+                         : typeof p.color === 'string' && p.color ? p.color.split(',')
+                         : typeof p.colors === 'string' && p.colors ? p.colors.split(',')
+                         : [];
+            colors.forEach(c => { if (c.trim()) addChip(c.trim(), colorWrap, colorInput); });
+
+            // ── Rich text editors ──
+            document.getElementById('featEditor').innerHTML = p.features    || '';
+            document.getElementById('descEditor').innerHTML = p.description || '';
+
+            // ── Populate existing images ──
+            if (p.img) {
+                renderMainPreview(getImageSrc(p.img));
+            }
+            const galleryImages = Array.isArray(p.gallery) ? p.gallery : p.gallery ? [p.gallery] : [];
+            if (galleryImages.length) {
+                renderGalleryPreview(galleryImages);
+            }
+
+            // ── Status toggle ──
+            const activeToggle = document.getElementById('activeToggle');
+            activeToggle.checked = (p.active === true || p.status === 'Active' || p.status == 1);
+            document.getElementById('toggleLabel').textContent =
+                activeToggle.checked ? 'Product is Active' : 'Product is Inactive';
+
+            showSnack('Product loaded. Make your changes and click Update Product.', 'success');
+        }
+
+        function setValue(id, val) {
+            const el = document.getElementById(id);
+            if (el) el.value = val;
+        }
+
+        window.addEventListener('DOMContentLoaded', initEditMode);
     </script>
 
 </body>

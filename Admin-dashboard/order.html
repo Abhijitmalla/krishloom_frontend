@@ -1,0 +1,2000 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Manage Orders &ndash; KrishLoom Admin</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --c: #b01a3a;
+      --c2: #8a1230;
+      --g: #c8860a;
+      --g2: #f0c040;
+      --ivory: #fdf8f2;
+      --card: #fff;
+      --border: #e8ddd4;
+      --muted: #7a6e79;
+      --text: #1a0a10;
+      --r: 10px;
+      --sw: 260px;
+      --nh: 58px;
+      --sb-bg: #fff5f0;
+      --sb-border: #f0ddd5;
+      --sb-section: #b5876a;
+      --sb-link: rgba(80, 20, 30, .45);
+      --sb-link-hover: #7a1228;
+      --sb-active-bg: rgba(176, 26, 58, .07);
+      --sb-active-txt: #b01a3a;
+      --sb-active-bar: #b01a3a;
+      --sb-footer: #fdeee8;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      background: var(--ivory);
+      color: var(--text)
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh
+    }
+
+    /* PROMO */
+    .promo {
+      background: var(--c);
+      color: #fff;
+      text-align: center;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .6px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 300
+    }
+
+    .promo strong {
+      color: var(--g2)
+    }
+
+    /* NAV */
+    .nav {
+      position: fixed;
+      top: 30px;
+      left: 0;
+      right: 0;
+      height: var(--nh);
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px 0 0;
+      z-index: 200
+    }
+
+    .nav-brand {
+      width: var(--sw);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 18px;
+      flex-shrink: 0;
+      text-decoration: none;
+      border-right: 1px solid var(--border)
+    }
+
+    .nav-logo-ring {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      display: grid;
+      place-items: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(176, 26, 58, .25)
+    }
+
+    .nav-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--c);
+      letter-spacing: -.1px;
+      line-height: 1
+    }
+
+    .nav-wordmark span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-top: 2px
+    }
+
+    .nav-search-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 20px
+    }
+
+    .nav-search {
+      position: relative;
+      max-width: 340px;
+      width: 100%
+    }
+
+    .nav-search input {
+      width: 100%;
+      padding: 8px 14px 8px 36px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 14.5px;
+      background: var(--ivory);
+      outline: none;
+      font-family: inherit;
+      color: var(--text);
+      transition: border .15s
+    }
+
+    .nav-search input:focus {
+      border-color: var(--c);
+      background: #fff
+    }
+
+    .nav-search i {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto
+    }
+
+    .nav-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--text);
+      font-size: 18px;
+      transition: background .15s
+    }
+
+    .nav-btn:hover {
+      background: var(--ivory)
+    }
+
+    .nav-pip {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 15px;
+      height: 15px;
+      background: var(--c);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 2px solid #fff
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 22px;
+      background: var(--border);
+      margin: 0 6px
+    }
+
+    .nav-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      border: 2px solid var(--sb-border);
+      transition: border-color .15s
+    }
+
+    .nav-avatar:hover {
+      border-color: var(--c)
+    }
+
+    .nav-user-info {
+      margin-left: 8px;
+      line-height: 1.25;
+      cursor: pointer
+    }
+
+    .nav-user-info .aname {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .nav-user-info .arole {
+      font-size: 11.5px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .nav-user-info .arole::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      place-items: center;
+      color: var(--text);
+      font-size: 20px
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: fixed;
+      top: calc(30px + var(--nh));
+      left: 0;
+      width: var(--sw);
+      height: calc(100vh - 30px - var(--nh));
+      background: var(--sb-bg);
+      border-right: 1px solid var(--sb-border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 100;
+      scrollbar-width: thin;
+      scrollbar-color: var(--sb-border) transparent;
+      transition: transform .2s ease
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 3px
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--sb-border);
+      border-radius: 2px
+    }
+
+    .sb-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .35);
+      z-index: 99;
+      pointer-events: none
+    }
+
+    .sb-overlay.active {
+      pointer-events: all
+    }
+
+    .sb-admin {
+      padding: 16px 16px 14px;
+      border-bottom: 1px solid var(--sb-border);
+      background: #fff
+    }
+
+    .sb-admin-inner {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .sb-admin-av {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      border: 2px solid rgba(176, 26, 58, .2)
+    }
+
+    .sb-admin-name {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .sb-admin-role {
+      font-size: .68rem;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    .sb-admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      background: rgba(176, 26, 58, .07);
+      color: var(--c);
+      font-size: .62rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      border: 1px solid rgba(176, 26, 58, .14);
+      letter-spacing: .3px
+    }
+
+    .sb-admin-badge i {
+      font-size: 10px
+    }
+
+    .sb-section {
+      padding: 14px 18px 5px;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: var(--sb-section);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .sb-section::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--sb-border)
+    }
+
+    .sb-nav {
+      list-style: none;
+      padding: 0 10px
+    }
+
+    .sb-item {
+      position: relative;
+      margin-bottom: 1px
+    }
+
+    .sb-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: var(--r);
+      text-decoration: none;
+      color: var(--sb-link);
+      font-size: .82rem;
+      font-weight: 400;
+      transition: background 150ms, color 150ms;
+      cursor: pointer;
+      position: relative;
+      user-select: none
+    }
+
+    .sb-link:hover {
+      background: rgba(176, 26, 58, .05);
+      color: var(--sb-link-hover)
+    }
+
+    .sb-link.active {
+      background: var(--sb-active-bg);
+      color: var(--sb-active-txt);
+      font-weight: 500
+    }
+
+    .sb-link.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 22%;
+      height: 56%;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background: var(--sb-active-bar)
+    }
+
+    .sb-link i.icon {
+      font-size: 17px;
+      flex-shrink: 0;
+      opacity: .65
+    }
+
+    .sb-link:hover i.icon,
+    .sb-link.active i.icon {
+      opacity: 1
+    }
+
+    .sb-link .lbl {
+      flex: 1;
+      line-height: 1.2
+    }
+
+    .chev {
+      font-size: 13px;
+      color: rgba(80, 20, 30, .3);
+      transition: transform 180ms, color 150ms;
+      flex-shrink: 0
+    }
+
+    .sb-link:hover .chev {
+      color: rgba(80, 20, 30, .5)
+    }
+
+    .sb-item.open>.sb-link .chev {
+      transform: rotate(180deg);
+      color: var(--c)
+    }
+
+    .sb-badge {
+      background: var(--c);
+      color: #fff;
+      font-size: .57rem;
+      font-weight: 700;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 4px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      line-height: 1
+    }
+
+    .sb-badge.green {
+      background: #16a34a
+    }
+
+    .sb-badge.amber {
+      background: var(--g);
+      color: #3a1a00
+    }
+
+    .sb-dropdown {
+      list-style: none;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height .26s cubic-bezier(.4, 0, .2, 1), opacity .18s;
+      padding: 0 0 0 28px
+    }
+
+    .sb-item.open>.sb-dropdown {
+      max-height: 500px;
+      opacity: 1
+    }
+
+    .sb-sub {
+      position: relative;
+      margin-bottom: 1px
+    }
+
+    .sb-sub-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7.5px 10px 7.5px 12px;
+      border-radius: 7px;
+      text-decoration: none;
+      color: rgba(80, 20, 30, .38);
+      font-size: .79rem;
+      font-weight: 400;
+      transition: background 140ms, color 140ms;
+      cursor: pointer;
+      position: relative
+    }
+
+    .sb-sub-link::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(176, 26, 58, .2);
+      transition: background 140ms
+    }
+
+    .sb-sub-link:hover {
+      background: rgba(176, 26, 58, .05);
+      color: var(--c2)
+    }
+
+    .sb-sub-link:hover::before {
+      background: var(--c)
+    }
+
+    .sb-sub-link.active {
+      color: var(--c);
+      font-weight: 500
+    }
+
+    .sb-sub-link.active::before {
+      background: var(--c);
+      width: 5px;
+      height: 5px
+    }
+
+    .sb-sub-link i {
+      font-size: 14px;
+      opacity: .6;
+      flex-shrink: 0
+    }
+
+    .sb-sub-link:hover i,
+    .sb-sub-link.active i {
+      opacity: 1
+    }
+
+    .sb-sub-link .lbl {
+      flex: 1
+    }
+
+    .sb-link.logout {
+      color: rgba(176, 26, 58, .45)
+    }
+
+    .sb-link.logout:hover {
+      background: rgba(176, 26, 58, .07);
+      color: var(--c)
+    }
+
+    .sb-footer {
+      margin-top: auto;
+      padding: 14px 16px;
+      border-top: 1px solid var(--sb-border);
+      background: var(--sb-footer);
+      flex-shrink: 0
+    }
+
+    .sb-footer-pill {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--sb-border)
+    }
+
+    .sb-footer-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgba(200, 134, 10, .1);
+      display: grid;
+      place-items: center;
+      color: var(--g);
+      font-size: 15px;
+      flex-shrink: 0
+    }
+
+    .sb-footer-text {
+      font-size: .7rem;
+      color: var(--muted);
+      line-height: 1.45
+    }
+
+    .sb-footer-text strong {
+      color: var(--text);
+      font-weight: 600;
+      display: block;
+      font-size: .75rem
+    }
+
+    .main {
+      margin-left: var(--sw);
+      padding-top: calc(30px + var(--nh));
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh
+    }
+
+    .content {
+      padding: 26px 28px 40px;
+      flex: 1
+    }
+
+    /* page header */
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .76rem;
+      color: var(--muted)
+    }
+
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none
+    }
+
+    .breadcrumb a:hover {
+      color: var(--c)
+    }
+
+    .breadcrumb i {
+      font-size: 12px
+    }
+
+    .breadcrumb span:last-child {
+      color: var(--c);
+      font-weight: 500
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: .82rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .15s;
+      white-space: nowrap;
+      font-family: inherit
+    }
+
+    .btn i {
+      font-size: 15px
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--c), var(--c2));
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(176, 26, 58, .25)
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 5px 16px rgba(176, 26, 58, .35);
+      transform: translateY(-1px)
+    }
+
+    .btn-ghost {
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--border)
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--c);
+      color: var(--c)
+    }
+
+    .btn-danger-ghost {
+      background: #fff;
+      color: #c0392b;
+      border: 1px solid #f3c9c2
+    }
+
+    .btn-danger-ghost:hover {
+      background: #fdf1ef;
+      border-color: #e74c3c
+    }
+
+    .btn-sm {
+      padding: 7px 12px;
+      font-size: .76rem
+    }
+
+    /* stat strip */
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-bottom: 18px
+    }
+
+    .stat-c {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: box-shadow .15s
+    }
+
+    .stat-c:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .07)
+    }
+
+    .sc-ico {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+      flex-shrink: 0
+    }
+
+    .sc-ico.r {
+      background: rgba(176, 26, 58, .09);
+      color: var(--c)
+    }
+
+    .sc-ico.g {
+      background: rgba(22, 163, 74, .09);
+      color: #16a34a
+    }
+
+    .sc-ico.b {
+      background: rgba(59, 130, 246, .09);
+      color: #2563eb
+    }
+
+    .sc-ico.a {
+      background: rgba(200, 134, 10, .09);
+      color: var(--g)
+    }
+
+    .sc-ico.m {
+      background: rgba(124, 58, 237, .09);
+      color: #7c3aed
+    }
+
+    .sc-val {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1
+    }
+
+    .sc-lbl {
+      font-size: .68rem;
+      color: var(--muted);
+      margin-top: 3px
+    }
+
+    /* table card */
+    .table-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap
+    }
+
+    .tb-search {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+      max-width: 320px
+    }
+
+    .tb-search input {
+      width: 100%;
+      padding: 9px 14px 9px 36px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .85rem;
+      background: var(--ivory);
+      outline: none;
+      font-family: inherit;
+      color: var(--text);
+      transition: border .15s
+    }
+
+    .tb-search input:focus {
+      border-color: var(--c);
+      background: #fff
+    }
+
+    .tb-search i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    .tb-select {
+      padding: 9px 30px 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .8rem;
+      background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a6e79' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 11px center;
+      appearance: none;
+      -webkit-appearance: none;
+      color: var(--text);
+      font-family: inherit;
+      cursor: pointer
+    }
+
+    .tb-select:focus {
+      border-color: var(--c);
+      outline: none
+    }
+
+    .tb-spacer {
+      flex: 1
+    }
+
+    .tb-count {
+      font-size: .76rem;
+      color: var(--muted);
+      white-space: nowrap
+    }
+
+    .tb-count strong {
+      color: var(--text)
+    }
+
+    .table-scroll {
+      overflow-x: auto
+    }
+
+    table.ptable {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1700px
+    }
+
+    .ptable thead th {
+      position: sticky;
+      top: 0;
+      background: #fbf6f1;
+      text-align: left;
+      font-size: .67rem;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 11px 10px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      z-index: 2
+    }
+
+    .ptable thead th.sortable {
+      cursor: pointer;
+      user-select: none
+    }
+
+    .ptable thead th.sortable:hover {
+      color: var(--c)
+    }
+
+    .ptable thead th.sortable i {
+      font-size: 12px;
+      margin-left: 3px;
+      opacity: .45
+    }
+
+    .ptable tbody td {
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: .82rem;
+      color: var(--text);
+      vertical-align: middle;
+      white-space: nowrap
+    }
+
+    .ptable tbody tr {
+      transition: background .12s
+    }
+
+    .ptable tbody tr:hover {
+      background: var(--ivory)
+    }
+
+    .ptable tbody tr:last-child td {
+      border-bottom: none
+    }
+
+    .col-sl {
+      width: 44px;
+      color: var(--muted);
+      font-weight: 600;
+      text-align: center
+    }
+
+    .col-view {
+      width: 50px;
+      text-align: center
+    }
+
+    .col-action {
+      width: 78px
+    }
+
+    .mono {
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: .78rem;
+      color: var(--muted)
+    }
+
+    .badge-soft {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: .67rem;
+      font-weight: 600;
+      white-space: nowrap
+    }
+
+    .badge-soft.status-pending {
+      background: #fef3c7;
+      color: #b45309
+    }
+
+    .badge-soft.status-shipped {
+      background: #dbeafe;
+      color: #1d4ed8
+    }
+
+    .badge-soft.status-delivered {
+      background: #d1fae5;
+      color: #065f46
+    }
+
+    .badge-soft.status-cancelled {
+      background: #fee2e2;
+      color: #b91c1c
+    }
+
+    .badge-soft.status-returned {
+      background: #ede9fe;
+      color: #5b21b6
+    }
+
+    .num-cell {
+      font-variant-numeric: tabular-nums
+    }
+
+    .act-icons {
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .icon-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 14px;
+      transition: all .15s
+    }
+
+    .icon-btn.edit:hover {
+      border-color: #2563eb;
+      color: #2563eb;
+      background: rgba(37, 99, 235, .06)
+    }
+
+    .icon-btn.del:hover {
+      border-color: #e74c3c;
+      color: #e74c3c;
+      background: rgba(231, 76, 60, .06)
+    }
+
+    .icon-btn.view:hover {
+      border-color: #7c3aed;
+      color: #7c3aed;
+      background: rgba(124, 58, 237, .06)
+    }
+
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--muted)
+    }
+
+    .empty-state i {
+      font-size: 40px;
+      color: var(--border);
+      margin-bottom: 10px;
+      display: block
+    }
+
+    .empty-state strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 4px;
+      font-size: .9rem
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border)
+    }
+
+    .pg-info {
+      font-size: .76rem;
+      color: var(--muted)
+    }
+
+    .pg-info strong {
+      color: var(--text)
+    }
+
+    .pg-btns {
+      display: flex;
+      gap: 6px;
+      align-items: center
+    }
+
+    .pg-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: .76rem;
+      color: var(--text);
+      font-weight: 600;
+      transition: all .15s
+    }
+
+    .pg-btn:hover:not(:disabled) {
+      border-color: var(--c);
+      color: var(--c)
+    }
+
+    .pg-btn.active {
+      background: var(--c);
+      border-color: var(--c);
+      color: #fff
+    }
+
+    .pg-btn:disabled {
+      opacity: .35;
+      cursor: not-allowed
+    }
+
+    /* snackbar */
+    #globalSnackbar {
+      visibility: hidden;
+      min-width: 280px;
+      background: #333;
+      color: #fff;
+      text-align: left;
+      border-radius: 8px;
+      padding: 16px 20px;
+      position: fixed;
+      z-index: 1000000;
+      right: 24px;
+      top: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
+      transition: opacity .3s, transform .3s;
+      opacity: 0;
+      transform: translateY(-20px);
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    #globalSnackbar.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    #globalSnackbar.success {
+      background: #fff;
+      color: #1e8449;
+      border-left: 6px solid #2ecc71
+    }
+
+    #globalSnackbar.error {
+      background: #fff;
+      color: #c0392b;
+      border-left: 6px solid #e74c3c
+    }
+
+    @media(max-width:900px) {
+      .sidebar {
+        transform: translateX(-100%)
+      }
+
+      .sidebar.open {
+        transform: translateX(0)
+      }
+
+      .sb-overlay {
+        display: block
+      }
+
+      .main {
+        margin-left: 0
+      }
+
+      .hamburger {
+        display: grid
+      }
+
+      .nav-brand {
+        border-right: none;
+        width: auto
+      }
+
+      .nav-user-info {
+        display: none
+      }
+
+      .stat-strip {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    @media(max-width:640px) {
+      .content {
+        padding: 18px 16px
+      }
+
+      .stat-strip {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start
+      }
+    }
+
+    /* MODALS */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      display: none;
+      place-items: center;
+      opacity: 0;
+      transition: opacity .2s
+    }
+
+    .modal-overlay.active {
+      display: grid;
+      opacity: 1
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
+      padding: 24px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      transform: scale(0.95);
+      transition: transform .2s
+    }
+
+    .modal-overlay.active .modal {
+      transform: scale(1)
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text)
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--muted)
+    }
+
+    .modal-body {
+      max-height: 60vh;
+      overflow-y: auto
+    }
+
+    .modal-footer {
+      margin-top: 20px;
+      text-align: right;
+      border-top: 1px solid var(--border);
+      padding-top: 12px
+    }
+
+    .form-group {
+      margin-bottom: 16px
+    }
+
+    .form-group label {
+      display: block;
+      font-size: .85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text)
+    }
+
+    .form-group select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .9rem;
+      font-family: inherit;
+      outline: none
+    }
+
+    /* Order Items list */
+    .o-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .o-item:last-child {
+      border-bottom: none
+    }
+
+    .o-item-img {
+      width: 60px;
+      height: 80px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      cursor: pointer
+    }
+
+    .o-item-info {
+      flex: 1
+    }
+
+    .o-item-title {
+      font-weight: 600;
+      font-size: .9rem;
+      color: var(--text);
+      margin-bottom: 4px
+    }
+
+    .o-item-price {
+      font-size: .85rem;
+      color: var(--muted)
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 10000;
+      display: none;
+      place-items: center
+    }
+
+    .lightbox.active {
+      display: grid
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3)
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 30px;
+      cursor: pointer;
+      background: none;
+      border: none
+    }
+  </style>
+</head>
+
+<body>
+  <div class="promo">&#10022; <strong>20% Off</strong> &mdash; Auto Applied at Checkout &nbsp;&middot;&nbsp; Limited
+    Time Only &#10022;</div>
+  <nav class="nav">
+    <button class="hamburger" id="hamburger"><i class="ti ti-menu-2"></i></button>
+    <a class="nav-brand" href="index.html">
+      <div class="nav-logo-ring">KL</div>
+      <div class="nav-wordmark">KrishLoom<span>Admin Panel</span></div>
+    </a>
+    <div class="nav-search-wrap">
+      <div class="nav-search"><i class="ti ti-search"></i><input type="text" placeholder="Search orders&hellip;" />
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn"><i class="ti ti-bell"></i><span class="nav-pip">7</span></button>
+      <button class="nav-btn"><i class="ti ti-settings"></i></button>
+      <div class="nav-divider"></div>
+      <div class="nav-avatar">AD</div>
+      <div class="nav-user-info">
+        <div class="aname">Admin User</div>
+        <div class="arole">Super Admin</div>
+      </div>
+      <button class="nav-btn"><i class="ti ti-chevron-down"></i></button>
+    </div>
+  </nav>
+  <div class="sb-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-admin">
+      <div class="sb-admin-inner">
+        <div class="sb-admin-av">AD</div>
+        <div>
+          <div class="sb-admin-name">Admin User</div>
+          <div class="sb-admin-role">admin@krishloom.com</div>
+        </div>
+      </div>
+      <div class="sb-admin-badge"><i class="ti ti-shield-check"></i> Super Admin</div>
+    </div>
+    <div class="sb-section">Main</div>
+    <ul class="sb-nav">
+      <li class="sb-item"><a class="sb-link" href="index.html"><i class="ti ti-layout-dashboard icon"></i><span
+            class="lbl">Dashboard</span></a></li>
+      <li class="sb-item"><a class="sb-link" href="#"><i class="ti ti-shield-lock icon"></i><span class="lbl">Role &amp;
+            Rights</span><span class="sb-badge">4</span></a></li>
+    </ul>
+
+    <div class="sb-section">Affiliate</div>
+    <ul class="sb-nav">
+      <li class="sb-item" id="aff">
+        <a class="sb-link" onclick="toggle('aff',this)" href="#"><i class="ti ti-users icon"></i><span
+            class="lbl">Affiliate</span><i class="ti ti-chevron-down chev"></i></a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-list"></i><span class="lbl">All
+                Affiliate</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-circle-check"></i><span
+                class="lbl">Active</span><span class="sb-badge green" style="font-size:.54rem">12</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-circle-x"></i><span
+                class="lbl">Inactive</span><span class="sb-badge" style="font-size:.54rem">3</span></a></li>
+        </ul>
+      </li>
+      <li class="sb-item" id="kyc">
+        <a class="sb-link" onclick="toggle('kyc',this)" href="#"><i class="ti ti-id-badge icon"></i><span
+            class="lbl">Affiliate KYC</span><i class="ti ti-chevron-down chev"></i></a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-clock"></i><span class="lbl">All
+                KYC</span><span class="sb-badge amber" style="font-size:.54rem">8</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-clock"></i><span class="lbl">Pending
+                Requests</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-circle-check"></i><span
+                class="lbl">Accepted Requests</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-circle-x"></i><span class="lbl">Rejected
+                Requests</span></a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="sb-section">Content</div>
+    <ul class="sb-nav">
+      <li class="sb-item" id="review">
+        <a class="sb-link" onclick="toggle('review',this)" href="#"><i class="ti ti-star icon"></i><span
+            class="lbl">Review</span><span class="sb-badge amber">5</span><i class="ti ti-chevron-down chev"></i></a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-list"></i><span class="lbl">All
+                Reviews</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-clock"></i><span class="lbl">Pending
+                Reviews</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-check"></i><span class="lbl">Accepted
+                Reviews</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-x"></i><span class="lbl">Rejected
+                Reviews</span></a></li>
+        </ul>
+      </li>
+      <li class="sb-item"><a class="sb-link" href="#"><i class="ti ti-users-group icon"></i><span class="lbl">All
+            Users</span></a></li>
+      <li class="sb-item" id="slider">
+        <a class="sb-link" onclick="toggle('slider',this)" href="#"><i class="ti ti-slideshow icon"></i><span
+            class="lbl">Slider</span><i class="ti ti-chevron-down chev"></i></a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-plus"></i><span
+                class="lbl">Slider</span></a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="sb-section">Master</div>
+    <ul class="sb-nav">
+      <li class="sb-item" id="master">
+        <a class="sb-link" onclick="toggle('master',this)" href="#"><i
+            class="ti ti-adjustments-horizontal icon"></i><span class="lbl">Master</span><i
+            class="ti ti-chevron-down chev"></i></a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-separator-horizontal"></i><span
+                class="lbl">Top Scroll</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-tag"></i><span class="lbl">Type</span></a>
+          </li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-category"></i><span
+                class="lbl">Category</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-building-factory"></i><span
+                class="lbl">Manufacturer</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-truck-delivery"></i><span
+                class="lbl">Delivery Charge</span></a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="sb-section">Store</div>
+    <ul class="sb-nav">
+      <li class="sb-item open" id="products">
+        <a class="sb-link" onclick="toggle('products',this)" href="#"><i class="ti ti-package icon"></i><span
+            class="lbl">Products</span><i class="ti ti-chevron-down chev"></i></a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub"><a class="sb-sub-link" href="addproduct.html"><i class="ti ti-circle-plus"></i><span
+                class="lbl">Add Product</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" href="manageproduct.html"><i class="ti ti-table"></i><span
+                class="lbl">Manage Products</span></a></li>
+        </ul>
+      </li>
+      <li class="sb-item open" id="orders">
+        <a class="sb-link active" onclick="toggle('orders',this)" href="#"><i class="ti ti-receipt icon"></i><span
+            class="lbl">Orders</span><span class="sb-badge">24</span><i class="ti ti-chevron-down chev"></i></a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub"><a class="sb-sub-link active" href="order.html"><i class="ti ti-list"></i><span
+                class="lbl">All Orders</span></a></li>
+         
+        </ul>
+      </li>
+    </ul>
+    <div class="sb-section">Account</div>
+    <ul class="sb-nav" style="margin-bottom:6px">
+      <li class="sb-item" id="password">
+        <a class="sb-link" onclick="toggle('password',this)" href="#"><i class="ti ti-lock icon"></i><span
+            class="lbl">Password</span><i class="ti ti-chevron-down chev"></i></a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-key"></i><span class="lbl">Change
+                Password</span></a></li>
+        </ul>
+      </li>
+      <li class="sb-item"><a class="sb-link logout" href="#" onclick="return false"><i
+            class="ti ti-logout icon"></i><span class="lbl">Logout</span></a></li>
+    </ul>
+    <div class="sb-footer">
+      <div class="sb-footer-pill">
+        <div class="sb-footer-icon"><i class="ti ti-shield-check"></i></div>
+        <div class="sb-footer-text"><strong>KrishLoom Admin</strong>v2.0 &middot; &copy; 2026</div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="content">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Manage Orders</div>
+          <div class="breadcrumb"><a href="#">Dashboard</a><i class="ti ti-chevron-right"></i><span>Store</span><i
+              class="ti ti-chevron-right"></i><span>Orders</span></div>
+        </div>
+        <button class="btn btn-primary"><i class="ti ti-plus"></i> New Order</button>
+      </div>
+
+      <!-- stat strip -->
+      <div class="stat-strip">
+        <div class="stat-c">
+          <div class="sc-ico r"><i class="ti ti-receipt"></i></div>
+          <div>
+            <div class="sc-val" id="statTotal">0</div>
+            <div class="sc-lbl">Total Orders</div>
+          </div>
+        </div>
+        <div class="stat-c">
+          <div class="sc-ico a"><i class="ti ti-clock"></i></div>
+          <div>
+            <div class="sc-val" id="statPending">0</div>
+            <div class="sc-lbl">Pending</div>
+          </div>
+        </div>
+        <div class="stat-c">
+          <div class="sc-ico b"><i class="ti ti-truck"></i></div>
+          <div>
+            <div class="sc-val" id="statShipped">0</div>
+            <div class="sc-lbl">Shipped</div>
+          </div>
+        </div>
+        <div class="stat-c">
+          <div class="sc-ico g"><i class="ti ti-circle-check"></i></div>
+          <div>
+            <div class="sc-val" id="statDelivered">0</div>
+            <div class="sc-lbl">Delivered</div>
+          </div>
+        </div>
+        <div class="stat-c">
+          <div class="sc-ico m"><i class="ti ti-currency-rupee"></i></div>
+          <div>
+            <div class="sc-val" id="statRevenue">&#8377;0</div>
+            <div class="sc-lbl">Revenue</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- table card -->
+      <div class="table-card">
+        <div class="toolbar">
+          <div class="tb-search"><i class="ti ti-search"></i><input type="text" id="searchInput"
+              placeholder="Search order ID, name, mobile&hellip;" oninput="applyFilters()" /></div>
+          <select class="tb-select" id="filterStatus" onchange="applyFilters()">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+            <option value="returned">Returned</option>
+          </select>
+          <div class="tb-spacer"></div>
+          <div class="tb-count"><strong id="resultCount">0</strong> orders</div>
+        </div>
+
+        <div class="table-scroll">
+          <table class="ptable">
+            <thead>
+              <tr>
+                <th class="col-sl">SL</th>
+                <th class="col-view">View</th>
+                <th class="sortable" onclick="sortBy('orderId')">Order ID <i class="ti ti-arrows-sort"></i></th>
+                <th class="sortable" onclick="sortBy('date')">Date <i class="ti ti-arrows-sort"></i></th>
+                <th class="sortable" onclick="sortBy('name')">Name <i class="ti ti-arrows-sort"></i></th>
+                <th>Mobile</th>
+                <th class="sortable" onclick="sortBy('status')">Status <i class="ti ti-arrows-sort"></i></th>
+                <th class="sortable" onclick="sortBy('mrpAmount')">MRP Amount <i class="ti ti-arrows-sort"></i></th>
+                <th class="sortable" onclick="sortBy('orderAmount')">Order Amount <i class="ti ti-arrows-sort"></i></th>
+                <th>Tracking No</th>
+                <th class="col-action">Action</th>
+                <th>Accepted Date</th>
+                <th>Shipped Date</th>
+                <th>Delivered Date</th>
+                <th>Returned Date</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="empty-state" id="emptyState" style="display:none"><i class="ti ti-package-off"></i><strong>No orders
+            found</strong>
+          <p>Try adjusting your filters.</p>
+        </div>
+
+        <div class="pagination">
+          <div class="pg-info">Showing <strong id="pgFrom">0</strong>&ndash;<strong id="pgTo">0</strong> of <strong
+              id="pgTotal">0</strong></div>
+          <div class="pg-btns" id="pgBtns"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="globalSnackbar"></div>
+
+  <!-- Status Modal -->
+  <div class="modal-overlay" id="statusModalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Update Order Status</div>
+        <button class="modal-close" onclick="closeStatusModal()"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editOrderId">
+        <div class="form-group">
+          <label>Status</label>
+          <select id="editOrderStatus">
+            <option value="pending">Pending</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+            <option value="returned">Returned</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeStatusModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveOrderStatus()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Order Modal -->
+  <div class="modal-overlay" id="viewModalOverlay">
+    <div class="modal" style="max-width:600px">
+      <div class="modal-header">
+        <div class="modal-title">Order Details <span id="viewOrderNo"
+            style="color:var(--muted); font-size:.9rem; margin-left:10px"></span></div>
+        <button class="modal-close" onclick="closeViewModal()"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="modal-body">
+        <div id="viewOrderItems"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img id="lightboxImg" src="" alt="Full view">
+  </div>
+
+  <script>
+    // ---------- sidebar toggle ----------
+    function toggle(id, link) {
+      const item = document.getElementById(id);
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.sb-item.open').forEach(el => { if (el.id !== id) el.classList.remove('open'); });
+      item.classList.toggle('open', !isOpen);
+      return false;
+    }
+    const ham = document.getElementById('hamburger');
+    const ov = document.getElementById('overlay');
+    const sb = document.getElementById('sidebar');
+    ham.addEventListener('click', () => { const o = sb.classList.toggle('open'); ov.classList.toggle('active', o); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('active'); });
+    function checkMob() { ham.style.display = window.innerWidth <= 900 ? 'grid' : 'none'; }
+    window.addEventListener('resize', checkMob); checkMob();
+
+    // ---------- real orders from API ----------
+    let orders = [];
+
+    async function fetchOrders() {
+      try {
+        const res = await fetch('http://localhost/krishloom-vastram/backend/routes/OrderApi.php?route=getAllOrders');
+        const data = await res.json();
+        if (data.status) {
+          // Map DB fields to what the frontend expects
+          orders = data.orders.map(o => ({
+            dbId: o.id, // Keep the real numeric ID for API calls
+            orderId: o.order_number || ('ORD-' + o.id),
+            date: o.created_at ? o.created_at.split(' ')[0] : 'N/A',
+           name: o.user_name || 'N/A',
+mobile: o.user_phone ? String(o.user_phone) : 'N/A',
+            status: (o.order_status || 'pending').toLowerCase(),
+            mrpAmount: parseFloat(o.subtotal || 0),
+            orderAmount: parseFloat(o.total_amount || 0),
+            trackingNo: o.trackingNo || '-',
+            acceptedDate: null,
+            shippedDate: null,
+            deliveredDate: null,
+            returnedDate: null
+          }));
+          applyFilters(); // Re-render with fetched data
+        } else {
+          document.getElementById('emptyState').innerHTML = `<p style="color:red">API Error: ${data.message}</p>`;
+          document.getElementById('emptyState').style.display = 'block';
+        }
+      } catch (err) {
+        console.error('Error fetching orders:', err);
+        document.getElementById('emptyState').innerHTML = `<p style="color:red">JS Error: ${err.message}</p>`;
+        document.getElementById('emptyState').style.display = 'block';
+        showGlobalSnackbar('Failed to load orders', 'error');
+      }
+    }
+
+    // ---------- state ----------
+    let state = { search: '', status: '', sortKey: null, sortDir: 1, page: 1, perPage: 8 };
+
+    function getFiltered() {
+      let list = orders.filter(o => {
+        const q = state.search.toLowerCase();
+        const matchSearch = !q || o.orderId.toLowerCase().includes(q) || o.name.toLowerCase().includes(q) || o.mobile.includes(q);
+        const matchStatus = !state.status || o.status === state.status;
+        return matchSearch && matchStatus;
+      });
+      if (state.sortKey) {
+        list.sort((a, b) => {
+          let va = a[state.sortKey], vb = b[state.sortKey];
+          if (typeof va === 'string') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+          if (va < vb) return -1 * state.sortDir;
+          if (va > vb) return 1 * state.sortDir;
+          return 0;
+        });
+      }
+      return list;
+    }
+
+    function statusBadge(status) {
+      const map = { pending: 'status-pending', shipped: 'status-shipped', delivered: 'status-delivered', cancelled: 'status-cancelled', returned: 'status-returned' };
+      return `<span class="badge-soft ${map[status] || ''}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>`;
+    }
+
+    function render() {
+      const filtered = getFiltered();
+      const total = filtered.length;
+      const totalPages = Math.max(1, Math.ceil(total / state.perPage));
+      if (state.page > totalPages) state.page = totalPages;
+      const start = (state.page - 1) * state.perPage;
+      const pageItems = filtered.slice(start, start + state.perPage);
+
+      const tbody = document.getElementById('tbody');
+      const emptyState = document.getElementById('emptyState');
+
+      if (pageItems.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'block';
+      } else {
+        emptyState.style.display = 'none';
+        tbody.innerHTML = pageItems.map((o, i) => {
+          const sl = start + i + 1;
+          const accepted = o.acceptedDate || '-';
+          const shipped = o.shippedDate || '-';
+          const delivered = o.deliveredDate || '-';
+          const returned = o.returnedDate || '-';
+          return `<tr>
+            <td class="col-sl">${sl}</td>
+            <td class="col-view"><button class="icon-btn view" title="View Order" onclick="viewOrder(${o.dbId})"><i class="ti ti-eye"></i></button></td>
+            <td class="pid-pill">${o.orderId}</td>
+            <td class="mono">${o.date}</td>
+            <td><strong>${o.name}</strong></td>
+            <td class="mono">${o.mobile}</td>
+            <td>${statusBadge(o.status)}</td>
+            <td class="num-cell price-strike" style="color:var(--muted)">&#8377;${o.mrpAmount.toLocaleString('en-IN')}</td>
+            <td class="num-cell price-main" style="font-weight:700;color:var(--c)">&#8377;${o.orderAmount.toLocaleString('en-IN')}</td>
+            <td class="mono">${o.trackingNo}</td>
+            <td class="col-action"><div class="act-icons"><button class="icon-btn edit" title="Update Status" onclick="openStatusModal(${o.dbId}, '${o.status}')"><i class="ti ti-pencil"></i></button><button class="icon-btn del" title="Delete" onclick="deleteOrder(${o.dbId})"><i class="ti ti-trash"></i></button></div></td>
+            <td class="mono">${accepted}</td>
+            <td class="mono">${shipped}</td>
+            <td class="mono">${delivered}</td>
+            <td class="mono">${returned}</td>
+          </tr>`;
+        }).join('');
+      }
+
+      document.getElementById('resultCount').textContent = total;
+      document.getElementById('pgFrom').textContent = total === 0 ? 0 : start + 1;
+      document.getElementById('pgTo').textContent = Math.min(start + state.perPage, total);
+      document.getElementById('pgTotal').textContent = total;
+
+      // pagination
+      const wrap = document.getElementById('pgBtns');
+      let html = `<button class="pg-btn" ${state.page === 1 ? 'disabled' : ''} onclick="goPage(${state.page - 1})"><i class="ti ti-chevron-left"></i></button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        if (totalPages > 7 && i !== 1 && i !== totalPages && Math.abs(i - state.page) > 1) {
+          if (i === 2 || i === totalPages - 1) html += `<span style="padding:0 4px;color:var(--muted)">&hellip;</span>`;
+          continue;
+        }
+        html += `<button class="pg-btn ${i === state.page ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+      }
+      html += `<button class="pg-btn" ${state.page === totalPages ? 'disabled' : ''} onclick="goPage(${state.page + 1})"><i class="ti ti-chevron-right"></i></button>`;
+      wrap.innerHTML = html;
+
+      // stats
+      document.getElementById('statTotal').textContent = orders.length;
+      document.getElementById('statPending').textContent = orders.filter(o => o.status === 'pending').length;
+      document.getElementById('statShipped').textContent = orders.filter(o => o.status === 'shipped').length;
+      document.getElementById('statDelivered').textContent = orders.filter(o => o.status === 'delivered').length;
+      const revenue = orders.filter(o => o.status === 'delivered').reduce((s, o) => s + o.orderAmount, 0);
+      document.getElementById('statRevenue').textContent = '₹' + revenue.toLocaleString('en-IN');
+    }
+
+    function applyFilters() {
+      state.search = document.getElementById('searchInput').value.trim();
+      state.status = document.getElementById('filterStatus').value;
+      state.page = 1;
+      render();
+    }
+
+    function sortBy(key) {
+      if (state.sortKey === key) state.sortDir *= -1; else { state.sortKey = key; state.sortDir = 1; }
+      render();
+    }
+
+    function goPage(p) { if (p < 1) return; state.page = p; render(); }
+
+    // snackbar
+    function showGlobalSnackbar(msg, type = 'success') {
+      const el = document.getElementById('globalSnackbar');
+      if (!el) return;
+      el.textContent = msg;
+      el.className = 'show ' + type;
+      setTimeout(() => { el.className = el.className.replace('show', '').trim(); }, 3000);
+    }
+
+    // ---------- Delete ----------
+    async function deleteOrder(id) {
+      if (!confirm('Are you sure you want to delete this order?')) return;
+      try {
+        const res = await fetch('http://localhost/krishloom-vastram/backend/routes/OrderApi.php?route=deleteOrder', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order_id: id })
+        });
+        const result = await res.json();
+        if (result.status) {
+          showGlobalSnackbar('Order deleted successfully');
+          fetchOrders();
+        } else {
+          showGlobalSnackbar(result.message || 'Error deleting order', 'error');
+        }
+      } catch (err) {
+        showGlobalSnackbar('Error deleting order', 'error');
+      }
+    }
+
+    // ---------- Update Status ----------
+    function openStatusModal(id, currentStatus) {
+      document.getElementById('editOrderId').value = id;
+      document.getElementById('editOrderStatus').value = currentStatus.toLowerCase();
+      document.getElementById('statusModalOverlay').classList.add('active');
+    }
+    function closeStatusModal() {
+      document.getElementById('statusModalOverlay').classList.remove('active');
+    }
+    async function saveOrderStatus() {
+      const id = document.getElementById('editOrderId').value;
+      const status = document.getElementById('editOrderStatus').value;
+      try {
+        const res = await fetch('http://localhost/krishloom-vastram/backend/routes/OrderApi.php?route=updateOrderStatus', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order_id: id, status: status })
+        });
+        const result = await res.json();
+        if (result.status) {
+          showGlobalSnackbar('Status updated successfully');
+          closeStatusModal();
+          fetchOrders();
+        } else {
+          showGlobalSnackbar(result.message || 'Error updating status', 'error');
+        }
+      } catch (err) {
+        showGlobalSnackbar('Error updating status', 'error');
+      }
+    }
+
+    // ---------- View Details ----------
+    async function viewOrder(id) {
+      try {
+        const res = await fetch('http://localhost/krishloom-vastram/backend/routes/OrderApi.php?route=getOrderDetails&order_id=' + id);
+        const data = await res.json();
+        if (data.status) {
+          document.getElementById('viewOrderNo').textContent = data.data.order.order_number || ('ORD-' + id);
+          const itemsHtml = data.data.products.map(p => `
+            <div class="o-item">
+              <img src="http://localhost/krishloom-vastram/backend/${p.main_image}" class="o-item-img" onclick="openLightbox(this.src)" onerror="this.src='https://via.placeholder.com/60x80?text=No+Image'">
+              <div class="o-item-info">
+                <div class="o-item-title">${p.product_title}</div>
+                <div class="o-item-price">Qty: ${p.quantity} &nbsp;&bull;&nbsp; &#8377;${parseFloat(p.price).toLocaleString('en-IN')}</div>
+              </div>
+            </div>
+          `).join('');
+          document.getElementById('viewOrderItems').innerHTML = itemsHtml || '<div style="text-align:center;color:var(--muted)">No items found</div>';
+          document.getElementById('viewModalOverlay').classList.add('active');
+        } else {
+          showGlobalSnackbar('Failed to load order details', 'error');
+        }
+      } catch (err) {
+        showGlobalSnackbar('Error loading order details', 'error');
+      }
+    }
+    function closeViewModal() {
+      document.getElementById('viewModalOverlay').classList.remove('active');
+    }
+
+    // ---------- Lightbox ----------
+    function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightbox').classList.add('active');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+    // Close modals on clicking overlay background
+    document.querySelectorAll('.modal-overlay, .lightbox').forEach(el => {
+      el.addEventListener('click', (e) => {
+        if (e.target === el) {
+          el.classList.remove('active');
+        }
+      });
+    });
+
+    // Call fetch on load instead of static render
+    fetchOrders();
+  </script>
+</body>
+
+</html>

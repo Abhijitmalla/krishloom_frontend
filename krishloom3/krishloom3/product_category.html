@@ -11,7 +11,7 @@
 
     <!-- font -->
     <link rel="stylesheet" href="assets/fonts/fonts.css">
-    <link rel="stylesheet" href="assets/icon:icomoon/style.css">
+    <link rel="stylesheet" href="assets/icon_icomoon/style.css">
     <!-- css -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
@@ -123,14 +123,13 @@
                             <li class=" d-sm-block">
                                 <a href="wishlist.html" class="nav-icon-item link">
                                    <i class="fas fa-heart"></i>
+                                   <span class="count wishlist-count">0</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#shoppingCart" data-bs-toggle="offcanvas" class="nav-icon-item link shop-cart">
+                                <a href="view-cart.html" class="nav-icon-item link shop-cart">
                                     <i class="fas fa-shopping-cart"></i>
-                                    <span class="count">
-                                        10+
-                                    </span>
+                                    <span class="count">0</span>
                                 </a>
                             </li>
                             <!-- Profile Icon (shown when logged in) -->
@@ -6887,6 +6886,7 @@
 
     <script src="assets/js/carousel.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/user-store.js"></script>
     <!-- Auth-aware header logic -->
     <style>
         #profileIconItem {
@@ -7024,9 +7024,10 @@
                     if (res.status && res.data) {
                         const under2999 = [];
                         const under4999 = [];
+                        const allProducts = res.data;
 
-                        res.data.forEach(product => {
-                            if (product.product_type === 'Saree') {
+                        allProducts.forEach(product => {
+                            if (product.product_type === 'Saree' && product.image_type === 'main') {
                                 const price = parseFloat(product.selling_price);
                                 if (!isNaN(price)) {
                                     if (price < 2999) {
@@ -7044,34 +7045,34 @@
 
                             let html = '';
                             products.forEach(p => {
-                                // Extract first gallery image as hover image or fallback to main image
+                                // Find first gallery image for hover effect from the flat API list
                                 let hoverImg = p.main_image;
-                                try {
-                                    const gallery = JSON.parse(p.gallery_images);
-                                    if (Array.isArray(gallery) && gallery.length > 0) {
-                                        hoverImg = gallery[0];
-                                    }
-                                } catch (e) {}
+                                const galleryImg = allProducts.find(g => g.image_type === 'gallery' && String(g.parent_product_id) === String(p.id));
+                                if (galleryImg) {
+                                    hoverImg = galleryImg.main_image;
+                                }
 
-                                const mainImageUrl = p.main_image ? 'http://localhost/krishloom-vastram/backend/uploads/' + encodeURIComponent(p.main_image) : '';
-                                const hoverImageUrl = hoverImg ? 'http://localhost/krishloom-vastram/backend/uploads/' + encodeURIComponent(hoverImg) : mainImageUrl;
+                                const formatImg = img => img ? 'http://localhost/krishloom-vastram/backend/' + img.split('/').map(encodeURIComponent).join('/') : '';
+                                const mainImageUrl = formatImg(p.main_image);
+                                const hoverImageUrl = hoverImg ? formatImg(hoverImg) : mainImageUrl;
                                 const productJson = JSON.stringify(p).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
                                 
                                 // Price formatting
                                 const oldPrice = parseFloat(p.mrp);
                                 const newPrice = parseFloat(p.selling_price);
+                                const detailUrl = `product-detail.html?id=${encodeURIComponent(p.id)}`;
 
                                 html += `
                                 <div class="swiper-slide wow fadeInUp">
-                                    <div class="card-product">
+                                    <div class="card-product" data-product-id="${p.id}">
                                         <div class="card-product_wrapper" style="position: relative; overflow: hidden;">
-                                            <a href="product-detail.html" class="product-img view-details-link" data-product="${productJson}" style="display: block; overflow: hidden; position: relative;">
+                                            <a href="${detailUrl}" class="product-img view-details-link" data-product="${productJson}" style="display: block; overflow: hidden; position: relative;">
                                                 <img class="img-product" loading="lazy" width="330" height="440"
                                                     src="${mainImageUrl}" alt="Product" style="object-fit: cover; width:100%; height:100%; position: relative; z-index: 1;">
                                                 <img class="img-hover" loading="lazy" width="330" height="440"
                                                     src="${hoverImageUrl}" alt="Product" style="object-fit: cover; width:100%; height:100%; position: absolute; inset: 0; top: 0; left: 0; z-index: 2; opacity: 0; transition: transform 0.7s ease, opacity 0.7s ease; pointer-events: none;">
                                             </a>
-                                            <button class="wishlist-btn-top-right" aria-label="Add to wishlist" onclick="event.preventDefault(); this.classList.toggle('active');">
+                                            <button class="wishlist-btn-top-right js-add-wishlist" data-product-id="${p.id}" aria-label="Add to wishlist" aria-pressed="false">
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                                 </svg>
@@ -7087,13 +7088,13 @@
                                             </ul>
                                             <div class="product-action_bot">
                                                 <a href="#quickAdd" data-bs-toggle="modal"
-                                                    class="tf-btn btn-white small w-100">
+                                                    class="tf-btn btn-white small w-100 js-add-cart" data-product-id="${p.id}">
                                                     Quick Add
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="card-product_info">
-                                            <a href="product-detail.html"
+                                            <a href="${detailUrl}"
                                                 class="name-product lh-24 fw-medium link-underline-text view-details-link" data-product="${productJson}">
                                                 ${p.product_title}
                                             </a>

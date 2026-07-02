@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout – KrishLoom</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+
+    :root {
+      --crimson:  #b01a3a;
+      --crimson2: #8a1230;
+      --crimson3: #6b0e26;
+      --gold:     #c8860a;
+      --gold2:    #f0c040;
+      --ivory:    #fdf8f2;
+      --ivory2:   #f7f0e8;
+      --card:     #ffffff;
+      --border:   #e8ddd4;
+      --border2:  #d4c5b8;
+      --muted:    #7a6e79;
+      --text:     #1a0a10;
+      --text2:    #3d2030;
+      --success:  #16a34a;
+      --r:        10px;
+      --r2:       14px;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 14px;
+      background: var(--ivory);
+      color: var(--text);
+    }
+
+    /* ══════════════════════════════
+       TOP STRIP + HEADER
+    ══════════════════════════════ */
+    .promo-strip {
+      background: var(--crimson);
+      color: #fff;
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .5px;
+    }
+    .promo-strip strong { color: var(--gold2) }
+
+    .site-header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+    }
+    .brand-ring {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--crimson), var(--gold));
+      display: grid; place-items: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 13px; font-weight: 700;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(176,26,58,.25);
+    }
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 700;
+      color: var(--crimson); line-height: 1;
+    }
+    .brand-name span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 9px; font-weight: 500;
+      color: var(--muted); letter-spacing: 1px;
+      text-transform: uppercase; margin-top: 2px;
+    }
+
+    /* Stepper in header */
+    .checkout-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      padding: 0 14px;
+    }
+    .step.active { color: var(--crimson) }
+    .step.done { color: var(--success) }
+    .step-num {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+      display: grid; place-items: center;
+      font-size: 11px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step.active .step-num { background: var(--crimson); color: #fff; border-color: var(--crimson) }
+    .step.done .step-num { background: var(--success); color: #fff; border-color: var(--success) }
+    .step-div {
+      width: 32px; height: 1px;
+      background: var(--border);
+    }
+    .step.done + .step-div { background: var(--success) }
+    .header-secure {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--muted);
+    }
+    .header-secure i { color: var(--success); font-size: 16px }
+
+    /* ══════════════════════════════
+       MAIN LAYOUT
+    ══════════════════════════════ */
+    .checkout-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* ══════════════════════════════
+       SECTION CARDS
+    ══════════════════════════════ */
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .section-card:last-child { margin-bottom: 0 }
+    .card-header {
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-header-left {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-num {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--crimson);
+      color: #fff;
+      font-size: 12px; font-weight: 700;
+      display: grid; place-items: center;
+      flex-shrink: 0;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--text);
+    }
+    .card-edit {
+      font-size: 12px; font-weight: 600;
+      color: var(--crimson);
+      cursor: pointer;
+      display: flex; align-items: center; gap: 4px;
+      background: none; border: none;
+      text-decoration: none;
+    }
+    .card-edit:hover { color: var(--crimson2) }
+    .card-body { padding: 22px }
+
+    /* ══════════════════════════════
+       FORM ELEMENTS
+    ══════════════════════════════ */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .form-row.three { grid-template-columns: 1fr 1fr 1fr }
+    .form-row.full { grid-template-columns: 1fr }
+    .form-row:last-child { margin-bottom: 0 }
+    .form-group { display: flex; flex-direction: column; gap: 5px }
+    .form-group.span2 { grid-column: span 2 }
+    .form-label {
+      font-size: 12px; font-weight: 600;
+      color: var(--text2); letter-spacing: .2px;
+    }
+    .form-label .req { color: var(--crimson); margin-left: 2px }
+    .form-control {
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--ivory);
+      outline: none;
+      transition: border .15s, box-shadow .15s, background .15s;
+    }
+    .form-control:focus {
+      border-color: var(--crimson);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(176,26,58,.08);
+    }
+    .form-control.error {
+      border-color: var(--crimson);
+      background: #fff5f7;
+    }
+    .form-control::placeholder { color: #c5b8be }
+    select.form-control { cursor: pointer }
+    .form-hint { font-size: 11px; color: var(--muted) }
+    .error-msg { font-size: 11px; color: var(--crimson); display: none }
+    .form-group.has-error .error-msg { display: block }
+    .form-group.has-error .form-control { border-color: var(--crimson) }
+
+    /* ══════════════════════════════
+       DELIVERY OPTIONS
+    ══════════════════════════════ */
+    .delivery-options { display: flex; flex-direction: column; gap: 10px }
+    .delivery-opt {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border .15s, background .15s;
+      position: relative;
+    }
+    .delivery-opt:hover { border-color: var(--crimson); background: rgba(176,26,58,.02) }
+    .delivery-opt.selected {
+      border-color: var(--crimson);
+      background: rgba(176,26,58,.04);
+    }
+    .delivery-opt input[type="radio"] { display: none }
+    .radio-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      display: grid; place-items: center;
+      transition: border .15s;
+    }
+    .delivery-opt.selected .radio-dot {
+      border-color: var(--crimson);
+    }
+    .radio-dot::after {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--crimson);
+      transform: scale(0);
+      transition: transform .15s;
+    }
+    .delivery-opt.selected .radio-dot::after { transform: scale(1) }
+    .delivery-opt-info { flex: 1 }
+    .delivery-opt-name {
+      font-size: 13.5px; font-weight: 600;
+      color: var(--text);
+    }
+    .delivery-opt-detail {
+      font-size: 11.5px; color: var(--muted); margin-top: 2px;
+    }
+    .delivery-opt-price {
+      font-size: 13px; font-weight: 700;
+      color: var(--crimson);
+    }
+    .delivery-opt-price.free { color: var(--success) }
+    .delivery-badge {
+      position: absolute;
+      top: -8px; right: 14px;
+      background: var(--gold);
+      color: #3a1a00;
+      font-size: 9px; font-weight: 700;
+      padding: 2px 8px; border-radius: 20px;
+      letter-spacing: .4px; text-transform: uppercase;
+    }
+
+    /* ══════════════════════════════
+       PAYMENT METHODS
+    ══════════════════════════════ */
+    .pay-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .pay-tab {
+      display: flex; align-items: center; gap: 7px;
+      padding: 11px 18px;
+      font-size: 12.5px; font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+      background: none; border-top: none; border-left: none; border-right: none;
+      font-family: inherit;
+    }
+    .pay-tab i { font-size: 17px }
+    .pay-tab.active {
+      color: var(--crimson);
+      border-bottom-color: var(--crimson);
+    }
+    .pay-panel { display: none }
+    .pay-panel.active { display: block }
+
+    /* Card icons row */
+    .card-icons {
+      display: flex; gap: 8px; margin-bottom: 16px;
+    }
+    .card-icon {
+      height: 28px; padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700;
+      color: var(--muted);
+    }
+    .card-icon.visa { color: #1a1f71 }
+    .card-icon.mc { color: #eb001b }
+    .card-icon.rupay { color: #006400 }
+
+    /* Card number with icon */
+    .card-num-wrap { position: relative }
+    .card-num-wrap .form-control { padding-right: 46px }
+    .card-num-wrap i {
+      position: absolute; right: 13px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px; color: var(--muted);
+    }
+
+    /* UPI panel */
+    .upi-apps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .upi-app {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: border .15s, background .15s;
+      font-size: 11px; font-weight: 600; color: var(--text);
+    }
+    .upi-app:hover, .upi-app.selected {
+      border-color: var(--crimson);
+      background: rgba(176,26,58,.04);
+      color: var(--crimson);
+    }
+    .upi-app i { display: block; font-size: 22px; margin-bottom: 5px; color: inherit }
+    .upi-divider {
+      display: flex; align-items: center; gap: 10px;
+      margin: 16px 0;
+      font-size: 11.5px; color: var(--muted);
+    }
+    .upi-divider::before, .upi-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* COD panel */
+    .cod-notice {
+      background: var(--ivory2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .cod-notice i { font-size: 22px; color: var(--gold); flex-shrink: 0; margin-top: 1px }
+    .cod-notice p { font-size: 13px; line-height: 1.6; color: var(--text2) }
+    .cod-notice p strong { color: var(--text); font-weight: 600 }
+    .cod-fee {
+      margin-top: 12px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12.5px; color: var(--muted);
+    }
+    .cod-fee strong { color: var(--crimson); font-weight: 700 }
+
+    /* ══════════════════════════════
+       ORDER SUMMARY (RIGHT COLUMN)
+    ══════════════════════════════ */
+    .summary-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      overflow: hidden;
+      position: sticky;
+      top: 80px;
+    }
+    .summary-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(110deg, var(--crimson2) 0%, #4a0e1c 100%);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .summary-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700; color: #fff;
+    }
+    .summary-header .item-count {
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      font-size: 11px; font-weight: 600;
+      padding: 3px 10px; border-radius: 20px;
+    }
+
+    /* Cart items */
+    .cart-items { padding: 14px 20px; border-bottom: 1px solid var(--border) }
+    .cart-item {
+      display: flex; gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-item:last-child { border-bottom: none; padding-bottom: 0 }
+    .cart-item-img {
+      width: 58px; height: 68px;
+      border-radius: 8px;
+      background: var(--ivory2);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .cart-item-img svg { width: 32px; height: 32px; opacity: .25 }
+    .item-qty-badge {
+      position: absolute;
+      top: -6px; right: -6px;
+      width: 19px; height: 19px;
+      background: var(--crimson);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 10px; font-weight: 700;
+      display: grid; place-items: center;
+      border: 2px solid #fff;
+    }
+    .cart-item-info { flex: 1; min-width: 0 }
+    .cart-item-name {
+      font-size: 12.5px; font-weight: 600;
+      color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: 3px;
+    }
+    .cart-item-meta {
+      font-size: 11px; color: var(--muted); margin-bottom: 5px;
+    }
+    .cart-item-price {
+      font-size: 13px; font-weight: 700; color: var(--text);
+    }
+    .cart-item-mrp {
+      font-size: 11px; color: var(--muted);
+      text-decoration: line-through; margin-left: 5px;
+    }
+    .cart-item-save {
+      font-size: 10.5px; color: var(--success); font-weight: 600;
+      background: rgba(22,163,74,.08);
+      padding: 2px 7px; border-radius: 20px; margin-left: 4px;
+    }
+
+    /* Coupon */
+    .coupon-row {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex; gap: 8px;
+    }
+    .coupon-row .form-control {
+      flex: 1;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .coupon-row .form-control::placeholder { text-transform: none; letter-spacing: 0 }
+    .btn-coupon {
+      padding: 10px 16px;
+      background: var(--ivory2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 12.5px; font-weight: 600;
+      color: var(--crimson);
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .15s, border .15s;
+      white-space: nowrap;
+    }
+    .btn-coupon:hover { background: rgba(176,26,58,.07); border-color: var(--crimson) }
+    .coupon-applied {
+      padding: 10px 20px;
+      background: rgba(22,163,74,.07);
+      border-bottom: 1px solid rgba(22,163,74,.15);
+      display: none; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; color: var(--success);
+    }
+    .coupon-applied.show { display: flex }
+    .coupon-applied button {
+      margin-left: auto;
+      background: none; border: none;
+      color: var(--crimson); cursor: pointer;
+      font-size: 14px;
+    }
+
+    /* Price breakdown */
+    .price-breakdown { padding: 16px 20px; border-bottom: 1px solid var(--border) }
+    .price-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 5px 0;
+      font-size: 13px; color: var(--text2);
+    }
+    .price-row .label { display: flex; align-items: center; gap: 5px }
+    .price-row.discount .val { color: var(--success); font-weight: 600 }
+    .price-row.discount .label { color: var(--success) }
+    .price-row.delivery .val.free { color: var(--success); font-weight: 600 }
+    .price-row.coupon .val { color: var(--success); font-weight: 600 }
+    .price-row.total {
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      font-weight: 700;
+      font-size: 15px; color: var(--text);
+    }
+    .price-row.total .label { font-family: 'Playfair Display', serif }
+    .savings-strip {
+      margin-top: 10px;
+      background: rgba(22,163,74,.07);
+      border: 1px solid rgba(22,163,74,.15);
+      border-radius: 7px;
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 12px; font-weight: 600; color: var(--success);
+    }
+
+    /* Place order button */
+    .place-order-wrap { padding: 16px 20px }
+    .btn-place-order {
+      width: 100%;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, var(--crimson), var(--crimson2));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px; font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      transition: opacity .15s, transform .1s, box-shadow .15s;
+      box-shadow: 0 4px 18px rgba(176,26,58,.3);
+    }
+    .btn-place-order:hover { opacity: .93; box-shadow: 0 6px 22px rgba(176,26,58,.38) }
+    .btn-place-order:active { transform: scale(.98) }
+    .btn-place-order i { font-size: 18px }
+    .trust-badges {
+      display: flex; align-items: center; justify-content: center;
+      gap: 14px; margin-top: 12px; flex-wrap: wrap;
+    }
+    .trust-badge {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 10.5px; color: var(--muted);
+    }
+    .trust-badge i { font-size: 13px; color: var(--success) }
+
+    /* ══════════════════════════════
+       ADDRESS SAVED CARD
+    ══════════════════════════════ */
+    .saved-addresses { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px }
+    .saved-addr {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border .15s, background .15s;
+      position: relative;
+    }
+    .saved-addr:hover { border-color: var(--crimson); background: rgba(176,26,58,.02) }
+    .saved-addr.selected { border-color: var(--crimson); background: rgba(176,26,58,.04) }
+    .saved-addr .radio-dot { margin-top: 2px; flex-shrink: 0 }
+    .addr-info h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px }
+    .addr-info p { font-size: 12px; color: var(--muted); line-height: 1.5 }
+    .addr-tag {
+      font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 20px;
+      margin-left: 7px;
+      background: rgba(176,26,58,.1); color: var(--crimson);
+      text-transform: uppercase; letter-spacing: .4px;
+    }
+    .addr-default-tag {
+      font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 20px;
+      background: rgba(22,163,74,.1); color: var(--success);
+      position: absolute; top: 10px; right: 12px;
+    }
+    .set-default-btn {
+      position: absolute; bottom: 10px; right: 12px;
+      font-size: 10.5px; font-weight: 600;
+      color: var(--crimson);
+      background: rgba(176,26,58,.07);
+      border: 1px solid rgba(176,26,58,.2);
+      border-radius: 20px;
+      padding: 3px 10px;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex; align-items: center; gap: 4px;
+      transition: background .15s, border .15s;
+    }
+    .set-default-btn:hover { background: rgba(176,26,58,.14); border-color: var(--crimson) }
+    .set-default-btn i { font-size: 12px }
+    /* give card enough bottom padding so button doesn't overlap text */
+    .saved-addr:has(.set-default-btn) { padding-bottom: 36px }
+    .add-new-addr {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 16px;
+      border: 1.5px dashed var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px; font-weight: 600; color: var(--crimson);
+      transition: border .15s, background .15s;
+      background: none; width: 100%; font-family: inherit;
+    }
+    .add-new-addr:hover { border-color: var(--crimson); background: rgba(176,26,58,.03) }
+    .add-new-addr i { font-size: 18px }
+    .new-addr-form { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border) }
+    .new-addr-form.open { display: block }
+
+    /* ══════════════════════════════
+       SUBMIT BTN (left column)
+    ══════════════════════════════ */
+    .btn-continue {
+      width: 100%; padding: 13px 20px;
+      background: linear-gradient(135deg, var(--crimson), var(--crimson2));
+      color: #fff;
+      border: none; border-radius: 10px;
+      font-size: 13.5px; font-weight: 700;
+      font-family: inherit; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: opacity .15s, transform .1s, box-shadow .15s;
+      box-shadow: 0 3px 14px rgba(176,26,58,.28);
+      margin-top: 20px;
+    }
+    .btn-continue:hover { opacity: .92; box-shadow: 0 5px 20px rgba(176,26,58,.35) }
+    .btn-continue:active { transform: scale(.98) }
+
+    /* ══════════════════════════════
+       SUCCESS OVERLAY
+    ══════════════════════════════ */
+    .success-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(26,10,16,.75);
+      z-index: 999;
+      place-items: center;
+    }
+    .success-overlay.show { display: grid }
+    .success-modal {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 48px 40px;
+      text-align: center;
+      max-width: 440px; width: 90%;
+      animation: popIn .35s cubic-bezier(.175,.885,.32,1.275);
+    }
+    @keyframes popIn {
+      from { transform: scale(.85); opacity: 0 }
+      to   { transform: scale(1);   opacity: 1 }
+    }
+    .success-ring {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(22,163,74,.1);
+      display: grid; place-items: center;
+      margin: 0 auto 20px;
+    }
+    .success-ring i { font-size: 42px; color: var(--success) }
+    .success-modal h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 700;
+      color: var(--text); margin-bottom: 10px;
+    }
+    .success-modal p { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 6px }
+    .order-id {
+      display: inline-block;
+      margin: 14px 0 22px;
+      padding: 8px 18px;
+      background: var(--ivory2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+      color: var(--crimson); letter-spacing: .5px;
+    }
+    .btn-track {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, var(--crimson), var(--crimson2));
+      color: #fff; border: none; border-radius: 10px;
+      font-size: 13.5px; font-weight: 700;
+      font-family: inherit; cursor: pointer;
+      box-shadow: 0 3px 14px rgba(176,26,58,.28);
+    }
+    .eta-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(22,163,74,.09);
+      border: 1px solid rgba(22,163,74,.2);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12.5px; font-weight: 600; color: var(--success);
+      margin-bottom: 20px;
+    }
+    .eta-pill i { font-size: 15px }
+
+    /* ══════════════════════════════
+       TOAST
+    ══════════════════════════════ */
+    .toast {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: var(--text); color: #fff;
+      padding: 11px 22px; border-radius: 8px;
+      font-size: 13px; font-weight: 500;
+      z-index: 9999; opacity: 0;
+      transition: opacity .25s, transform .25s;
+      white-space: nowrap; pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0) }
+    .toast.success { background: var(--success) }
+    .toast.error { background: var(--crimson) }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media(max-width: 900px) {
+      .checkout-steps { display: none }
+      .checkout-wrap {
+        grid-template-columns: 1fr;
+        padding: 20px 16px 50px;
+        gap: 20px;
+      }
+      /* Move summary above on mobile */
+      .summary-col { order: -1 }
+      .summary-card { position: static }
+      .site-header { padding: 0 16px }
+      .upi-apps { grid-template-columns: repeat(2, 1fr) }
+    }
+    @media(max-width: 520px) {
+      .form-row { grid-template-columns: 1fr }
+      .form-row.three { grid-template-columns: 1fr }
+      .form-group.span2 { grid-column: span 1 }
+      .header-secure span { display: none }
+      .card-icons { flex-wrap: wrap }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── PROMO BAR ── -->
+  <div class="promo-strip">✦ <strong>Free Shipping</strong> on orders above ₹999 &nbsp;·&nbsp; Use code <strong>KRISHLOOM20</strong> for 20% off ✦</div>
+
+  <!-- ── HEADER ── -->
+  <header class="site-header">
+    <a href="#" class="brand">
+      <div class="brand-ring">KL</div>
+      <div class="brand-name">KrishLoom<span>Handcrafted Textiles</span></div>
+    </a>
+
+    <div class="checkout-steps">
+      <div class="step done" id="step1">
+        <div class="step-num"><i class="ti ti-check" style="font-size:11px"></i></div>
+        <span>Cart</span>
+      </div>
+      <div class="step-div"></div>
+      <div class="step active" id="step2">
+        <div class="step-num">2</div>
+        <span>Checkout</span>
+      </div>
+      <div class="step-div"></div>
+      <div class="step" id="step3">
+        <div class="step-num">3</div>
+        <span>Confirmation</span>
+      </div>
+    </div>
+
+    <div class="header-secure">
+      <i class="ti ti-lock"></i>
+      <span>Secured Checkout</span>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════
+       MAIN CHECKOUT LAYOUT
+  ══════════════════════════════════════ -->
+  <div class="checkout-wrap">
+
+    <!-- ── LEFT COLUMN ── -->
+    <div class="left-col">
+
+      <!-- ① DELIVERY ADDRESS -->
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-num">1</div>
+            <h2 class="card-title">Delivery Address</h2>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <!-- Saved Addresses -->
+          <div class="saved-addresses">
+
+            <div class="saved-addr selected" onclick="selectAddr(this)">
+              <div class="radio-dot"></div>
+              <div class="addr-info">
+                <h4>Priya Sharma <span class="addr-tag">Home</span></h4>
+                <p>42, Rose Garden Society, Sector 14<br>Gurugram, Haryana – 122 001<br>📞 +91 98765 43210</p>
+              </div>
+              <span class="addr-default-tag">Default</span>
+            </div>
+
+            <div class="saved-addr" onclick="selectAddr(this)">
+              <div class="radio-dot"></div>
+              <div class="addr-info">
+                <h4>Priya Sharma <span class="addr-tag" style="background:rgba(59,130,246,.1);color:#2563eb">Work</span></h4>
+                <p>Office No. 5, DLF Cyber City, Phase 2<br>Gurugram, Haryana – 122 002<br>📞 +91 98765 43210</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Add new address toggle -->
+          <button class="add-new-addr" onclick="toggleNewAddr()">
+            <i class="ti ti-plus"></i> Add New Address
+          </button>
+
+          <!-- New address form (hidden by default) -->
+          <div class="new-addr-form" id="newAddrForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">First Name <span class="req">*</span></label>
+                <input type="text" class="form-control" placeholder="Priya" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name <span class="req">*</span></label>
+                <input type="text" class="form-control" placeholder="Sharma" />
+              </div>
+            </div>
+            <div class="form-row full">
+              <div class="form-group">
+                <label class="form-label">Mobile Number <span class="req">*</span></label>
+                <input type="tel" class="form-control" placeholder="+91 00000 00000" />
+              </div>
+            </div>
+            <div class="form-row full">
+              <div class="form-group">
+                <label class="form-label">Address Line 1 <span class="req">*</span></label>
+                <input type="text" class="form-control" placeholder="House No., Street Name" />
+              </div>
+            </div>
+            <div class="form-row full">
+              <div class="form-group">
+                <label class="form-label">Address Line 2</label>
+                <input type="text" class="form-control" placeholder="Landmark, Area (optional)" />
+              </div>
+            </div>
+            <div class="form-row three">
+              <div class="form-group">
+                <label class="form-label">Pincode <span class="req">*</span></label>
+                <input type="text" class="form-control" placeholder="110 001" maxlength="6" oninput="autofillCity(this)" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">City <span class="req">*</span></label>
+                <input type="text" class="form-control" placeholder="New Delhi" id="cityField" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">State <span class="req">*</span></label>
+                <select class="form-control" id="stateField">
+                  <option value="" disabled selected>— State —</option>
+                  <option>Andhra Pradesh</option><option>Delhi</option>
+                  <option>Gujarat</option><option>Haryana</option>
+                  <option>Karnataka</option><option>Kerala</option>
+                  <option>Maharashtra</option><option>Odisha</option>
+                  <option>Punjab</option><option>Rajasthan</option>
+                  <option>Tamil Nadu</option><option>Telangana</option>
+                  <option>Uttar Pradesh</option><option>West Bengal</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row full" style="margin-top:4px">
+              <div class="form-group">
+                <label class="form-label">Address Type</label>
+                <div style="display:flex;gap:10px;margin-top:2px">
+                  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px">
+                    <input type="radio" name="addrType" value="home" checked style="accent-color:var(--crimson)"> Home
+                  </label>
+                  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px">
+                    <input type="radio" name="addrType" value="work" style="accent-color:var(--crimson)"> Work
+                  </label>
+                  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px">
+                    <input type="radio" name="addrType" value="other" style="accent-color:var(--crimson)"> Other
+                  </label>
+                </div>
+              </div>
+            </div>
+            <button class="btn-continue" onclick="saveNewAddr()" style="margin-top:14px">
+              <i class="ti ti-map-pin"></i> Save This Address
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ② DELIVERY OPTIONS -->
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-num">2</div>
+            <h2 class="card-title">Delivery Options</h2>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="delivery-options">
+
+            <label class="delivery-opt selected" onclick="selectDelivery(this, 0, 'Standard – 5–7 Business Days')">
+              <input type="radio" name="delivery" checked />
+              <div class="radio-dot"></div>
+              <div class="delivery-opt-info">
+                <div class="delivery-opt-name">Standard Delivery</div>
+                <div class="delivery-opt-detail">Estimated: Mon, 7 Jul – Wed, 9 Jul</div>
+              </div>
+              <div class="delivery-opt-price free">FREE</div>
+            </label>
+
+            <label class="delivery-opt" onclick="selectDelivery(this, 79, 'Express – 2–3 Business Days')">
+              <div class="delivery-badge">Popular</div>
+              <input type="radio" name="delivery" />
+              <div class="radio-dot"></div>
+              <div class="delivery-opt-info">
+                <div class="delivery-opt-name">Express Delivery</div>
+                <div class="delivery-opt-detail">Estimated: Sat, 5 Jul – Sun, 6 Jul</div>
+              </div>
+              <div class="delivery-opt-price">₹79</div>
+            </label>
+
+            <label class="delivery-opt" onclick="selectDelivery(this, 199, 'Same Day by 9 PM')">
+              <input type="radio" name="delivery" />
+              <div class="radio-dot"></div>
+              <div class="delivery-opt-info">
+                <div class="delivery-opt-name">Same Day Delivery</div>
+                <div class="delivery-opt-detail">Order by 12 PM · Delivery today by 9 PM</div>
+              </div>
+              <div class="delivery-opt-price">₹199</div>
+            </label>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ PAYMENT -->
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-num">3</div>
+            <h2 class="card-title">Payment Method</h2>
+          </div>
+          <div class="header-secure" style="font-size:11.5px">
+            <i class="ti ti-lock" style="font-size:14px"></i> 256-bit SSL
+          </div>
+        </div>
+        <div class="card-body" style="padding-bottom:8px">
+
+          <!-- Payment tabs -->
+          <div class="pay-tabs">
+            <button class="pay-tab active" onclick="switchPay('card', this)">
+              <i class="ti ti-credit-card"></i> Card
+            </button>
+            <button class="pay-tab" onclick="switchPay('upi', this)">
+              <i class="ti ti-qrcode"></i> UPI
+            </button>
+            <button class="pay-tab" onclick="switchPay('netbanking', this)">
+              <i class="ti ti-building-bank"></i> Net Banking
+            </button>
+            <button class="pay-tab" onclick="switchPay('cod', this)">
+              <i class="ti ti-wallet"></i> Cash on Delivery
+            </button>
+          </div>
+
+          <!-- CARD Panel -->
+          <div class="pay-panel active" id="panel-card">
+            <div class="card-icons">
+              <div class="card-icon visa">VISA</div>
+              <div class="card-icon mc">MC</div>
+              <div class="card-icon rupay">RuPay</div>
+              <div class="card-icon" style="color:#00457c">PayPal</div>
+            </div>
+            <div class="form-row full">
+              <div class="form-group" id="fg-cardnum">
+                <label class="form-label">Card Number <span class="req">*</span></label>
+                <div class="card-num-wrap">
+                  <input type="text" class="form-control" id="cardNum" placeholder="0000  0000  0000  0000" maxlength="19" oninput="formatCard(this)" />
+                  <i class="ti ti-credit-card"></i>
+                </div>
+                <span class="error-msg">Please enter a valid 16-digit card number.</span>
+              </div>
+            </div>
+            <div class="form-row full">
+              <div class="form-group">
+                <label class="form-label">Cardholder Name <span class="req">*</span></label>
+                <input type="text" class="form-control" id="cardName" placeholder="PRIYA SHARMA" style="text-transform:uppercase;letter-spacing:.5px" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group" id="fg-expiry">
+                <label class="form-label">Expiry Date <span class="req">*</span></label>
+                <input type="text" class="form-control" id="cardExpiry" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)" />
+                <span class="error-msg">Enter a valid expiry date.</span>
+              </div>
+              <div class="form-group" id="fg-cvv">
+                <label class="form-label">CVV <span class="req">*</span></label>
+                <input type="password" class="form-control" id="cardCvv" placeholder="•••" maxlength="4" />
+                <span class="error-msg">Enter a valid CVV.</span>
+              </div>
+            </div>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer;margin-top:4px;margin-bottom:18px">
+              <input type="checkbox" checked style="accent-color:var(--crimson);width:15px;height:15px" />
+              Save this card for future purchases
+            </label>
+          </div>
+
+          <!-- UPI Panel -->
+          <div class="pay-panel" id="panel-upi">
+            <div class="upi-apps">
+              <div class="upi-app" onclick="selectUpi(this)">
+                <i class="ti ti-currency-rupee"></i> GPay
+              </div>
+              <div class="upi-app" onclick="selectUpi(this)">
+                <i class="ti ti-device-mobile"></i> PhonePe
+              </div>
+              <div class="upi-app" onclick="selectUpi(this)">
+                <i class="ti ti-brand-patreon"></i> Paytm
+              </div>
+              <div class="upi-app" onclick="selectUpi(this)">
+                <i class="ti ti-dots-circle-horizontal"></i> Other
+              </div>
+            </div>
+            <div class="upi-divider">or enter UPI ID</div>
+            <div class="form-row full" style="margin-bottom:18px">
+              <div class="form-group">
+                <label class="form-label">UPI ID</label>
+                <input type="text" class="form-control" id="upiId" placeholder="yourname@upi" />
+                <span class="form-hint">e.g. priya@oksbi · priya@paytm · 9876543210@upi</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Net Banking Panel -->
+          <div class="pay-panel" id="panel-netbanking">
+            <div class="form-row full" style="margin-bottom:18px">
+              <div class="form-group">
+                <label class="form-label">Select Your Bank <span class="req">*</span></label>
+                <select class="form-control">
+                  <option value="" disabled selected>— Choose Bank —</option>
+                  <option>State Bank of India</option>
+                  <option>HDFC Bank</option>
+                  <option>ICICI Bank</option>
+                  <option>Axis Bank</option>
+                  <option>Kotak Mahindra Bank</option>
+                  <option>Punjab National Bank</option>
+                  <option>Bank of Baroda</option>
+                  <option>Canara Bank</option>
+                  <option>Other Bank</option>
+                </select>
+              </div>
+            </div>
+            <div class="cod-notice" style="background:rgba(59,130,246,.05);border-color:rgba(59,130,246,.2)">
+              <i class="ti ti-info-circle" style="color:#2563eb"></i>
+              <p>You will be redirected to your bank's secure net banking portal to complete the payment. <strong>Do not press back or refresh</strong> during the transaction.</p>
+            </div>
+          </div>
+
+          <!-- COD Panel -->
+          <div class="pay-panel" id="panel-cod">
+            <div class="cod-notice">
+              <i class="ti ti-cash"></i>
+              <div>
+                <p><strong>Pay when your order arrives.</strong> Our delivery partner will collect the payment at your doorstep. Please keep exact change ready.</p>
+                <div class="cod-fee"><i class="ti ti-info-circle"></i> Cash on Delivery charge: <strong>₹29</strong> added to your order total.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Continue button (mobile-visible alternative to sidebar button) -->
+      <button class="btn-continue" id="mobilePlaceOrder" onclick="placeOrder()" style="display:none">
+        <i class="ti ti-shield-check"></i> Place Order Securely
+      </button>
+
+    </div><!-- /left-col -->
+
+    <!-- ── RIGHT COLUMN: ORDER SUMMARY ── -->
+    <div class="summary-col">
+      <div class="summary-card">
+
+        <div class="summary-header">
+          <h2>Order Summary</h2>
+          <span class="item-count">3 Items</span>
+        </div>
+
+        <!-- Cart Items -->
+<div class="cart-items" id="checkout-cart-items">
+
+          <div class="cart-item">
+            <div class="cart-item-img">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="4" width="48" height="56" rx="4" fill="#e8ddd4"/><path d="M20 20 Q32 12 44 20 Q32 28 20 20Z" fill="#b01a3a" opacity=".5"/><path d="M20 32 Q32 24 44 32 Q32 40 20 32Z" fill="#c8860a" opacity=".4"/><path d="M20 44 Q32 36 44 44 Q32 52 20 44Z" fill="#b01a3a" opacity=".3"/></svg>
+              <span class="item-qty-badge">1</span>
+            </div>
+            <div class="cart-item-info">
+              <div class="cart-item-name">Kanjivaram Silk Saree – Crimson</div>
+              <div class="cart-item-meta">Color: Crimson · Size: 5.5m</div>
+              <div>
+                <span class="cart-item-price">₹4,299</span>
+                <span class="cart-item-mrp">₹5,999</span>
+                <span class="cart-item-save">28% off</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cart-item">
+            <div class="cart-item-img">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="8" width="40" height="48" rx="4" fill="#e8ddd4"/><line x1="20" y1="20" x2="44" y2="20" stroke="#b01a3a" stroke-width="2.5" opacity=".5"/><line x1="20" y1="28" x2="44" y2="28" stroke="#c8860a" stroke-width="2" opacity=".4"/><line x1="20" y1="36" x2="38" y2="36" stroke="#b01a3a" stroke-width="2" opacity=".35"/></svg>
+              <span class="item-qty-badge">2</span>
+            </div>
+            <div class="cart-item-info">
+              <div class="cart-item-name">Cotton Linen Dress Material</div>
+              <div class="cart-item-meta">Color: Ivory · Size: 2.5m · Qty: 2</div>
+              <div>
+                <span class="cart-item-price">₹1,598</span>
+                <span class="cart-item-mrp">₹1,998</span>
+                <span class="cart-item-save">20% off</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cart-item">
+            <div class="cart-item-img">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 12 Q32 8 48 12 L44 52 Q32 56 20 52Z" fill="#e8ddd4"/><path d="M22 20 Q32 16 42 20" stroke="#b01a3a" stroke-width="2" opacity=".5" fill="none"/><circle cx="32" cy="34" r="6" fill="#c8860a" opacity=".3"/></svg>
+              <span class="item-qty-badge">1</span>
+            </div>
+            <div class="cart-item-info">
+              <div class="cart-item-name">Embroidered Dupatta – Emerald</div>
+              <div class="cart-item-meta">Color: Emerald Green · Size: Free</div>
+              <div>
+                <span class="cart-item-price">₹899</span>
+                <span class="cart-item-mrp">₹1,299</span>
+                <span class="cart-item-save">31% off</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Coupon -->
+        <div class="coupon-row">
+          <input type="text" class="form-control" id="couponInput" placeholder="Enter coupon code" />
+          <button class="btn-coupon" onclick="applyCoupon()">Apply</button>
+        </div>
+        <div class="coupon-applied" id="couponApplied">
+          <i class="ti ti-tag" style="font-size:16px"></i>
+          <span id="couponMsg">KRISHLOOM20 applied — ₹659 saved!</span>
+          <button onclick="removeCoupon()" title="Remove coupon"><i class="ti ti-x"></i></button>
+        </div>
+
+        <!-- Price Breakdown -->
+        <div class="price-breakdown">
+          <div class="price-row">
+<span class="label" id="subtotalLabel">Subtotal (0 items)</span>
+            <span class="val" id="subtotalVal">₹6,796</span>
+          </div>
+          <div class="price-row discount">
+            <span class="label"><i class="ti ti-tag" style="font-size:13px"></i> Product Discount</span>
+            <span class="val">−₹2,000</span>
+          </div>
+          <div class="price-row coupon" id="couponRow" style="display:none">
+            <span class="label"><i class="ti ti-ticket" style="font-size:13px"></i> Coupon (KRISHLOOM20)</span>
+            <span class="val" id="couponVal">−₹659</span>
+          </div>
+          <div class="price-row delivery" id="deliveryRow">
+            <span class="label"><i class="ti ti-truck" style="font-size:13px"></i> Delivery</span>
+            <span class="val free" id="deliveryVal">FREE</span>
+          </div>
+          <div class="price-row" id="codRow" style="display:none">
+            <span class="label"><i class="ti ti-cash" style="font-size:13px"></i> COD Charge</span>
+            <span class="val">₹29</span>
+          </div>
+          <div class="price-row total">
+            <span class="label">Total Payable</span>
+            <span class="val" id="totalVal">₹4,796</span>
+          </div>
+          <div class="savings-strip" id="savingsStrip">
+            🎉 You're saving <strong id="totalSavings">₹2,000</strong> on this order!
+          </div>
+        </div>
+
+        <!-- Place Order -->
+        <div class="place-order-wrap">
+          <button class="btn-place-order" onclick="placeOrder()">
+            <i class="ti ti-shield-check"></i>
+            <span>Place Order · <span id="btnTotal">₹4,796</span></span>
+          </button>
+          <div class="trust-badges">
+            <div class="trust-badge"><i class="ti ti-lock"></i> Safe Payment</div>
+            <div class="trust-badge"><i class="ti ti-refresh"></i> Easy Returns</div>
+            <div class="trust-badge"><i class="ti ti-truck"></i> Fast Delivery</div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /summary-col -->
+
+  </div><!-- /checkout-wrap -->
+
+  <!-- SUCCESS OVERLAY -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-modal">
+      <div class="success-ring">
+        <i class="ti ti-circle-check"></i>
+      </div>
+      <h2>Order Placed!</h2>
+      <p>Thank you for shopping with KrishLoom.<br>Your handcrafted textiles are on their way.</p>
+      <div class="order-id" id="orderIdDisplay">Order #KL-2026-00847</div>
+      <div class="eta-pill">
+        <i class="ti ti-truck"></i>
+        Estimated delivery: <strong id="etaText">&nbsp;Mon, 7 Jul</strong>
+      </div>
+      <button class="btn-track" onclick="window.location.reload()">
+        <i class="ti ti-package"></i> Track Your Order
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ── Global state ── */
+    let deliveryCharge = 0;
+    let couponDiscount = 0;
+    let isCod = false;
+    let selectedShippingAddressId = null;
+
+const cartProducts = JSON.parse(
+    sessionStorage.getItem("checkoutProducts") || "[]"
+);
+
+let subtotal = 0;
+
+cartProducts.forEach(item => {
+    subtotal +=
+        Number(item.selling_price || item.price || 0) *
+        Number(item.quantity || 1);
+});
+
+document.getElementById("subtotalVal").textContent =
+    "₹" + subtotal.toFixed(2);
+
+document.getElementById("totalVal").textContent =
+    "₹" + subtotal.toFixed(2);
+
+document.getElementById("btnTotal").textContent =
+    "₹" + subtotal.toFixed(2);
+
+    const ADDRESSES_API = 'http://localhost/krishloom-vastram/backend/routes/addressApi.php?route=getAddresses';
+
+    async function fetchSavedAddresses(userId) {
+      try {
+        const response = await fetch(`${ADDRESSES_API}&user_id=${encodeURIComponent(userId)}`);
+        const result = await response.json();
+        if (result.status && Array.isArray(result.data)) {
+          return result.data;
+        }
+      } catch (error) {
+        console.error('Unable to load saved addresses:', error);
+      }
+      return [];
+    }
+
+    // Store all address objects keyed by ID for easy lookup in placeOrder
+    const addressMap = new Map();
+
+    function renderSavedAddresses(addresses) {
+      const container = document.querySelector('.saved-addresses');
+      if (!container) return;
+      container.innerHTML = '';
+      addressMap.clear();
+
+      // Default address first, else first address
+      let firstSelectedIdx = addresses.findIndex(a => Number(a.is_default) === 1);
+      if (firstSelectedIdx === -1) firstSelectedIdx = 0;
+
+      addresses.forEach((address, index) => {
+        // Store address data by ID (ensure string key)
+        addressMap.set(String(address.id), address);
+
+        const isSelected   = index === firstSelectedIdx;
+        const selected     = isSelected ? ' selected' : '';
+        const isDefault    = Number(address.is_default) === 1;
+        const defaultTag   = isDefault ? '<span class="addr-default-tag">Default</span>' : '';
+        const setDefaultBtn = !isDefault
+          ? `<button class="set-default-btn"
+               onclick="event.stopPropagation(); setDefaultAddress('${address.id}')"
+               title="Use as default shipping address">
+               <i class="ti ti-map-pin"></i> Set as Default
+             </button>`
+          : '';
+        const typeTag = address.address_type
+          ? `<span class="addr-tag" style="background:rgba(59,130,246,.1);color:#2563eb">${address.address_type}</span>`
+          : '';
+
+        const html = `
+          <div class="saved-addr${selected}"
+               onclick="selectAddr(this)"
+               data-id="${address.id}">
+            <div class="radio-dot"></div>
+            <div class="addr-info">
+              <h4>${address.full_name} ${typeTag}</h4>
+              <p>${address.address}<br>${address.city}, ${address.state} – ${address.pincode}<br>📞 ${address.phone}</p>
+            </div>
+            ${defaultTag}
+            ${setDefaultBtn}
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+
+        if (isSelected) {
+          selectedShippingAddressId = String(address.id);
+          console.log('[Checkout] Auto-selected address ID:', selectedShippingAddressId, address);
+        }
+      });
+    }
+
+    function redirectToAddressPage() {
+      window.location.href = 'address.html';
+    }
+
+    async function initCheckoutAddresses() {
+      const userId = sessionStorage.getItem('user_id');
+      if (!userId) {
+        redirectToAddressPage();
+        return;
+      }
+
+      const addresses = await fetchSavedAddresses(userId);
+      if (!addresses.length) {
+        redirectToAddressPage();
+        return;
+      }
+
+      renderSavedAddresses(addresses);
+    }
+
+    initCheckoutAddresses();
+
+    function selectDelivery(el, charge, label) {
+      document.querySelectorAll('.delivery-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      deliveryCharge = charge;
+      isCod = false;
+      document.getElementById('deliveryVal').textContent = charge === 0 ? 'FREE' : '₹' + charge;
+      document.getElementById('deliveryVal').className = 'val' + (charge === 0 ? ' free' : '');
+      recalc();
+    }
+
+    /* ── Address selection ── */
+    function selectAddr(el) {
+      document.querySelectorAll('.saved-addr').forEach(a => a.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedShippingAddressId = el.dataset.id || null;
+      console.log('[Checkout] Selected address ID:', selectedShippingAddressId, addressMap.get(selectedShippingAddressId));
+    }
+
+    /* ── Set address as default ── */
+    async function setDefaultAddress(addressId) {
+      const userId = sessionStorage.getItem('user_id');
+      if (!userId) return;
+
+      try {
+        const res = await fetch(
+          'http://localhost/krishloom-vastram/backend/routes/addressApi.php?route=updateAddress',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id:         Number(addressId),
+              user_id:    Number(userId),
+              is_default: 1
+            })
+          }
+        );
+        const result = await res.json();
+        if (result.status) {
+          showToast('Default address updated!', 'success');
+          // Reload addresses so default tag moves
+          const addresses = await fetchSavedAddresses(userId);
+          renderSavedAddresses(addresses);
+          // Keep the same address selected
+          const card = document.querySelector(`.saved-addr[data-id="${addressId}"]`);
+          if (card) selectAddr(card);
+        } else {
+          showToast(result.message || 'Could not update default address', 'error');
+        }
+      } catch (e) {
+        console.error('setDefaultAddress error:', e);
+        showToast('Error updating default address', 'error');
+      }
+    }
+
+
+    /* ── New address toggle ── */
+    function toggleNewAddr() {
+      const f = document.getElementById('newAddrForm');
+      f.classList.toggle('open');
+    }
+    function saveNewAddr() {
+      showToast('New address saved!', 'success');
+      document.getElementById('newAddrForm').classList.remove('open');
+    }
+
+    /* ── Auto-fill city from pincode (demo) ── */
+    const pincodeMap = { '110': ['New Delhi', 'Delhi'], '122': ['Gurugram', 'Haryana'], '400': ['Mumbai', 'Maharashtra'], '560': ['Bengaluru', 'Karnataka'], '600': ['Chennai', 'Tamil Nadu'], '751': ['Bhubaneswar', 'Odisha'] };
+    function autofillCity(input) {
+      const val = input.value.replace(/\D/g, '');
+      if (val.length >= 3) {
+        const key = val.slice(0, 3);
+        if (pincodeMap[key]) {
+          document.getElementById('cityField').value = pincodeMap[key][0];
+          const stateSelect = document.getElementById('stateField');
+          for (let o of stateSelect.options) { if (o.text === pincodeMap[key][1]) { stateSelect.value = o.value; break; } }
+        }
+      }
+    }
+
+    /* ── Payment tab switch ── */
+    function switchPay(panel, btn) {
+      document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.pay-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + panel).classList.add('active');
+      isCod = (panel === 'cod');
+      document.getElementById('codRow').style.display = isCod ? 'flex' : 'none';
+      recalc();
+    }
+
+    /* ── UPI app selection ── */
+    function selectUpi(el) {
+      document.querySelectorAll('.upi-app').forEach(a => a.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    /* ── Card formatting ── */
+    function formatCard(input) {
+      let v = input.value.replace(/\D/g, '').slice(0, 16);
+      input.value = v.match(/.{1,4}/g)?.join('  ') || v;
+    }
+    function formatExpiry(input) {
+      let v = input.value.replace(/\D/g, '').slice(0, 4);
+      if (v.length >= 3) v = v.slice(0, 2) + ' / ' + v.slice(2);
+      input.value = v;
+    }
+
+    /* ── Coupon ── */
+    const VALID_COUPONS = { 'KRISHLOOM20': 659, 'SILK10': 480, 'FIRST50': 250 };
+    function applyCoupon() {
+      const code = document.getElementById('couponInput').value.trim().toUpperCase();
+      if (!code) { showToast('Please enter a coupon code', 'error'); return; }
+      if (VALID_COUPONS[code] !== undefined) {
+        couponDiscount = VALID_COUPONS[code];
+        document.getElementById('couponApplied').classList.add('show');
+        document.getElementById('couponMsg').textContent = code + ' applied — ₹' + couponDiscount + ' saved!';
+        document.getElementById('couponRow').style.display = 'flex';
+        document.getElementById('couponVal').textContent = '−₹' + couponDiscount;
+        recalc();
+        showToast('Coupon applied successfully!', 'success');
+      } else {
+        showToast('Invalid or expired coupon code', 'error');
+      }
+    }
+    function removeCoupon() {
+      couponDiscount = 0;
+      document.getElementById('couponApplied').classList.remove('show');
+      document.getElementById('couponRow').style.display = 'none';
+      document.getElementById('couponInput').value = '';
+      recalc();
+      showToast('Coupon removed');
+    }
+
+    /* ── Recalculate totals ── */
+    function recalc() {
+const base = subtotal;
+      const codFee = isCod ? 29 : 0;
+      const total = base + deliveryCharge - couponDiscount + codFee;
+      const totalSavings = 2000 + couponDiscount;
+      document.getElementById('totalVal').textContent = '₹' + total.toLocaleString('en-IN');
+      document.getElementById('btnTotal').textContent = '₹' + total.toLocaleString('en-IN');
+      document.getElementById('totalSavings').textContent = '₹' + totalSavings.toLocaleString('en-IN');
+      document.getElementById('deliveryRow').querySelector('.val').textContent = deliveryCharge === 0 ? 'FREE' : '₹' + deliveryCharge;
+    }
+
+    /* ── Place Order ── */
+async function placeOrder() {
+        // Basic card validation if card tab is active
+      const cardPanel = document.getElementById('panel-card');
+      if (cardPanel.classList.contains('active')) {
+        const num = document.getElementById('cardNum').value.replace(/\s/g, '');
+        const expiry = document.getElementById('cardExpiry').value;
+        const cvv = document.getElementById('cardCvv').value;
+        const name = document.getElementById('cardName').value.trim();
+        let valid = true;
+        if (num.length < 16) { document.getElementById('fg-cardnum').classList.add('has-error'); valid = false; } else { document.getElementById('fg-cardnum').classList.remove('has-error'); }
+        if (!expiry.match(/\d\d\s\/\s\d\d/)) { document.getElementById('fg-expiry').classList.add('has-error'); valid = false; } else { document.getElementById('fg-expiry').classList.remove('has-error'); }
+        if (cvv.length < 3) { document.getElementById('fg-cvv').classList.add('has-error'); valid = false; } else { document.getElementById('fg-cvv').classList.remove('has-error'); }
+        if (!valid) { showToast('Please check your card details', 'error'); return; }
+      }
+
+      // Show processing
+      const btn = document.querySelector('.btn-place-order');
+      btn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin .7s linear infinite"></i> Processing…';
+      btn.disabled = true;
+
+      try {
+        // ── Resolve shipping address from addressMap ──
+        console.log('[placeOrder] selectedShippingAddressId =', selectedShippingAddressId);
+        console.log('[placeOrder] addressMap size =', addressMap.size);
+
+        if (!selectedShippingAddressId) {
+          showToast('Please select a delivery address', 'error');
+          btn.innerHTML = '<i class="ti ti-shield-check"></i> Place Order Securely';
+          btn.disabled = false;
+          return;
+        }
+
+        const addrData = addressMap.get(String(selectedShippingAddressId));
+        console.log('[placeOrder] addrData =', addrData);
+
+        if (!addrData) {
+          showToast('Selected address not found. Please try again.', 'error');
+          btn.innerHTML = '<i class="ti ti-shield-check"></i> Place Order Securely';
+          btn.disabled = false;
+          return;
+        }
+
+        const shippingAddress = {
+          name:    String(addrData.full_name  || '').trim(),
+          phone:   String(addrData.phone      || '').trim(),
+          address: String(addrData.address    || '').trim(),
+          city:    String(addrData.city       || '').trim(),
+          state:   String(addrData.state      || '').trim(),
+          pincode: String(addrData.pincode    || '').trim()
+        };
+
+        // Guard: at least name + address must be non-empty
+        if (!shippingAddress.name || !shippingAddress.address) {
+          showToast('Address details are incomplete. Please add a complete address.', 'error');
+          btn.innerHTML = '<i class="ti ti-shield-check"></i> Place Order Securely';
+          btn.disabled = false;
+          return;
+        }
+
+        // Prepare order data
+        const userId = sessionStorage.getItem('user_id');
+        const cartResponse = await fetch(
+          `http://localhost/krishloom-vastram/backend/routes/CartApi.php?route=getCart&user_id=${userId}`
+        );
+        
+        const cartResult = await cartResponse.json();
+        if (!cartResult.status || !cartResult.data) {
+          showToast('Error loading cart items', 'error');
+          btn.innerHTML = '<i class="ti ti-shield-check"></i> Place Order Securely';
+          btn.disabled = false;
+          return;
+        }
+
+        const subtotalText = document.getElementById('subtotalVal').textContent.replace(/[^0-9.]/g, '') || '0';
+        const deliveryText = document.getElementById('deliveryRow').querySelector('.val').textContent.replace(/[^0-9.]/g, '') || '0';
+        const couponText = document.getElementById('couponVal') ? document.getElementById('couponVal').textContent.replace(/[^0-9.]/g, '') : '0';
+        const totalText = document.getElementById('totalVal').textContent.replace(/[^0-9.]/g, '') || '0';
+
+const orderData = {
+  user_id: userId,
+  items: cartResult.data,
+  subtotal: parseFloat(subtotalText),
+  delivery_charge: parseFloat(deliveryText),
+  coupon_discount: parseFloat(couponText),
+  total: parseFloat(totalText),
+  payment_method:
+    document.querySelector('.pay-tab.active')
+      ?.textContent
+      ?.trim()
+      .toLowerCase(),
+
+  shipping_address: {
+    name: shippingAddress.name,
+    phone: shippingAddress.phone,
+    address: shippingAddress.address,
+    city: shippingAddress.city,
+    state: shippingAddress.state,
+    pincode: shippingAddress.pincode
+  }
+};
+        console.log('Placing order with data:', orderData);
+
+        // Make API call to place order
+        const response = await fetch(
+          "http://localhost/krishloom-vastram/backend/routes/OrderApi.php?route=placeOrder",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(orderData)
+          }
+        );
+
+        const responseText = await response.text();
+        console.log('API Response:', responseText);
+        
+        let result;
+        try {
+          result = JSON.parse(responseText);
+        } catch (e) {
+          console.error('Failed to parse JSON response:', responseText);
+          showToast('Server error. Please try again.', 'error');
+          btn.innerHTML = '<i class="ti ti-shield-check"></i> Place Order Securely';
+          btn.disabled = false;
+          return;
+        }
+
+        if (result.status) {
+          // Order placed successfully
+          const orderId = result.data?.order_id || 'KL-2026-0' + Math.floor(Math.random() * 9000 + 1000);
+          document.getElementById('orderIdDisplay').textContent = 'Order #' + orderId;
+          document.getElementById('successOverlay').classList.add('show');
+          document.getElementById('step3').classList.add('active');
+          
+          // Clear cart after successful order
+          await fetch(`http://localhost/krishloom-vastram/backend/routes/CartApi.php?route=clearCart&user_id=${userId}`, {
+            method: 'POST'
+          });
+          
+          showToast('Order placed successfully!', 'success');
+        } else {
+          showToast(result.message || 'Failed to place order', 'error');
+          btn.innerHTML = '<i class="ti ti-shield-check"></i> Place Order Securely';
+          btn.disabled = false;
+        }
+      } catch (error) {
+        console.error('Order placement error:', error);
+        showToast('Error placing order. Please try again.', 'error');
+        btn.innerHTML = '<i class="ti ti-shield-check"></i> Place Order Securely';
+        btn.disabled = false;
+      }
+    }
+
+    /* ── Toast ── */
+    function showToast(msg, type = '') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast show ' + type;
+      setTimeout(() => t.className = 'toast', 3000);
+    }
+
+    /* ── Spinner keyframe ── */
+    const style = document.createElement('style');
+    style.textContent = '@keyframes spin { to { transform: rotate(360deg) } }';
+    document.head.appendChild(style);
+
+    /* ── Show mobile place order button on small screens ── */
+    function checkMobile() {
+      document.getElementById('mobilePlaceOrder').style.display = window.innerWidth <= 900 ? 'flex' : 'none';
+    }
+    window.addEventListener('resize', checkMobile);
+    checkMobile();
+
+
+
+    const checkoutProducts = JSON.parse(
+    sessionStorage.getItem("checkoutProducts") || "[]"
+);
+
+console.log(checkoutProducts);
+
+
+
+async function loadCheckoutCart() {
+
+const userId = sessionStorage.getItem('user_id');
+    const response = await fetch(
+        `http://localhost/krishloom-vastram/backend/routes/CartApi.php?route=getCart&user_id=${userId}`
+    );
+
+    const result = await response.json();
+
+    let html = "";
+
+ subtotal = 0;
+let itemCount = 0;
+
+result.data.forEach(item => {
+    const quantity = Number(item.quantity) || 1;
+    const price = Number(item.selling_price) || 0;
+    const itemTotal = price * quantity;
+    const imageUrl = item.main_image ? `http://localhost/krishloom-vastram/backend/${item.main_image}` : '';
+    const productName = item.product_title || 'Product';
+    
+    subtotal += itemTotal;
+    itemCount += quantity;
+
+    html += `
+    <div class="cart-item">
+        <div class="cart-item-img">
+            <img src="${imageUrl}" width="60" alt="${productName}" onerror="this.src='data:image/svg+xml,%3Csvg viewBox=%270 0 64 64%27 fill=%27none%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Crect x=%278%27 y=%274%27 width=%2748%27 height=%2756%27 rx=%274%27 fill=%27%23e8ddd4%27/%3E%3C/svg%3E'">
+        </div>
+
+        <div class="cart-item-info">
+            <div class="cart-item-name">${productName}</div>
+            <div class="cart-item-meta">
+                Qty: ${quantity}
+            </div>
+
+            <div class="cart-item-price">
+                ₹${itemTotal.toFixed(2)}
+            </div>
+        </div>
+    </div>`;
+});
+
+    document.getElementById("checkout-cart-items").innerHTML = html;
+
+    document.getElementById("subtotalLabel").textContent =
+    `Subtotal (${itemCount} items)`;
+
+document.getElementById("subtotalVal").textContent =
+    `₹${subtotal}`;
+
+document.getElementById("totalVal").textContent =
+    `₹${subtotal}`;
+
+document.getElementById("btnTotal").textContent =
+    `₹${subtotal}`;
+
+document.getElementById("totalSavings").textContent = "₹0";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    loadCheckoutCart();
+});
+  </script>
+
+</body>
+</html>

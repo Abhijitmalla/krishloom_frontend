@@ -12,7 +12,7 @@
 
     <!-- font -->
     <link rel="stylesheet" href="assets/fonts/fonts.css">
-    <link rel="stylesheet" href="assets/icon:icomoon/style.css">
+    <link rel="stylesheet" href="assets/icomoon/style.css">
     <!-- css -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
@@ -109,6 +109,24 @@
                         </a>
                     </div>
 
+<div onclick="openPincodeModal()"
+     style="display:flex;
+            align-items:center;
+            gap:6px;
+            cursor:pointer;
+            margin:0 20px;
+            font-size:14px;
+            color:#333;
+            white-space:nowrap;">
+
+    <i class="fas fa-map-marker-alt"
+       style="color:#b01a3a;"></i>
+
+    <span id="currentLocation">Delivery Pincode</span>
+</div>
+
+
+
                     <!-- Right (Login / Cart etc.) -->
                     <div class="header-right">
                         <ul class=" footer-block__details-content list-unstyled">
@@ -125,15 +143,14 @@
                             <li class=" d-sm-block">
                                 <a href="wishlist.html" class="nav-icon-item link">
                                     <i class="fas fa-heart"></i>
+                                    <span class="count wishlist-count">0</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="#shoppingCart" data-bs-toggle="offcanvas" class="nav-icon-item link shop-cart">
+                                <a href="view-cart.html" class="nav-icon-item link shop-cart">
                                     <i class="fas fa-shopping-cart"></i>
-                                    <span class="count">
-                                        10+
-                                    </span>
+                                    <span class="count">0</span>
                                 </a>
                             </li>
                             <!-- Profile Icon (shown when logged in) -->
@@ -7815,6 +7832,7 @@
 
     <script src="assets/js/carousel.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/user-store.js"></script>
 
     <!-- Auth-aware header logic -->
     <style>
@@ -7837,6 +7855,8 @@
         #profileDefaultIcon.has-photo {
             display: none !important;
         }
+
+        
     </style>
     <script>
         window.addEventListener('load', function () {
@@ -7872,6 +7892,78 @@
             } catch (e) { console.error('Auth check error', e); }
         });
     </script>
+<script>
+function openPincodeModal() {
+    const modal = new bootstrap.Modal(
+        document.getElementById('pincodeModal')
+    );
+    modal.show();
+}
+
+async function updatePincode() {
+    const pincode = document.getElementById('pincode').value;
+
+    if (pincode.length !== 6) {
+        alert('Please enter a valid pincode');
+        return;
+    }
+
+    const response = await fetch(
+        `https://api.postalpincode.in/pincode/${pincode}`
+    );
+
+    const data = await response.json();
+
+    if (data[0].Status === 'Success') {
+        const po = data[0].PostOffice[0];
+
+        const location =
+            `${po.District}, ${po.State} - ${pincode}`;
+
+        document.getElementById('currentLocation')
+            .innerText = location;
+
+        localStorage.setItem('location', location);
+
+        bootstrap.Modal.getInstance(
+            document.getElementById('pincodeModal')
+        ).hide();
+    } else {
+        alert('Invalid Pincode');
+    }
+}
+
+window.addEventListener('load', function () {
+    const saved = localStorage.getItem('location');
+
+    if (saved) {
+        document.getElementById('currentLocation')
+            .innerText = saved;
+    }
+});
+</script>
+    <div class="modal fade" id="pincodeModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+            <h5>Update Delivery Pincode</h5>
+
+            <input
+                type="text"
+                id="pincode"
+                class="form-control mt-3"
+                placeholder="Enter Pincode"
+                maxlength="6"
+            >
+
+            <button
+                class="btn btn-dark mt-3"
+                onclick="updatePincode()"
+            >
+                Update
+            </button>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 
 <head>
     <meta charset="utf-8">
@@ -408,15 +409,13 @@
         /* ── Modal ── */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            z-index: 10001;
+            padding: 20px;
         }
 
         .modal-overlay.open {
@@ -429,112 +428,91 @@
             to { opacity: 1; }
         }
 
-        .modal {
+        .modal-body {
+            width: 100%;
+            max-width: 540px;
             background: var(--surface);
             border-radius: var(--radius);
-            width: 90%;
-            max-width: 500px;
             padding: 32px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
         }
 
-        .modal h2 {
+        .modal-body h2 {
             font-size: 24px;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: var(--text);
         }
 
-        .modal p.sub {
-            color: var(--muted);
-            margin-bottom: 24px;
+        .modal-body p {
             font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 20px;
         }
 
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 16px;
-        }
-        
-        .form-row .form-group {
-            flex: 1;
-        }
-
-        .form-group label {
+        .modal-body label {
             display: block;
             font-size: 13px;
             font-weight: 700;
-            color: var(--text);
             margin-bottom: 8px;
+            color: var(--text);
         }
 
-        .form-group input, .form-group textarea {
+        .modal-body input,
+        .modal-body textarea,
+        .modal-body select {
             width: 100%;
             border: 1.5px solid var(--border);
             border-radius: var(--radius-sm);
             padding: 12px 14px;
             font-size: 14px;
             font-family: inherit;
-            transition: all 0.2s;
             background: #fafafa;
+            outline: none;
+            transition: all 0.2s;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
+        .modal-body input:focus,
+        .modal-body textarea:focus,
+        .modal-body select:focus {
             border-color: var(--brand);
             background: #fff;
-            box-shadow: 0 0 0 4px var(--brand-light);
+            box-shadow: 0 0 0 4px rgba(172, 43, 64, 0.08);
         }
 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .form-check {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 24px 0;
-        }
-
-        .form-check input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--brand);
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 20px;
             cursor: pointer;
-        }
-
-        .form-check label {
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
+            color: #888;
         }
 
         .modal-actions {
             display: flex;
             justify-content: flex-end;
             gap: 12px;
+            margin-top: 18px;
         }
 
-        .btn-cancel {
+        .btn-secondary {
             background: transparent;
             border: 1.5px solid var(--border);
             color: var(--text);
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: var(--radius-sm);
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: background 0.2s ease;
         }
 
-        .btn-cancel:hover {
+        .btn-secondary:hover {
             background: #f5f5f5;
         }
 
@@ -551,6 +529,68 @@
 
         .btn-save:hover {
             background: var(--brand-dark);
+        }
+
+        .alert-inline {
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 18px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .alert-inline.show {
+            display: block;
+        }
+
+        .alert-inline.error {
+            background: #fdecea;
+            color: #b02a37;
+            border: 1px solid #f5c2c7;
+        }
+
+        .alert-inline.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .form-check input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            min-height: 20px;
+            accent-color: var(--brand);
+            cursor: pointer;
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+        }
+
+        .form-check label {
+            display: inline;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            cursor: pointer;
+            margin-left: 0;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
         }
 
         @media (max-width: 900px) {
@@ -641,45 +681,70 @@
             </div>
 
             <div class="address-grid" id="addressGrid">
-                <!-- Address Card 1 -->
-                <div class="address-card default">
-                    <span class="badge-default">Default</span>
-                    <div class="name">Priya Sharma</div>
-                    <div class="phone"><i class="fas fa-phone-alt"></i> +91 9876543210</div>
+                <div class="address-card empty">
                     <div class="address-detail">
-                        <span class="label">Delivery Address</span>
-                        Satya Vihar, Rasulgarh, Near Big Bazaar<br>
-                        Bhubaneswar, Odisha - 751010<br>
-                        India
-                    </div>
-                    <div class="card-actions">
-                        <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn-action btn-delete"><i class="fas fa-trash-alt"></i> Delete</button>
-                    </div>
-                </div>
-
-                <!-- Address Card 2 -->
-                <div class="address-card">
-                    <div class="name">Priya Sharma</div>
-                    <div class="phone"><i class="fas fa-phone-alt"></i> +91 9988776655</div>
-                    <div class="address-detail">
-                        <span class="label">Delivery Address</span>
-                        Flat 201, Green Valley Apartments, Patia<br>
-                        Bhubaneswar, Odisha - 751024<br>
-                        India
-                    </div>
-                    <div class="card-actions">
-                        <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn-action btn-delete"><i class="fas fa-trash-alt"></i> Delete</button>
-                        <button class="btn-action btn-set-default">Set as default</button>
+                        <span class="label">No saved addresses yet.</span>
+                        <p>Add a delivery address using the button above.</p>
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>
 
-    <!-- Modal is handled by parent dashboard via postMessage -->
+    <!-- Modal (Single Modal) -->
+    <div class="modal-overlay" id="addressModalOverlay">
+        <div class="modal-body">
+            <button class="modal-close" id="modalCloseBtn" type="button">&times;</button>
+            <h2 id="modalTitle">Add New Address</h2>
+            <p>Enter your delivery address details and save to add it to your account.</p>
+            <div class="alert-inline error" id="modalAlert"></div>
+            <form id="addressForm" onsubmit="return false;">
+                <input type="hidden" id="modalAddressId" value="">
+                <div class="form-group">
+                    <label for="modalFullName">Full Name</label>
+                    <input id="modalFullName" type="text" placeholder="Priya Sharma" required>
+                </div>
+                <div class="form-group">
+                    <label for="modalPhone">Phone Number</label>
+                    <input id="modalPhone" type="tel" placeholder="9876543210" required>
+                </div>
+                <div class="form-group">
+                    <label for="modalAddress">Address Line</label>
+                    <textarea id="modalAddress" placeholder="Street, colony, landmark…" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="modalCity">City</label>
+                        <input id="modalCity" type="text" placeholder="Bhubaneswar" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalPincode">Pincode</label>
+                        <input id="modalPincode" type="text" placeholder="751010" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="modalState">State</label>
+                        <input id="modalState" type="text" placeholder="Odisha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalCountry">Country</label>
+                        <input id="modalCountry" type="text" placeholder="India" value="India" required>
+                    </div>
+                </div>
+                <div class="form-check">
+                    <input id="modalDefault" type="checkbox">
+                    <label for="modalDefault">Make this my default delivery address</label>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="modalCancel" type="button">Cancel</button>
+                    <button class="btn-save" id="modalSave" type="button">Save Address</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
         const isEmbedded = window.self !== window.top || new URLSearchParams(window.location.search).get('embed') === 'true';
@@ -700,22 +765,537 @@
             document.body.style.background = 'transparent';
         }
 
-        /* ── Edit / Add buttons → send message to parent ── */
-        document.querySelectorAll('.btn-edit').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const card = btn.closest('.address-card');
-                const name = card.querySelector('.name')?.innerText || '';
-                const phone = card.querySelector('.phone')?.innerText.replace(/[^0-9]/g, '') || '';
-                const lines = card.querySelector('.address-detail')?.innerText?.split('\n').map(s => s.trim()).filter(Boolean) || [];
-                const target = isEmbedded ? window.parent : window;
-                target.postMessage({ type: 'OPEN_ADDRESS_MODAL', mode: 'edit', data: { name, phone, addressLines: lines } }, '*');
+        // ── State ──
+        let currentEditAddressId = null;
+
+        /* ── DOM Elements ── */
+        const addressGrid = document.getElementById('addressGrid');
+        const modalOverlay = document.getElementById('addressModalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalAlert = document.getElementById('modalAlert');
+        const modalAddressId = document.getElementById('modalAddressId');
+        const modalFullName = document.getElementById('modalFullName');
+        const modalPhone = document.getElementById('modalPhone');
+        const modalAddress = document.getElementById('modalAddress');
+        const modalCity = document.getElementById('modalCity');
+        const modalPincode = document.getElementById('modalPincode');
+        const modalState = document.getElementById('modalState');
+        const modalCountry = document.getElementById('modalCountry');
+        const modalDefault = document.getElementById('modalDefault');
+        const modalSave = document.getElementById('modalSave');
+        const modalCancel = document.getElementById('modalCancel');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const addAddressBtn = document.getElementById('addAddressBtn');
+
+        /* ── Helper Functions ── */
+        function showAlert(message, type = 'error') {
+            modalAlert.textContent = message;
+            modalAlert.className = `alert-inline show ${type}`;
+        }
+
+        function clearAlert() {
+            modalAlert.textContent = '';
+            modalAlert.className = 'alert-inline';
+        }
+
+        function resetForm() {
+            document.getElementById('addressForm').reset();
+            modalAddressId.value = '';
+            modalCountry.value = 'India';
+            currentEditAddressId = null;
+            clearAlert();
+        }
+
+        function openModal(title, addressData = null) {
+            resetForm();
+            modalTitle.textContent = title;
+            
+            if (addressData) {
+                modalAddressId.value = addressData.id || '';
+                modalFullName.value = addressData.full_name || '';
+                modalPhone.value = addressData.phone || '';
+                modalAddress.value = addressData.address || '';
+                modalCity.value = addressData.city || '';
+                modalPincode.value = addressData.pincode || '';
+                modalState.value = addressData.state || '';
+                modalCountry.value = addressData.country || 'India';
+                modalDefault.checked = addressData.is_default === 1 || addressData.is_default === true;
+                currentEditAddressId = addressData.id;
+                modalSave.textContent = 'Update Address';
+            } else {
+                modalSave.textContent = 'Save Address';
+            }
+            
+            modalOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+            resetForm();
+        }
+
+        /* ── Create Address Card DOM ── */
+        function createAddressCard(data) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'address-card' + (data.is_default ? ' default' : '');
+            wrapper.dataset.addressId = data.id;
+            wrapper.innerHTML = `
+                ${data.is_default ? '<span class="badge-default">Default</span>' : ''}
+                <div class="name">${data.full_name}</div>
+                <div class="phone"><i class="fas fa-phone-alt"></i> ${data.phone}</div>
+                <div class="address-detail">
+                    <span class="label">Delivery Address</span>
+                    ${data.address}<br>
+                    ${data.city}, ${data.state} - ${data.pincode}<br>
+                    ${data.country}
+                </div>
+                <div class="card-actions">
+                    <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn-action btn-delete"><i class="fas fa-trash-alt"></i> Delete</button>
+                    ${data.is_default ? '' : '<button class="btn-action btn-set-default">Set as default</button>'}
+                </div>
+            `;
+            return wrapper;
+        }
+
+        /* ── API Calls ── */
+
+        // GET: Fetch all addresses for a user
+        async function fetchAddresses(userId) {
+            try {
+                const response = await fetch(
+                    `http://localhost/krishloom-vastram/backend/routes/addressApi.php?route=getAddresses&user_id=${userId}`,
+                    { method: 'GET' }
+                );
+                const result = await response.json();
+                if (result.status && result.data) {
+                    return result.data;
+                }
+                return [];
+            } catch (error) {
+                console.error('Error fetching addresses:', error);
+                return [];
+            }
+        }
+
+        // POST: Add new address
+        async function addAddress(addressData) {
+            try {
+                const response = await fetch(
+                    'http://localhost/krishloom-vastram/backend/routes/addressApi.php?route=addAddress',
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(addressData)
+                    }
+                );
+                return await response.json();
+            } catch (error) {
+                console.error('Error adding address:', error);
+                return { status: false, message: 'Network error, please try again.' };
+            }
+        }
+
+        // PUT: Update address
+        async function updateAddress(addressData) {
+            try {
+                const response = await fetch(
+                    'http://localhost/krishloom-vastram/backend/routes/addressApi.php?route=updateAddress',
+                    {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(addressData)
+                    }
+                );
+                return await response.json();
+            } catch (error) {
+                console.error('Error updating address:', error);
+                return { status: false, message: 'Network error, please try again.' };
+            }
+        }
+
+        // DELETE: Delete address
+        async function deleteAddress(addressId) {
+            try {
+                const response = await fetch(
+                    `http://localhost/krishloom-vastram/backend/routes/addressApi.php?route=deleteAddress&id=${addressId}`,
+                    { method: 'DELETE' }
+                );
+                return await response.json();
+            } catch (error) {
+                console.error('Error deleting address:', error);
+                return { status: false, message: 'Network error, please try again.' };
+            }
+        }
+
+        // PUT: Set default address
+        async function setDefaultAddress(addressId, userId) {
+            try {
+                const response = await fetch(
+                    'http://localhost/krishloom-vastram/backend/routes/addressApi.php?route=updateAddress',
+                    {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            id: addressId,
+                            user_id: userId,
+                            is_default: 1
+                        })
+                    }
+                );
+                return await response.json();
+            } catch (error) {
+                console.error('Error setting default address:', error);
+                return { status: false, message: 'Network error, please try again.' };
+            }
+        }
+
+        /* ── Save Address (Add or Update) ── */
+        async function saveAddress() {
+            const userId = sessionStorage.getItem('user_id');
+            if (!userId) {
+                showAlert('Please log in before adding an address.');
+                return;
+            }
+
+            const fullName = modalFullName.value.trim();
+            const phone = modalPhone.value.trim();
+            const address = modalAddress.value.trim();
+            const city = modalCity.value.trim();
+            const state = modalState.value.trim();
+            const pincode = modalPincode.value.trim();
+            const country = modalCountry.value.trim();
+            const isDefault = modalDefault.checked ? 1 : 0;
+
+            if (!fullName || !phone || !address || !city || !state || !pincode) {
+                showAlert('Please fill in all required fields.');
+                return;
+            }
+
+            clearAlert();
+
+            const addressData = {
+                user_id: Number(userId),
+                full_name: fullName,
+                phone: phone,
+                address: address,
+                city: city,
+                state: state,
+                pincode: pincode,
+                country: country,
+                is_default: isDefault
+            };
+
+            let result;
+            const isEditing = currentEditAddressId !== null;
+
+            if (isEditing) {
+                addressData.id = currentEditAddressId;
+                result = await updateAddress(addressData);
+            } else {
+                result = await addAddress(addressData);
+            }
+
+            if (result.status === true) {
+                // If this address is default, remove default from others
+                if (isDefault) {
+                    document.querySelectorAll('.address-card.default').forEach(card => {
+                        card.classList.remove('default');
+                        const badge = card.querySelector('.badge-default');
+                        if (badge) badge.remove();
+                    });
+                }
+
+                if (isEditing) {
+                    // Update the existing card
+                    const oldCard = document.querySelector(`.address-card[data-address-id="${currentEditAddressId}"]`);
+                    if (oldCard) {
+                        const newCard = createAddressCard({
+                            id: currentEditAddressId,
+                            full_name: fullName,
+                            phone: phone,
+                            address: address,
+                            city: city,
+                            state: state,
+                            pincode: pincode,
+                            country: country,
+                            is_default: isDefault
+                        });
+                        oldCard.replaceWith(newCard);
+                    }
+                } else {
+                    // Add new card
+                    const newCard = createAddressCard({
+                        id: result.address_id || Date.now(),
+                        full_name: fullName,
+                        phone: phone,
+                        address: address,
+                        city: city,
+                        state: state,
+                        pincode: pincode,
+                        country: country,
+                        is_default: isDefault
+                    });
+                    addressGrid.appendChild(newCard);
+                }
+
+                // Close modal and reattach event listeners
+                closeModal();
+                attachEventListeners();
+            } else {
+                showAlert(result.message || 'Unable to save address.');
+            }
+        }
+
+        /* ── Delete Address ── */
+        async function handleDelete(addressId) {
+            if (!confirm('Are you sure you want to delete this address?')) return;
+
+            try {
+                const result = await deleteAddress(addressId);
+                if (result.status === true) {
+                    const card = document.querySelector(`.address-card[data-address-id="${addressId}"]`);
+                    if (card) {
+                        card.style.transition = 'all 0.3s';
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.9)';
+                        setTimeout(() => card.remove(), 300);
+                    }
+                } else {
+                    alert(result.message || 'Unable to delete address.');
+                }
+            } catch (error) {
+                console.error('Error deleting address:', error);
+                alert('Network error, please try again.');
+            }
+        }
+
+        /* ── Set Default Address ── */
+        async function handleSetDefault(addressId) {
+            const userId = sessionStorage.getItem('user_id');
+            if (!userId) {
+                alert('Please log in first.');
+                return;
+            }
+
+            try {
+                const result = await setDefaultAddress(addressId, userId);
+                if (result.status === true) {
+                    // Remove default from all cards
+                    document.querySelectorAll('.address-card.default').forEach(card => {
+                        card.classList.remove('default');
+                        const badge = card.querySelector('.badge-default');
+                        if (badge) badge.remove();
+                    });
+
+                    // Add default to the selected card
+                    const card = document.querySelector(`.address-card[data-address-id="${addressId}"]`);
+                    if (card) {
+                        card.classList.add('default');
+                        const existingBadge = card.querySelector('.badge-default');
+                        if (!existingBadge) {
+                            const badge = document.createElement('span');
+                            badge.className = 'badge-default';
+                            badge.textContent = 'Default';
+                            card.insertBefore(badge, card.firstChild);
+                        }
+                        // Remove the "Set as default" button if it exists
+                        const setDefaultBtn = card.querySelector('.btn-set-default');
+                        if (setDefaultBtn) setDefaultBtn.remove();
+                    }
+                } else {
+                    alert(result.message || 'Unable to set default address.');
+                }
+            } catch (error) {
+                console.error('Error setting default:', error);
+                alert('Network error, please try again.');
+            }
+        }
+
+        /* ── Edit Address ── */
+        function handleEdit(addressId) {
+            const card = document.querySelector(`.address-card[data-address-id="${addressId}"]`);
+            if (!card) return;
+
+            const name = card.querySelector('.name')?.innerText || '';
+            const phone = card.querySelector('.phone')?.innerText.replace(/[^0-9]/g, '') || '';
+            const addressDetail = card.querySelector('.address-detail');
+            
+            // Parse address details
+            const lines = addressDetail?.innerText?.split('\n').map(s => s.trim()).filter(Boolean) || [];
+            // Remove the label
+            const addressLines = lines.slice(1);
+            
+            // Parse city, state, pincode from the second last line
+            let city = '';
+            let state = '';
+            let pincode = '';
+            let country = 'India';
+            
+            if (addressLines.length >= 2) {
+                const locationLine = addressLines[addressLines.length - 2] || '';
+                const countryLine = addressLines[addressLines.length - 1] || '';
+                
+                // Parse "City, State - Pincode"
+                const locationMatch = locationLine.match(/^(.*?),\s*(.*?)\s*-\s*(\d+)$/);
+                if (locationMatch) {
+                    city = locationMatch[1].trim();
+                    state = locationMatch[2].trim();
+                    pincode = locationMatch[3].trim();
+                }
+                
+                if (countryLine && countryLine !== 'India') {
+                    country = countryLine;
+                }
+            }
+
+            const isDefault = card.classList.contains('default');
+
+            openModal('Edit Address', {
+                id: addressId,
+                full_name: name,
+                phone: phone,
+                address: addressLines[0] || '',
+                city: city,
+                state: state,
+                pincode: pincode,
+                country: country,
+                is_default: isDefault
             });
+        }
+
+        /* ── Attach Event Listeners ── */
+        function attachEventListeners() {
+            // Edit buttons
+            document.querySelectorAll('.btn-edit').forEach(btn => {
+                btn.removeEventListener('click', handleEditClick);
+                btn.addEventListener('click', handleEditClick);
+            });
+
+            // Delete buttons
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.removeEventListener('click', handleDeleteClick);
+                btn.addEventListener('click', handleDeleteClick);
+            });
+
+            // Set default buttons
+            document.querySelectorAll('.btn-set-default').forEach(btn => {
+                btn.removeEventListener('click', handleSetDefaultClick);
+                btn.addEventListener('click', handleSetDefaultClick);
+            });
+        }
+
+        function handleEditClick(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const card = e.currentTarget.closest('.address-card');
+            if (card) {
+                const addressId = card.dataset.addressId;
+                handleEdit(addressId);
+            }
+        }
+
+        function handleDeleteClick(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const card = e.currentTarget.closest('.address-card');
+            if (card) {
+                const addressId = card.dataset.addressId;
+                handleDelete(addressId);
+            }
+        }
+
+        function handleSetDefaultClick(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const card = e.currentTarget.closest('.address-card');
+            if (card) {
+                const addressId = card.dataset.addressId;
+                handleSetDefault(addressId);
+            }
+        }
+
+        /* ── Load Addresses from API ── */
+        async function loadAddresses() {
+            const userId = sessionStorage.getItem('user_id');
+            if (!userId) return;
+
+            try {
+                const addresses = await fetchAddresses(userId);
+                if (addresses.length > 0) {
+                    addressGrid.innerHTML = '';
+                    addresses.forEach(addr => {
+                        const card = createAddressCard(addr);
+                        addressGrid.appendChild(card);
+                    });
+                    attachEventListeners();
+                }
+            } catch (error) {
+                console.error('Error loading addresses:', error);
+            }
+        }
+
+        /* ── DOM Event Listeners ── */
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load addresses if user is logged in
+            if (sessionStorage.getItem('user_id')) {
+                loadAddresses();
+            }
+
+            // Add address button
+            addAddressBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal('Add New Address');
+            });
+
+            // Modal buttons
+            modalCloseBtn.addEventListener('click', closeModal);
+            modalCancel.addEventListener('click', closeModal);
+            modalSave.addEventListener('click', saveAddress);
+
+            // Close modal on overlay click
+            modalOverlay.addEventListener('click', function(event) {
+                if (event.target === this) closeModal();
+            });
+
+            // Keyboard shortcut: Escape to close modal
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('open')) {
+                    closeModal();
+                }
+            });
+
+            // Attach initial event listeners
+            attachEventListeners();
         });
 
-        document.getElementById('addAddressBtn').addEventListener('click', () => {
-            const target = isEmbedded ? window.parent : window;
-            target.postMessage({ type: 'OPEN_ADDRESS_MODAL', mode: 'add', data: {} }, '*');
-        });
+        /* ── Handle Embed Mode ── */
+        if (isEmbedded) {
+            // Listen for messages from parent
+            window.addEventListener('message', function(event) {
+                const { type, mode, data } = event.data;
+                if (type === 'OPEN_ADDRESS_MODAL') {
+                    if (mode === 'edit' && data) {
+                        openModal('Edit Address', {
+                            id: data.id,
+                            full_name: data.name,
+                            phone: data.phone,
+                            address: data.addressLines?.[0] || '',
+                            city: data.city || '',
+                            state: data.state || '',
+                            pincode: data.pincode || '',
+                            country: data.country || 'India',
+                            is_default: data.isDefault || false
+                        });
+                    } else {
+                        openModal('Add New Address');
+                    }
+                }
+            });
+        }
+
     </script>
 </body>
 </html>
