@@ -1611,11 +1611,10 @@ const orderData = {
   delivery_charge: parseFloat(deliveryText),
   coupon_discount: parseFloat(couponText),
   total: parseFloat(totalText),
-  payment_method:
-    document.querySelector('.pay-tab.active')
-      ?.textContent
-      ?.trim()
-      .toLowerCase(),
+ payment_method: isCod ? 'cod' :
+                document.getElementById('panel-upi').classList.contains('active') ? 'upi' :
+                document.getElementById('panel-netbanking').classList.contains('active') ? 'netbanking' :
+                'card',
 
   shipping_address: {
     name: shippingAddress.name,
@@ -1761,11 +1760,7 @@ result.data.forEach(item => {
 document.getElementById("subtotalVal").textContent =
     `₹${subtotal}`;
 
-document.getElementById("totalVal").textContent =
-    `₹${subtotal}`;
-
-document.getElementById("btnTotal").textContent =
-    `₹${subtotal}`;
+recalc();
 
 document.getElementById("totalSavings").textContent = "₹0";
 }

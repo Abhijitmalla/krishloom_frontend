@@ -1265,13 +1265,13 @@
                         class="lbl">Review</span><span class="sb-badge amber">5</span><i
                         class="ti ti-chevron-down chev"></i></a>
                 <ul class="sb-dropdown">
-                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="allreviews.html?status=all"><i
                                 class="ti ti-list"></i><span class="lbl">All Reviews</span></a></li>
-                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="allreviews.html?status=pending"><i
                                 class="ti ti-clock"></i><span class="lbl">Pending Reviews</span></a></li>
-                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="allreviews.html?status=accepted"><i
                                 class="ti ti-check"></i><span class="lbl">Accepted Reviews</span></a></li>
-                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i
+                    <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="allreviews.html?status=rejected"><i
                                 class="ti ti-x"></i><span class="lbl">Rejected Reviews</span></a></li>
                 </ul>
             </li>
@@ -1659,13 +1659,13 @@
             document.querySelectorAll('.sb-link.active').forEach(a => a.classList.remove('active'));
             el.classList.add('active');
             if (window.innerWidth <= 900) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); }
-            return false;
+            return true;
         }
         function setSubActive(el) {
             document.querySelectorAll('.sb-sub-link.active').forEach(a => a.classList.remove('active'));
             el.classList.add('active');
             if (window.innerWidth <= 900) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); }
-            return false;
+            return true;
         }
         const ham = document.getElementById('hamburger');
         const ov = document.getElementById('overlay');

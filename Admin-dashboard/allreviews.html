@@ -1,11 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Reviews - KrishLoom Admin</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    :root {
+      --c:#b01a3a; --c2:#8a1230; --g:#c8860a; --g2:#f0c040;
+      --ivory:#fdf8f2; --card:#fff; --border:#e8ddd4; --muted:#7a6e79; --text:#1a0a10;
+      --r:10px; --sw:260px; --nh:58px; --sb-bg:#fff5f0; --sb-border:#f0ddd5;
+      --sb-section:#b5876a; --sb-link:rgba(80,20,30,.45); --sb-link-hover:#7a1228;
+      --sb-active-bg:rgba(176,26,58,.07); --sb-active-txt:#b01a3a; --sb-active-bar:#b01a3a;
+      --sb-footer:#fdeee8;
+    }
+    html, body { height:100%; font-family:'Inter',system-ui,sans-serif; font-size:15px; background:var(--ivory); color:var(--text) }
+    .promo { background:var(--c); color:#fff; text-align:center; padding:7px 16px; font-size:13px; font-weight:500; letter-spacing:.6px; position:fixed; top:0; left:0; right:0; z-index:300 }
+    .promo strong { color:var(--g2) }
+    .nav { position:fixed; top:30px; left:0; right:0; height:var(--nh); background:#fff; border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 20px 0 0; z-index:200 }
+    .hamburger { display:none; background:none; border:none; cursor:pointer; width:38px; height:38px; border-radius:8px; place-items:center; color:var(--text); font-size:22px; margin-left:8px }
+    .nav-brand { width:var(--sw); display:flex; align-items:center; gap:10px; padding:0 18px; flex-shrink:0; text-decoration:none; border-right:1px solid var(--border) }
+    .nav-logo-ring { width:34px; height:34px; border-radius:9px; flex-shrink:0; background:linear-gradient(135deg,var(--c),var(--g)); display:grid; place-items:center; font-family:'Playfair Display',serif; font-size:12px; font-weight:700; color:#fff; box-shadow:0 2px 10px rgba(176,26,58,.25) }
+    .nav-wordmark { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--c); letter-spacing:-.1px; line-height:1 }
+    .nav-wordmark span { display:block; font-family:'Inter',sans-serif; font-size:10.5px; font-weight:500; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; margin-top:2px }
+    .nav-search-wrap { flex:1; display:flex; align-items:center; padding:0 20px }
+    .nav-search { position:relative; max-width:340px; width:100% }
+    .nav-search input { width:100%; padding:8px 14px 8px 36px; border:1px solid var(--border); border-radius:20px; font-size:14.5px; background:var(--ivory); outline:none; font-family:inherit; color:var(--text) }
+    .nav-search i { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:15px }
+    .nav-right { display:flex; align-items:center; gap:4px; margin-left:auto }
+    .nav-btn { position:relative; background:none; border:none; cursor:pointer; width:38px; height:38px; border-radius:50%; display:grid; place-items:center; color:var(--text); font-size:18px }
+    .nav-btn:hover { background:var(--ivory) }
+    .nav-pip { position:absolute; top:5px; right:5px; width:15px; height:15px; background:var(--c); color:#fff; font-size:8px; font-weight:700; border-radius:50%; display:grid; place-items:center; border:2px solid #fff }
+    .nav-divider { width:1px; height:22px; background:var(--border); margin:0 6px }
+    .nav-avatar { width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--c),var(--g)); color:#fff; font-size:11px; font-weight:700; display:grid; place-items:center; border:2px solid var(--sb-border) }
+    .nav-user-info { margin-left:8px; line-height:1.25 }
+    .nav-user-info .aname { font-size:14.5px; font-weight:600 }
+    .nav-user-info .arole { font-size:11.5px; color:var(--muted); display:flex; align-items:center; gap:4px }
+    .nav-user-info .arole::before { content:''; width:5px; height:5px; border-radius:50%; background:#22c55e }
+    .sidebar { position:fixed; top:calc(30px + var(--nh)); left:0; width:var(--sw); height:calc(100vh - 30px - var(--nh)); background:var(--sb-bg); border-right:1px solid var(--sb-border); display:flex; flex-direction:column; overflow-y:auto; overflow-x:hidden; z-index:100; transition:transform .2s ease }
+    .sidebar::-webkit-scrollbar { width:3px }
+    .sidebar::-webkit-scrollbar-thumb { background:var(--sb-border); border-radius:2px }
+    .sb-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:99; pointer-events:none }
+    .sb-overlay.active { pointer-events:all }
+    .sb-admin { padding:16px 16px 14px; border-bottom:1px solid var(--sb-border); background:#fff }
+    .sb-admin-inner { display:flex; align-items:center; gap:10px }
+    .sb-admin-av { width:42px; height:42px; border-radius:50%; flex-shrink:0; background:linear-gradient(135deg,var(--c),var(--g)); display:grid; place-items:center; font-size:12px; font-weight:700; color:#fff; border:2px solid rgba(176,26,58,.2) }
+    .sb-admin-name { font-size:.85rem; font-weight:600 }
+    .sb-admin-role { font-size:.68rem; color:var(--muted); margin-top:2px }
+    .sb-admin-badge { display:inline-flex; align-items:center; gap:4px; margin-top:8px; background:rgba(176,26,58,.07); color:var(--c); font-size:.62rem; font-weight:600; padding:3px 9px; border-radius:20px; border:1px solid rgba(176,26,58,.14); letter-spacing:.3px }
+    .sb-section { padding:14px 18px 5px; font-size:.58rem; font-weight:700; letter-spacing:1.2px; color:var(--sb-section); text-transform:uppercase; display:flex; align-items:center; gap:8px }
+    .sb-section::after { content:''; flex:1; height:1px; background:var(--sb-border) }
+    .sb-nav { list-style:none; padding:0 10px }
+    .sb-item { position:relative; margin-bottom:1px }
+    .sb-link { display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:var(--r); text-decoration:none; color:var(--sb-link); font-size:.82rem; font-weight:400; cursor:pointer; position:relative }
+    .sb-link:hover { background:rgba(176,26,58,.05); color:var(--sb-link-hover) }
+    .sb-link.active { background:var(--sb-active-bg); color:var(--sb-active-txt); font-weight:500 }
+    .sb-link.active::before { content:''; position:absolute; left:0; top:22%; height:56%; width:3px; border-radius:0 3px 3px 0; background:var(--sb-active-bar) }
+    .sb-link i.icon { font-size:17px; flex-shrink:0; opacity:.65 }
+    .sb-link.active i.icon, .sb-link:hover i.icon { opacity:1 }
+    .sb-link .lbl { flex:1; line-height:1.2 }
+    .chev { font-size:13px; color:rgba(80,20,30,.3); transition:transform 180ms; flex-shrink:0 }
+    .sb-item.open>.sb-link .chev { transform:rotate(180deg); color:var(--c) }
+    .sb-badge { background:var(--c); color:#fff; font-size:.57rem; font-weight:700; min-width:17px; height:17px; padding:0 4px; border-radius:8px; display:grid; place-items:center; line-height:1 }
+    .sb-badge.amber { background:var(--g); color:#3a1a00 }
+    .sb-dropdown { list-style:none; overflow:hidden; max-height:0; opacity:0; transition:max-height .26s cubic-bezier(.4,0,.2,1),opacity .18s; padding:0 0 0 28px }
+    .sb-item.open>.sb-dropdown { max-height:500px; opacity:1 }
+    .sb-sub-link { display:flex; align-items:center; gap:8px; padding:7.5px 10px 7.5px 12px; border-radius:7px; text-decoration:none; color:rgba(80,20,30,.38); font-size:.79rem; font-weight:400; transition:background 140ms,color 140ms; position:relative }
+    .sb-sub-link::before { content:''; position:absolute; left:2px; top:50%; transform:translateY(-50%); width:4px; height:4px; border-radius:50%; background:rgba(176,26,58,.2) }
+    .sb-sub-link:hover { background:rgba(176,26,58,.05); color:var(--c2) }
+    .sb-sub-link.active { color:var(--c); font-weight:500 }
+    .sb-sub-link.active::before { background:var(--c); width:5px; height:5px }
+    .sb-footer { margin-top:auto; padding:14px 16px; border-top:1px solid var(--sb-border); background:var(--sb-footer) }
+    .sb-footer-pill { display:flex; align-items:center; gap:9px; background:#fff; border-radius:8px; padding:10px 12px; border:1px solid var(--sb-border) }
+    .sb-footer-icon { width:28px; height:28px; border-radius:6px; background:rgba(200,134,10,.1); display:grid; place-items:center; color:var(--g); font-size:15px }
+    .sb-footer-text { font-size:.7rem; color:var(--muted); line-height:1.45 }
+    .sb-footer-text strong { color:var(--text); font-weight:600; display:block; font-size:.75rem }
+    .main { margin-left:var(--sw); padding-top:calc(30px + var(--nh)); min-height:100vh }
+    .content { padding:26px 28px 40px }
+    .page-header { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:20px; flex-wrap:wrap }
+    .page-title { font-family:'Playfair Display',serif; font-size:1.55rem; font-weight:700; margin-bottom:4px }
+    .breadcrumb { display:flex; align-items:center; gap:6px; font-size:.76rem; color:var(--muted) }
+    .breadcrumb a { color:var(--muted); text-decoration:none }
+    .breadcrumb span:last-child { color:var(--c); font-weight:500 }
+    .btn { display:inline-flex; align-items:center; gap:7px; padding:9px 14px; border-radius:8px; font-size:.8rem; font-weight:600; border:1px solid transparent; cursor:pointer; text-decoration:none; transition:all .15s; white-space:nowrap; font-family:inherit }
+    .btn i { font-size:15px }
+    .btn-primary { background:linear-gradient(135deg,var(--c),var(--c2)); color:#fff; box-shadow:0 3px 10px rgba(176,26,58,.25) }
+    .btn-ghost { background:#fff; color:var(--text); border-color:var(--border) }
+    .btn-ghost:hover { border-color:var(--c); color:var(--c) }
+    .stat-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:18px }
+    .stat-c { background:#fff; border:1px solid var(--border); border-radius:var(--r); padding:14px 16px; display:flex; align-items:center; gap:12px }
+    .sc-ico { width:36px; height:36px; border-radius:8px; display:grid; place-items:center; font-size:17px }
+    .sc-ico.r { background:rgba(176,26,58,.09); color:var(--c) }
+    .sc-ico.a { background:rgba(200,134,10,.09); color:var(--g) }
+    .sc-ico.g { background:rgba(22,163,74,.09); color:#16a34a }
+    .sc-ico.x { background:rgba(231,76,60,.09); color:#c0392b }
+    .sc-val { font-size:1.2rem; font-weight:700; line-height:1 }
+    .sc-lbl { font-size:.68rem; color:var(--muted); margin-top:3px }
+    .table-card { background:#fff; border:1px solid var(--border); border-radius:var(--r); overflow:hidden }
+    .toolbar { display:flex; align-items:center; gap:10px; padding:16px 18px; border-bottom:1px solid var(--border); flex-wrap:wrap }
+    .tb-search { position:relative; flex:1; min-width:220px; max-width:360px }
+    .tb-search input { width:100%; padding:9px 14px 9px 36px; border:1px solid var(--border); border-radius:8px; font-size:.85rem; background:var(--ivory); outline:none; font-family:inherit; color:var(--text) }
+    .tb-search i { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:15px }
+    .filter-tabs { display:flex; gap:6px; flex-wrap:wrap }
+    .tab { border:1px solid var(--border); background:#fff; color:var(--muted); border-radius:8px; padding:8px 12px; font-size:.78rem; font-weight:600; text-decoration:none }
+    .tab.active { background:var(--c); border-color:var(--c); color:#fff }
+    .table-scroll { overflow-x:auto }
+    table { width:100%; border-collapse:collapse; min-width:1120px }
+    th { background:#fbf6f1; text-align:left; font-size:.67rem; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:var(--muted); padding:11px 12px; border-bottom:1px solid var(--border); white-space:nowrap }
+    td { padding:12px; border-bottom:1px solid var(--border); font-size:.82rem; vertical-align:middle }
+    tr:hover td { background:var(--ivory) }
+    .product-cell { display:flex; align-items:center; gap:10px; min-width:220px }
+    .product-img { width:48px; height:60px; object-fit:cover; border-radius:7px; border:1px solid var(--border); background:var(--ivory) }
+    .product-name { font-weight:700; color:var(--text); margin-bottom:3px }
+    .review-comment { min-width:280px; max-width:420px; white-space:normal; color:#3b2a30; line-height:1.45 }
+    .stars { color:var(--g); font-size:.82rem; white-space:nowrap; margin-top:5px }
+    .user-name { font-weight:600 }
+    .date { color:var(--muted); font-size:.74rem; margin-top:3px }
+    .badge-soft { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:20px; font-size:.67rem; font-weight:700; white-space:nowrap }
+    .status-pending { background:#fef3c7; color:#b45309 }
+    .status-accepted { background:#d1fae5; color:#065f46 }
+    .status-rejected { background:#fee2e2; color:#b91c1c }
+    .act-icons { display:flex; align-items:center; gap:5px }
+    .icon-btn { width:30px; height:30px; border-radius:7px; border:1px solid var(--border); background:#fff; display:grid; place-items:center; cursor:pointer; color:var(--muted); font-size:14px; transition:all .15s }
+    .icon-btn.accept:hover { border-color:#16a34a; color:#16a34a; background:rgba(22,163,74,.07) }
+    .icon-btn.reject:hover { border-color:#c0392b; color:#c0392b; background:rgba(192,57,43,.07) }
+    .icon-btn.del:hover { border-color:#e74c3c; color:#e74c3c; background:rgba(231,76,60,.07) }
+    .empty-state { padding:56px 20px; text-align:center; color:var(--muted); display:none }
+    .empty-state i { font-size:40px; color:var(--border); margin-bottom:10px; display:block }
+    #globalSnackbar { visibility:hidden; min-width:260px; background:#fff; color:#1e8449; text-align:left; border-radius:8px; padding:14px 18px; position:fixed; z-index:1000000; right:24px; top:24px; font-size:14px; font-weight:600; box-shadow:0 10px 30px rgba(0,0,0,.2); opacity:0; transform:translateY(-20px); transition:opacity .3s,transform .3s; border-left:6px solid #2ecc71 }
+    #globalSnackbar.show { visibility:visible; opacity:1; transform:translateY(0) }
+    #globalSnackbar.error { color:#c0392b; border-left-color:#e74c3c }
+    @media(max-width:1000px){ .stat-strip{ grid-template-columns:repeat(2,1fr) } }
+    @media(max-width:900px){ .sidebar{ transform:translateX(-100%) } .sidebar.open{ transform:translateX(0) } .sb-overlay{ display:block } .main{ margin-left:0 } .hamburger{ display:grid } .nav-brand{ border-right:none; width:auto } .nav-user-info{ display:none } }
+    @media(max-width:640px){ .content{ padding:18px 16px } .stat-strip{ grid-template-columns:1fr } .page-header{ align-items:flex-start; flex-direction:column } }
+  </style>
 </head>
 <body>
-    
+  <div class="promo">&#10022; <strong>20% Off</strong> &mdash; Auto Applied at Checkout &nbsp;&middot;&nbsp; Limited Time Only &#10022;</div>
+  <nav class="nav">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><i class="ti ti-menu-2"></i></button>
+    <a class="nav-brand" href="index.html"><div class="nav-logo-ring">KL</div><div class="nav-wordmark">KrishLoom<span>Admin Panel</span></div></a>
+    <div class="nav-search-wrap"><div class="nav-search"><i class="ti ti-search"></i><input type="text" placeholder="Search reviews, products, users..." /></div></div>
+    <div class="nav-right">
+      <button class="nav-btn" aria-label="Notifications"><i class="ti ti-bell"></i><span class="nav-pip">7</span></button>
+      <button class="nav-btn" aria-label="Settings"><i class="ti ti-settings"></i></button>
+      <div class="nav-divider"></div>
+      <div class="nav-avatar">AD</div>
+      <div class="nav-user-info"><div class="aname">Admin User</div><div class="arole">Super Admin</div></div>
+      <button class="nav-btn" aria-label="More"><i class="ti ti-chevron-down"></i></button>
+    </div>
+  </nav>
+  <div class="sb-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-admin"><div class="sb-admin-inner"><div class="sb-admin-av">AD</div><div><div class="sb-admin-name">Admin User</div><div class="sb-admin-role">admin@krishloom.com</div></div></div><div class="sb-admin-badge"><i class="ti ti-shield-check"></i> Super Admin</div></div>
+    <div class="sb-section">Main</div>
+    <ul class="sb-nav">
+      <li class="sb-item"><a class="sb-link" href="index.html"><i class="ti ti-layout-dashboard icon"></i><span class="lbl">Dashboard</span></a></li>
+      <li class="sb-item"><a class="sb-link" href="#"><i class="ti ti-shield-lock icon"></i><span class="lbl">Role &amp; Rights</span><span class="sb-badge">4</span></a></li>
+    </ul>
+    <div class="sb-section">Affiliate</div>
+    <ul class="sb-nav">
+      <li class="sb-item" id="aff"><a class="sb-link" onclick="return toggle('aff')" href="#"><i class="ti ti-users icon"></i><span class="lbl">Affiliate</span><i class="ti ti-chevron-down chev"></i></a><ul class="sb-dropdown"><li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-list"></i><span class="lbl">All Affiliate</span></a></li><li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-circle-check"></i><span class="lbl">Active</span></a></li><li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-circle-x"></i><span class="lbl">Inactive</span></a></li></ul></li>
+      <li class="sb-item" id="kyc"><a class="sb-link" onclick="return toggle('kyc')" href="#"><i class="ti ti-id-badge icon"></i><span class="lbl">Affiliate KYC</span><i class="ti ti-chevron-down chev"></i></a><ul class="sb-dropdown"><li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-clock"></i><span class="lbl">All KYC</span></a></li><li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-clock"></i><span class="lbl">Pending Requests</span></a></li><li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-circle-check"></i><span class="lbl">Accepted Requests</span></a></li><li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-circle-x"></i><span class="lbl">Rejected Requests</span></a></li></ul></li>
+    </ul>
+    <div class="sb-section">Content</div>
+    <ul class="sb-nav">
+      <li class="sb-item open" id="review">
+        <a class="sb-link active" onclick="return toggle('review')" href="#"><i class="ti ti-star icon"></i><span class="lbl">Review</span><span class="sb-badge amber">5</span><i class="ti ti-chevron-down chev"></i></a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub"><a class="sb-sub-link" data-review-link="all" href="allreviews.html?status=all"><i class="ti ti-list"></i><span class="lbl">All Reviews</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" data-review-link="pending" href="allreviews.html?status=pending"><i class="ti ti-clock"></i><span class="lbl">Pending Reviews</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" data-review-link="accepted" href="allreviews.html?status=accepted"><i class="ti ti-check"></i><span class="lbl">Accepted Reviews</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" data-review-link="rejected" href="allreviews.html?status=rejected"><i class="ti ti-x"></i><span class="lbl">Rejected Reviews</span></a></li>
+        </ul>
+      </li>
+      <li class="sb-item"><a class="sb-link" href="#"><i class="ti ti-users-group icon"></i><span class="lbl">All Users</span></a></li>
+      <li class="sb-item" id="slider"><a class="sb-link" onclick="return toggle('slider')" href="#"><i class="ti ti-slideshow icon"></i><span class="lbl">Slider</span><i class="ti ti-chevron-down chev"></i></a><ul class="sb-dropdown"><li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-plus"></i><span class="lbl">Slider</span></a></li></ul></li>
+    </ul>
+    <div class="sb-section">Master</div>
+    <ul class="sb-nav"><li class="sb-item" id="master"><a class="sb-link" onclick="return toggle('master')" href="#"><i class="ti ti-adjustments-horizontal icon"></i><span class="lbl">Master</span><i class="ti ti-chevron-down chev"></i></a><ul class="sb-dropdown"><li class="sb-sub"><a class="sb-sub-link" href="top-scroll.html"><i class="ti ti-separator-horizontal"></i><span class="lbl">Top Scroll</span></a></li><li class="sb-sub"><a class="sb-sub-link" href="master-type.html"><i class="ti ti-tag"></i><span class="lbl">Type</span></a></li><li class="sb-sub"><a class="sb-sub-link" href="master-category.html"><i class="ti ti-category"></i><span class="lbl">Category</span></a></li><li class="sb-sub"><a class="sb-sub-link" href="master-manufacturer.html"><i class="ti ti-building-factory"></i><span class="lbl">Manufacturer</span></a></li><li class="sb-sub"><a class="sb-sub-link" href="delivery-charge.html"><i class="ti ti-truck-delivery"></i><span class="lbl">Delivery Charge</span></a></li></ul></li></ul>
+    <div class="sb-section">Store</div>
+    <ul class="sb-nav"><li class="sb-item" id="products"><a class="sb-link" onclick="return toggle('products')" href="#"><i class="ti ti-package icon"></i><span class="lbl">Products</span><i class="ti ti-chevron-down chev"></i></a><ul class="sb-dropdown"><li class="sb-sub"><a class="sb-sub-link" href="addproduct.html"><i class="ti ti-circle-plus"></i><span class="lbl">Add Product</span></a></li><li class="sb-sub"><a class="sb-sub-link" href="manageproduct.html"><i class="ti ti-table"></i><span class="lbl">Manage Products</span></a></li></ul></li><li class="sb-item" id="orders"><a class="sb-link" onclick="return toggle('orders')" href="#"><i class="ti ti-receipt icon"></i><span class="lbl">Orders</span><span class="sb-badge">24</span><i class="ti ti-chevron-down chev"></i></a><ul class="sb-dropdown"><li class="sb-sub"><a class="sb-sub-link" href="order.html"><i class="ti ti-list"></i><span class="lbl">All Orders</span></a></li></ul></li></ul>
+    <div class="sb-section">Account</div>
+    <ul class="sb-nav" style="margin-bottom:6px"><li class="sb-item" id="password"><a class="sb-link" onclick="return toggle('password')" href="#"><i class="ti ti-lock icon"></i><span class="lbl">Password</span><i class="ti ti-chevron-down chev"></i></a><ul class="sb-dropdown"><li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-key"></i><span class="lbl">Change Password</span></a></li></ul></li><li class="sb-item"><a class="sb-link" href="#"><i class="ti ti-logout icon"></i><span class="lbl">Logout</span></a></li></ul>
+    <div class="sb-footer"><div class="sb-footer-pill"><div class="sb-footer-icon"><i class="ti ti-shield-check"></i></div><div class="sb-footer-text"><strong>KrishLoom Admin</strong>v2.0 &middot; &copy; 2026</div></div></div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <div class="page-header">
+        <div><div class="page-title" id="pageTitle">All Reviews</div><div class="breadcrumb"><a href="index.html">Dashboard</a><i class="ti ti-chevron-right"></i><span>Content</span><i class="ti ti-chevron-right"></i><span id="breadcrumbStatus">Reviews</span></div></div>
+        <a class="btn btn-primary" href="allreviews.html?status=pending"><i class="ti ti-clock"></i> Pending Queue</a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat-c"><div class="sc-ico r"><i class="ti ti-star"></i></div><div><div class="sc-val" id="statAll">0</div><div class="sc-lbl">All Reviews</div></div></div>
+        <div class="stat-c"><div class="sc-ico a"><i class="ti ti-clock"></i></div><div><div class="sc-val" id="statPending">0</div><div class="sc-lbl">Pending</div></div></div>
+        <div class="stat-c"><div class="sc-ico g"><i class="ti ti-circle-check"></i></div><div><div class="sc-val" id="statAccepted">0</div><div class="sc-lbl">Accepted</div></div></div>
+        <div class="stat-c"><div class="sc-ico x"><i class="ti ti-circle-x"></i></div><div><div class="sc-val" id="statRejected">0</div><div class="sc-lbl">Rejected</div></div></div>
+      </div>
+      <div class="table-card">
+        <div class="toolbar">
+          <div class="tb-search"><i class="ti ti-search"></i><input id="searchInput" type="text" placeholder="Search product, user, comment..." oninput="renderReviews()" /></div>
+          <div class="filter-tabs">
+            <a class="tab" data-tab="all" href="allreviews.html?status=all">All</a>
+            <a class="tab" data-tab="pending" href="allreviews.html?status=pending">Pending</a>
+            <a class="tab" data-tab="accepted" href="allreviews.html?status=accepted">Accepted</a>
+            <a class="tab" data-tab="rejected" href="allreviews.html?status=rejected">Rejected</a>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>SL</th>
+                <th>Product</th>
+                <th>Review / Comment</th>
+                <th>User Name</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="reviewBody"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="emptyState"><i class="ti ti-message-off"></i><strong>No reviews found</strong><p>Try another status or search text.</p></div>
+      </div>
+    </div>
+  </main>
+  <div id="globalSnackbar"></div>
+  <script>
+ let reviews = [];
+
+const API_BASE =
+  "http://localhost/krishloom-vastram/backend/routes/reviewApi.php";
+    const params = new URLSearchParams(window.location.search);
+    const validStatuses = ['all', 'pending', 'accepted', 'rejected'];
+    let currentStatus = params.get('status') || 'all';
+    if (!validStatuses.includes(currentStatus)) currentStatus = 'all';
+
+    async function loadReviews() {
+  try {
+    const response = await fetch(
+      `${API_BASE}?route=getAllReviews`
+    );
+
+    const data = await response.json();
+
+    if (data.success) {
+      reviews = data.reviews.map(r => ({
+        id: r.id,
+        productId: r.product_id,
+        productName: r.product_name || `Product #${r.product_id}`,
+        productImage:
+          r.product_image ,
+        userName: r.user_name,
+        rating: Number(r.rating),
+        title: r.title || "",
+        comment: r.comment || "",
+        status: r.status,
+        date: r.created_at
+      }));
+
+      updateStats();
+      renderReviews();
+    }
+  } catch (err) {
+    console.log(err);
+    showSnackbar(
+      "Failed to load reviews",
+      "error"
+    );
+  }
+}
+
+    function titleFor(status) {
+      const map = { all: 'All Reviews', pending: 'Pending Reviews', accepted: 'Accepted Reviews', rejected: 'Rejected Reviews' };
+      return map[status] || map.all;
+    }
+    function toggle(id) {
+      const item = document.getElementById(id);
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.sb-item.open').forEach(el => { if (el.id !== id) el.classList.remove('open'); });
+      item.classList.toggle('open', !isOpen);
+      return false;
+    }
+    function statusBadge(status) {
+      return `<span class="badge-soft status-${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>`;
+    }
+    function stars(count) {
+      return '<span class="stars">' + '★'.repeat(count) + '☆'.repeat(5 - count) + '</span>';
+    }
+    function updateStats() {
+      document.getElementById('statAll').textContent = reviews.length;
+      document.getElementById('statPending').textContent = reviews.filter(r => r.status === 'pending').length;
+      document.getElementById('statAccepted').textContent = reviews.filter(r => r.status === 'accepted').length;
+      document.getElementById('statRejected').textContent = reviews.filter(r => r.status === 'rejected').length;
+    }
+    function renderReviews() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const filtered = reviews.filter(r => {
+        const matchesStatus = currentStatus === 'all' || r.status === currentStatus;
+        const matchesSearch = !q || r.productName.toLowerCase().includes(q) || r.userName.toLowerCase().includes(q) || r.comment.toLowerCase().includes(q);
+        return matchesStatus && matchesSearch;
+      });
+      const body = document.getElementById('reviewBody');
+      document.getElementById('emptyState').style.display = filtered.length ? 'none' : 'block';
+      body.innerHTML = filtered.map((r, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td><div class="product-cell"><img class="product-img" src="${r.productImage}" alt="${r.productName}" onerror="this.src='https://via.placeholder.com/48x60?text=No+Image'"><div><div class="product-name">${r.productName}</div><div class="date">${r.date}</div></div></div></td>
+          <td><div class="review-comment">${r.comment}</div>${stars(r.rating)}</td>
+          <td><div class="user-name">${r.userName}</div></td>
+          <td>${statusBadge(r.status)}</td>
+          <td><div class="act-icons"><button class="icon-btn accept" title="Accept" onclick="setReviewStatus(${r.id}, 'accepted')"><i class="ti ti-check"></i></button><button class="icon-btn reject" title="Reject" onclick="setReviewStatus(${r.id}, 'rejected')"><i class="ti ti-x"></i></button><button class="icon-btn del" title="Delete" onclick="deleteReview(${r.id})"><i class="ti ti-trash"></i></button></div></td>
+        </tr>
+      `).join('');
+    }
+  async function setReviewStatus(id, status) {
+  try {
+    const response = await fetch(
+      `${API_BASE}?route=updateReviewStatus`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          id,
+          status
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (data.success) {
+      await loadReviews();
+
+      showSnackbar(
+        `Review ${status} successfully`
+      );
+    } else {
+      showSnackbar(
+        data.message,
+        "error"
+      );
+    }
+  } catch (err) {
+    console.log(err);
+    showSnackbar(
+      "Failed to update review status",
+      "error"
+    );
+  }
+}
+    function showSnackbar(message, type = 'success') {
+      const el = document.getElementById('globalSnackbar');
+      el.textContent = message;
+      el.className = 'show ' + type;
+      setTimeout(() => { el.className = ''; }, 2800);
+    }
+    function initPage() {
+      document.getElementById('pageTitle').textContent = titleFor(currentStatus);
+      document.getElementById('breadcrumbStatus').textContent = titleFor(currentStatus);
+      document.querySelector(`[data-review-link="${currentStatus}"]`)?.classList.add('active');
+      document.querySelector(`[data-tab="${currentStatus}"]`)?.classList.add('active');
+      loadReviews();
+      const ham = document.getElementById('hamburger');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      ham.addEventListener('click', () => {
+        const open = sidebar.classList.toggle('open');
+        overlay.classList.toggle('active', open);
+      });
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+      });
+    }
+    initPage();
+  </script>
 </body>
 </html>

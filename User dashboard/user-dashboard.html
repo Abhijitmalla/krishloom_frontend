@@ -1776,53 +1776,56 @@
 
     document.getElementById("sidebarLogout")?.addEventListener("click", handleLogoutClick);
 
-    function loadProfile(e) {
-      if (e) e.preventDefault();
-      document.getElementById('dashboardView').style.display = 'none';
-      const iframeView = document.getElementById('iframeView');
-      iframeView.style.display = 'block';
-      document.getElementById('contentIframe').src = 'profile.html?embed=true';
-      document.querySelector('.main-inner').style.padding = '0';
+    const dashboardBaseIndex = window.location.pathname.indexOf('/user-dashboard.html');
+    const dashboardBasePath = dashboardBaseIndex >= 0
+      ? window.location.pathname.slice(0, dashboardBaseIndex + '/user-dashboard.html'.length)
+      : window.location.pathname;
+    const dashboardDirPath = dashboardBasePath.slice(0, dashboardBasePath.lastIndexOf('/') + 1);
+    const dashboardRoutes = {
+      dashboard: { linkId: 'sidebarDashboardLink', file: '', path: dashboardBasePath },
+      profile: { linkId: 'sidebarProfileLink', file: 'profile.html', path: dashboardBasePath + '/profile.html' },
+      myorder: { linkId: 'sidebarMyOrdersLink', file: 'myorder.html', path: dashboardBasePath + '/myorder.html' },
+      address: { linkId: 'sidebarAddressLink', file: 'address.html', path: dashboardBasePath + '/address.html' },
+      review: { linkId: 'sidebarReviewLink', file: 'review.html', path: dashboardBasePath + '/review.html' }
+    };
+
+    function setSidebarRouteActive(routeName) {
+      document.querySelectorAll('.sb-nav a').forEach(a => a.classList.remove('active'));
+      const route = dashboardRoutes[routeName];
+      if (route?.linkId) document.getElementById(route.linkId)?.classList.add('active');
     }
 
-    function loadMyOrders(e) {
-      if (e) e.preventDefault();
-
-      document.getElementById('dashboardView').style.display = 'none';
-
-      const iframeView = document.getElementById('iframeView');
-      iframeView.style.display = 'block';
-
-      document.getElementById('contentIframe').src = 'myorder.html?embed=true';
-
-      document.querySelector('.main-inner').style.padding = '0';
+    function showDashboardRoute(routeName, pushPath = true) {
+      const route = dashboardRoutes[routeName] || dashboardRoutes.dashboard;
+      setSidebarRouteActive(routeName);
+      if (routeName === 'dashboard') {
+        document.getElementById('iframeView').style.display = 'none';
+        document.getElementById('dashboardView').style.display = 'block';
+        document.getElementById('contentIframe').src = '';
+        document.querySelector('.main-inner').style.padding = '28px 30px';
+      } else {
+        document.getElementById('dashboardView').style.display = 'none';
+        const iframeView = document.getElementById('iframeView');
+        iframeView.style.display = 'block';
+        document.getElementById('contentIframe').src = dashboardDirPath + route.file + '?embed=true';
+        document.querySelector('.main-inner').style.padding = '0';
+      }
+      if (pushPath && window.location.pathname !== route.path) {
+        history.pushState({ dashboardRoute: routeName }, '', route.path);
+      }
     }
 
-    function loadDashboard(e) {
-      if (e) e.preventDefault();
-      document.getElementById('iframeView').style.display = 'none';
-      document.getElementById('dashboardView').style.display = 'block';
-      document.getElementById('contentIframe').src = '';
-      document.querySelector('.main-inner').style.padding = '28px 30px';
+    function routeFromPath() {
+      const tail = window.location.pathname.slice(dashboardBasePath.length).replace(/^\/+/, '');
+      const match = tail.match(/^([^/]+)\.html$/);
+      return match && dashboardRoutes[match[1]] ? match[1] : 'dashboard';
     }
 
-    function loadAddress(e) {
-      if (e) e.preventDefault();
-      document.getElementById('dashboardView').style.display = 'none';
-      const iframeView = document.getElementById('iframeView');
-      iframeView.style.display = 'block';
-      document.getElementById('contentIframe').src = 'address.html?embed=true';
-      document.querySelector('.main-inner').style.padding = '0';
-    }
-
-    function loadReview(e) {
-      if (e) e.preventDefault();
-      document.getElementById('dashboardView').style.display = 'none';
-      const iframeView = document.getElementById('iframeView');
-      iframeView.style.display = 'block';
-      document.getElementById('contentIframe').src = 'review.html?embed=true';
-      document.querySelector('.main-inner').style.padding = '0';
-    }
+    function loadProfile(e) { if (e) e.preventDefault(); showDashboardRoute('profile'); }
+    function loadMyOrders(e) { if (e) e.preventDefault(); showDashboardRoute('myorder'); }
+    function loadDashboard(e) { if (e) e.preventDefault(); showDashboardRoute('dashboard'); }
+    function loadAddress(e) { if (e) e.preventDefault(); showDashboardRoute('address'); }
+    function loadReview(e) { if (e) e.preventDefault(); showDashboardRoute('review'); }
 
     document.getElementById('sidebarMyOrdersLink')?.addEventListener('click', loadMyOrders);
     document.getElementById('sidebarAddressLink')?.addEventListener('click', loadAddress);
@@ -1830,6 +1833,8 @@
     document.getElementById('navProfileLink')?.addEventListener('click', loadProfile);
     document.getElementById('sidebarProfileLink')?.addEventListener('click', loadProfile);
     document.getElementById('sidebarDashboardLink')?.addEventListener('click', loadDashboard);
+    window.addEventListener('popstate', () => showDashboardRoute(routeFromPath(), false));
+    document.addEventListener('DOMContentLoaded', () => showDashboardRoute(routeFromPath(), false));
 
     /* ── Address Modal – full screen from parent ── */
     window.addEventListener('message', function (event) {

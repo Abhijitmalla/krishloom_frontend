@@ -1480,13 +1480,13 @@
         <a class="sb-link" onclick="toggle('review',this)" href="#"><i class="ti ti-star icon"></i><span
             class="lbl">Review</span><span class="sb-badge amber">5</span><i class="ti ti-chevron-down chev"></i></a>
         <ul class="sb-dropdown">
-          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-list"></i><span class="lbl">All
+          <li class="sb-sub"><a class="sb-sub-link" href="allreviews.html?status=all"><i class="ti ti-list"></i><span class="lbl">All
                 Reviews</span></a></li>
-          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-clock"></i><span class="lbl">Pending
+          <li class="sb-sub"><a class="sb-sub-link" href="allreviews.html?status=pending"><i class="ti ti-clock"></i><span class="lbl">Pending
                 Reviews</span></a></li>
-          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-check"></i><span class="lbl">Accepted
+          <li class="sb-sub"><a class="sb-sub-link" href="allreviews.html?status=accepted"><i class="ti ti-check"></i><span class="lbl">Accepted
                 Reviews</span></a></li>
-          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-x"></i><span class="lbl">Rejected
+          <li class="sb-sub"><a class="sb-sub-link" href="allreviews.html?status=rejected"><i class="ti ti-x"></i><span class="lbl">Rejected
                 Reviews</span></a></li>
         </ul>
       </li>
@@ -1509,15 +1509,15 @@
             class="ti ti-adjustments-horizontal icon"></i><span class="lbl">Master</span><i
             class="ti ti-chevron-down chev"></i></a>
         <ul class="sb-dropdown">
-          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-separator-horizontal"></i><span
+          <li class="sb-sub"><a class="sb-sub-link" href="top-scroll.html"><i class="ti ti-separator-horizontal"></i><span
                 class="lbl">Top Scroll</span></a></li>
-          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-tag"></i><span class="lbl">Type</span></a>
+          <li class="sb-sub"><a class="sb-sub-link" href="master-type.html"><i class="ti ti-tag"></i><span class="lbl">Type</span></a>
           </li>
-          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-category"></i><span
+          <li class="sb-sub"><a class="sb-sub-link" href="master-category.html"><i class="ti ti-category"></i><span
                 class="lbl">Category</span></a></li>
-          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-building-factory"></i><span
+          <li class="sb-sub"><a class="sb-sub-link" href="master-manufacturer.html"><i class="ti ti-building-factory"></i><span
                 class="lbl">Manufacturer</span></a></li>
-          <li class="sb-sub"><a class="sb-sub-link" href="#"><i class="ti ti-truck-delivery"></i><span
+          <li class="sb-sub"><a class="sb-sub-link" href="delivery-charge.html"><i class="ti ti-truck-delivery"></i><span
                 class="lbl">Delivery Charge</span></a></li>
         </ul>
       </li>
@@ -1757,6 +1757,9 @@ mobile: o.user_phone ? String(o.user_phone) : 'N/A',
             mrpAmount: parseFloat(o.subtotal || 0),
             orderAmount: parseFloat(o.total_amount || 0),
             trackingNo: o.trackingNo || '-',
+              invoiceUrl: o.invoice_number
+  ? `http://localhost/krishloom-vastram/backend/uploads/invoices/${o.invoice_number}.pdf`
+    : null,
             acceptedDate: null,
             shippedDate: null,
             deliveredDate: null,
@@ -1962,7 +1965,38 @@ mobile: o.user_phone ? String(o.user_phone) : 'N/A',
               </div>
             </div>
           `).join('');
-          document.getElementById('viewOrderItems').innerHTML = itemsHtml || '<div style="text-align:center;color:var(--muted)">No items found</div>';
+
+          const order = orders.find(o => o.dbId == id);
+const invoiceUrl = order?.invoiceUrl;
+         document.getElementById('viewOrderItems').innerHTML = `
+  ${itemsHtml}
+
+  ${
+    invoiceUrl
+      ? `
+      <div style="margin-top:20px;border-top:1px solid #ddd;padding-top:20px;">
+        <h4>Invoice</h4>
+
+      <iframe
+  src="${invoiceUrl}"
+  width="100%"
+  height="500"
+  style="border:1px solid #ddd;border-radius:10px;">
+</iframe>
+
+<a
+  href="${invoiceUrl}"
+  download
+  class="btn btn-primary"
+  style="margin-top:15px;">
+  <i class="ti ti-download"></i>
+  Download Invoice
+</a>
+      </div>
+      `
+      : ''
+  }
+`;
           document.getElementById('viewModalOverlay').classList.add('active');
         } else {
           showGlobalSnackbar('Failed to load order details', 'error');

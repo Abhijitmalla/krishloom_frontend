@@ -879,7 +879,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="checkout.html" class="sub-menu_link has-text">
+                                                <a href="../../User dashboard/checkout.html" class="sub-menu_link has-text">
                                                     <span class="cus-text">
                                                         Quick Checkout
                                                     </span>
@@ -1264,7 +1264,7 @@
                                                     class="price-add d-none d-sm-block d-md-none d-lg-block">₹79.99</span> -->
                                             </a>
                                         </div>
-                                        <a href="checkout.html" class="tf-btn type-xl btn-primary animate-btn w-100">
+                                        <a href="../../User dashboard/checkout.html" class="tf-btn type-xl btn-primary animate-btn w-100">
                                             Buy It Now
                                         </a>
                                     </div>
@@ -1457,65 +1457,56 @@
                         <div class="product-desc_review write-cancel-review-wrap">
                             <div class="box-rating mb-0">
                                 <div class="rating-ratio">
-                                    <p class="text-display fw-medium">
-                                        4.8
-                                    </p>
-                                    <div class="star-wrap normal d-flex align-items-center">
+                                    <p class="text-display fw-medium" id="reviewAvgRating">—</p>
+                                    <div class="star-wrap normal d-flex align-items-center" id="reviewAvgStars">
                                         <i class="icon icon-Star fs-24"></i>
                                         <i class="icon icon-Star fs-24"></i>
                                         <i class="icon icon-Star fs-24"></i>
                                         <i class="icon icon-Star fs-24"></i>
                                         <i class="icon icon-Star fs-24"></i>
                                     </div>
-                                    <p class="rate-number">
-                                        (1,968 Ratings)
-                                    </p>
+                                    <p class="rate-number" id="reviewTotalCount">(0 Ratings)</p>
                                 </div>
-                                <div class="rating-progress-list">
+                                <div class="rating-progress-list" id="reviewProgressBars">
                                     <div class="rate-progress-star fw-medium">
                                         <span class="number-star">5</span>
                                         <i class="icon icon-Star fs-20 cl-text-yellow"></i>
-                                        <div class="progress" role="progressbar" aria-label="Basic example"
-                                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar" style="width: 60%;"></div>
+                                        <div class="progress" role="progressbar" aria-label="5 stars" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" id="progress5" style="width: 0%;"></div>
                                         </div>
-                                        <span class="number-percent">60%</span>
+                                        <span class="number-percent" id="percent5">0%</span>
                                     </div>
                                     <div class="rate-progress-star fw-medium">
                                         <span class="number-star">4</span>
                                         <i class="icon icon-Star fs-20 cl-text-yellow"></i>
-                                        <div class="progress" role="progressbar" aria-label="Basic example"
-                                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar" style="width: 20%;"></div>
+                                        <div class="progress" role="progressbar" aria-label="4 stars" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" id="progress4" style="width: 0%;"></div>
                                         </div>
-                                        <span class="number-percent">20%</span>
+                                        <span class="number-percent" id="percent4">0%</span>
                                     </div>
                                     <div class="rate-progress-star fw-medium">
                                         <span class="number-star">3</span>
                                         <i class="icon icon-Star fs-20 cl-text-yellow"></i>
-                                        <div class="progress" role="progressbar" aria-label="Basic example"
-                                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar" style="width: 10%;"></div>
+                                        <div class="progress" role="progressbar" aria-label="3 stars" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" id="progress3" style="width: 0%;"></div>
                                         </div>
-                                        <span class="number-percent">10%</span>
+                                        <span class="number-percent" id="percent3">0%</span>
                                     </div>
                                     <div class="rate-progress-star fw-medium">
                                         <span class="number-star">2</span>
                                         <i class="icon icon-Star fs-20 cl-text-yellow"></i>
-                                        <div class="progress" role="progressbar" aria-label="Basic example"
-                                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar" style="width: 7%;"></div>
+                                        <div class="progress" role="progressbar" aria-label="2 stars" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" id="progress2" style="width: 0%;"></div>
                                         </div>
-                                        <span class="number-percent">7%</span>
+                                        <span class="number-percent" id="percent2">0%</span>
                                     </div>
                                     <div class="rate-progress-star fw-medium">
                                         <span class="number-star">1</span>
                                         <i class="icon icon-Star fs-20 cl-text-yellow"></i>
-                                        <div class="progress" role="progressbar" aria-label="Basic example"
-                                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar" style="width: 3%;"></div>
+                                        <div class="progress" role="progressbar" aria-label="1 star" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" id="progress1" style="width: 0%;"></div>
                                         </div>
-                                        <span class="number-percent">3%</span>
+                                        <span class="number-percent" id="percent1">0%</span>
                                     </div>
                                 </div>
                                 <div>
@@ -1531,133 +1522,55 @@
                             </div>
                             <div class="box-comment cancel-review-wrap">
                                 <div class="head">
-                                    <h4>03 Comments</h4>
+                                    <h4 id="reviewCommentCount">0 Comments</h4>
                                     <div class="sort-by">
                                         <span class="text-caption-01">Sort by:</span>
                                         <div class="select-wrap select-sort-comment">
-                                            <select class="select-2">
-                                                <option value="1" selected="">Most Recent</option>
-                                                <option value="2">Last Week</option>
-                                                <option value="3">Today</option>
+                                            <select class="select-2" id="reviewSortSelect">
+                                                <option value="newest" selected="">Most Recent</option>
+                                                <option value="oldest">Oldest</option>
+                                                <option value="highest">Highest Rating</option>
+                                                <option value="lowest">Lowest Rating</option>
                                             </select>
                                             <i class="icon icon-CaretDown"></i>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="wg-comment">
-                                    <div class="comment-list">
-                                        <div class="box-comment">
-                                            <div class="comment_info">
-                                                <div class="info_image">
-                                                    <img loading="lazy" width="60" height="60"
-                                                        src="assets/images/section/sareereview.jpg" alt="Image">
-                                                </div>
-                                                <div class="info_author">
-                                                    <p class="h6 author__name">
-                                                        Top-tier cookware designed for performance
-                                                    </p>
-                                                    <p class="author_date text-caption-01 cl-text-3">
-                                                        1 days ago
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p class="comment_text text-body-1">
-                                                The set arrived quickly, and I was impressed with how sturdy and sleek
-                                                the pieces feel. The non-stick ceramic surface is excellent, and it’s
-                                                easy to clean.
-                                            </p>
-                                            <div class="comment_reply">
-                                                <div class="comment_info">
-                                                    <div class="info_image">
-                                                        <img loading="lazy" width="60" height="60"
-                                                            src="assets/images/section/profile.jpg" alt="Image">
-                                                    </div>
-                                                    <div class="info_author">
-                                                        <p class="h6 author__name">
-                                                            Reply from Amerce
-                                                        </p>
-                                                        <p class="author_date text-caption-01 cl-text-3">
-                                                            1 days ago
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <p class="comment_text text-body-1">
-                                                    I bought this set as a gift. The craftsmanship is top-notch, and
-                                                    customer service was super helpful with my inquiries.
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="box-comment">
-                                            <div class="comment_info">
-                                                <div class="info_image">
-                                                    <img loading="lazy" width="60" height="60"
-                                                        src="assets/images/section/profile.jpg" alt="Image">
-                                                </div>
-                                                <div class="info_author">
-                                                    <p class="h6 author__name">
-                                                        Top-tier cookware designed for performance
-                                                    </p>
-                                                    <p class="author_date text-caption-01 cl-text-3">
-                                                        1 days ago
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p class="comment_text text-body-1">
-                                                Great experience overall! Easy checkout process, fast shipping, and the
-                                                cookware was just as described.
-                                            </p>
-                                        </div>
+                                    <div class="comment-list" id="reviewCommentList">
+                                        <div class="text-center py-4 cl-text-3" id="reviewLoadingMsg">Loading reviews...</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-write-comment write-review-wrap">
                                 <div class="head">
                                     <h5>Write a review:</h5>
-                                    <div class="star-wrap rate-click d-flex align-items-center">
-                                        <i class="icon icon-Star"></i>
-                                        <i class="icon icon-Star"></i>
-                                        <i class="icon icon-Star"></i>
-                                        <i class="icon icon-Star"></i>
-                                        <i class="icon icon-Star"></i>
+                                    <div class="star-wrap rate-click d-flex align-items-center" id="reviewStarPicker">
+                                        <i class="icon icon-Star" data-rating="1"></i>
+                                        <i class="icon icon-Star" data-rating="2"></i>
+                                        <i class="icon icon-Star" data-rating="3"></i>
+                                        <i class="icon icon-Star" data-rating="4"></i>
+                                        <i class="icon icon-Star" data-rating="5"></i>
                                     </div>
                                 </div>
-                                <form class="form-rating">
+                                <form class="form-rating" id="reviewSubmitForm">
                                     <div class="form-content mb-24">
                                         <div class="tf-grid-layout md-col-2">
                                             <div class="tf-grid-layout">
                                                 <fieldset class="tf-field">
-                                                    <label for="review" class="tf-lable fw-medium">Review Title</label>
-                                                    <input type="text" id="review"
-                                                        placeholder="Give your review a title" required="">
-                                                </fieldset>
-                                                <fieldset class="tf-field">
-                                                    <label for="email" class="tf-lable fw-medium">Your Email <span
-                                                            class="text-primary">*</span></label>
-                                                    <input type="email" id="email" placeholder="Your email (private)"
-                                                        required="">
-                                                </fieldset>
-                                                <fieldset class="tf-field">
-                                                    <label for="name" class="tf-lable fw-medium">Your Name <span
-                                                            class="text-primary">*</span></label>
-                                                    <input type="text" id="name" placeholder="You Name (Public)"
-                                                        required="">
+                                                    <label for="reviewTitle" class="tf-lable fw-medium">Review Title</label>
+                                                    <input type="text" id="reviewTitle"
+                                                        placeholder="Give your review a title">
                                                 </fieldset>
                                             </div>
                                             <fieldset class="tf-field d-flex flex-column">
-                                                <label for="name" class="tf-lable fw-medium">Review</label>
-                                                <textarea name="message" id="message"
-                                                    placeholder="Write your comment here" class="h-md-100"></textarea>
+                                                <label for="reviewComment" class="tf-lable fw-medium">Review <span class="text-primary">*</span></label>
+                                                <textarea id="reviewComment"
+                                                    placeholder="Write your comment here" class="h-md-100" required=""></textarea>
                                             </fieldset>
                                         </div>
-                                        <div class="checkbox-wrap">
-                                            <input class="tf-check" type="checkbox" id="save">
-                                            <label for="save" class="cl-text-2">
-                                                Save my name, email, and website in this browser for the next time I
-                                                comment.
-                                            </label>
-                                        </div>
                                     </div>
-                                    <button type="submit" class="tf-btn animate-btn">
+                                    <button type="submit" class="tf-btn animate-btn" id="reviewSubmitBtn">
                                         Submit Review
                                     </button>
                                 </form>
@@ -3072,7 +2985,7 @@
                                 <span class="price-add d-none d-sm-block d-md-none d-lg-block">₹79.99</span>
                             </a>
                         </div>
-                        <a href="checkout.html" class="tf-btn type-xl btn-primary animate-btn w-100">
+                        <a href="../../User dashboard/checkout.html" class="tf-btn type-xl btn-primary animate-btn w-100">
                             Buy It Now
                         </a>
                     </div>
@@ -3268,7 +3181,7 @@
                                     <span class="price-add d-none d-sm-block d-md-none d-lg-block">₹59.99</span>
                                 </a>
                             </div>
-                            <a href="checkout.html" class="tf-btn type-xl btn-primary animate-btn w-100">
+                            <a href="../../User dashboard/checkout.html" class="tf-btn type-xl btn-primary animate-btn w-100">
                                 Buy It Now
                             </a>
                         </div>
@@ -3415,7 +3328,7 @@
                                 <a href="view-cart.html" class="tf-btn btn-stroke">
                                     View cart
                                 </a>
-                                <a href="checkout.html" class="tf-btn animate-btn">
+                                <a href="../../User dashboard/checkout.html" class="tf-btn animate-btn">
                                     Check Out
                                 </a>
                             </div>
@@ -4089,266 +4002,595 @@
             display: none !important;
         }
     </style>
-    <script>
-        window.addEventListener('load', function () {
-            var userData = sessionStorage.getItem('user');
-            if (userData) {
-                try {
-                    var user = JSON.parse(userData);
+        <script>
+            window.addEventListener('load', function () {
+                var userData = sessionStorage.getItem('user');
+                if (userData) {
+                    try {
+                        var user = JSON.parse(userData);
 
-                    // Hide Register / Login buttons (desktop + mobile)
-                    var desktopAuth = document.getElementById('desktopAuthButtons');
-                    var mobileAuth = document.getElementById('mobileAuthButtons');
-                    if (desktopAuth) desktopAuth.style.setProperty('display', 'none', 'important');
-                    if (mobileAuth) mobileAuth.style.setProperty('display', 'none', 'important');
+                        // Hide Register / Login buttons (desktop + mobile)
+                        var desktopAuth = document.getElementById('desktopAuthButtons');
+                        var mobileAuth = document.getElementById('mobileAuthButtons');
+                        if (desktopAuth) desktopAuth.style.setProperty('display', 'none', 'important');
+                        if (mobileAuth) mobileAuth.style.setProperty('display', 'none', 'important');
 
-                    // Show profile icon in header using class
-                    var profileItem = document.getElementById('profileIconItem');
-                    if (profileItem) profileItem.classList.add('auth-visible');
+                        // Show profile icon in header using class
+                        var profileItem = document.getElementById('profileIconItem');
+                        if (profileItem) profileItem.classList.add('auth-visible');
 
-                    // If user has a profile image stored (profile_image is just filename)
-                    var profileFilename = (user && user.profile_image) || sessionStorage.getItem('profile_image') || '';
-                    if (profileFilename) {
-                        // Build full URL the same way user-dashboard.html does
-                        var profilePicUrl = 'http://localhost/krishloom-vastram/backend/uploads/' + profileFilename + '?t=' + Date.now();
-                        var img = document.getElementById('profileImg');
-                        var ico = document.getElementById('profileDefaultIcon');
-                        if (img) {
-                            img.src = profilePicUrl;
-                            img.classList.add('has-photo');
+                        // If user has a profile image stored (profile_image is just filename)
+                        var profileFilename = (user && user.profile_image) || sessionStorage.getItem('profile_image') || '';
+                        if (profileFilename) {
+                            // Build full URL the same way user-dashboard.html does
+                            var profilePicUrl = 'http://localhost/krishloom-vastram/backend/uploads/' + profileFilename + '?t=' + Date.now();
+                            var img = document.getElementById('profileImg');
+                            var ico = document.getElementById('profileDefaultIcon');
+                            if (img) {
+                                img.src = profilePicUrl;
+                                img.classList.add('has-photo');
+                            }
+                            if (ico) ico.classList.add('has-photo');
                         }
-                        if (ico) ico.classList.add('has-photo');
-                    }
-                } catch (e) { console.error('Auth check error', e); }
-            }
-
-            try {
-                var BASE = 'http://localhost/krishloom-vastram/backend/';
-
-                // ── Determine which product ID to show ──
-                var urlParams = new URLSearchParams(window.location.search);
-                var targetId  = urlParams.get('id');
-
-                // Also accept from sessionStorage (set by product listing pages)
-                if (!targetId) {
-                    var stored = sessionStorage.getItem('selectedProduct');
-                    if (stored) {
-                        try { var sp = JSON.parse(stored); targetId = sp.id || sp.pid || null; } catch(e) {}
-                    }
+                    } catch (e) { console.error('Auth check error', e); }
                 }
 
-                // ── Fetch all products from API ──
-                fetch(BASE + 'routes/productApi.php?route=getProducts')
-                    .then(function(r){ return r.json(); })
-                    .then(function(result) {
-                        if (!result.status || !result.data) return;
-                        var allProducts = result.data;
+                try {
+                    var BASE = 'http://localhost/krishloom-vastram/backend/';
 
-                        // 1. Find the exact product to display (the "current" product)
-                        var currentProduct = null;
-                        if (targetId) {
-                            currentProduct = allProducts.find(function(p){
-                                return String(p.id) === String(targetId);
-                            });
-                        }
-                        if (!currentProduct) {
-                            currentProduct = allProducts.find(function(p){ return p.image_type === 'main'; }) || allProducts[0];
-                        }
-                        if (!currentProduct) return;
-                        window.krishloomCurrentProductId = currentProduct.id;
-                        
-                        // ── Store the cart product ID globally (use the current/selected product - could be variant) ──
-                        window.krishloomCartProductId = currentProduct.id;
-                        
-                        // Update all cart buttons with the current product ID
-                        document.querySelectorAll('.btn-action-price,.tf-product-total-quantity .tf-btn,.product-action_bot .tf-btn').forEach(function(el) {
-                            el.setAttribute('data-product-id', currentProduct.id);
-                        });
+                    // ── Determine which product ID to show ──
+                    var urlParams = new URLSearchParams(window.location.search);
+                    var targetId  = urlParams.get('id');
 
-                        // 2. Find the "Main" parent of the family
-                        var familyMain = currentProduct;
-                        var cartProductId = currentProduct.id;  // Default to current product (which is the variant)
-                        
-                        if (currentProduct.image_type === 'gallery' && currentProduct.parent_product_id) {
-                            var parent = allProducts.find(function(p) { return String(p.id) === String(currentProduct.parent_product_id); });
-                            if (parent) {
-                                familyMain = parent;
+                    // Also accept from sessionStorage (set by product listing pages)
+                    if (!targetId) {
+                        var stored = sessionStorage.getItem('selectedProduct');
+                        if (stored) {
+                            try { var sp = JSON.parse(stored); targetId = sp.id || sp.pid || null; } catch(e) {}
+                        }
+                    }
+
+                    // ── Fetch all products from API ──
+                    fetch(BASE + 'routes/productApi.php?route=getProducts')
+                        .then(function(r){ return r.json(); })
+                        .then(function(result) {
+                            if (!result.status || !result.data) return;
+                            var allProducts = result.data;
+
+                            // 1. Find the exact product to display (the "current" product)
+                            var currentProduct = null;
+                            if (targetId) {
+                                currentProduct = allProducts.find(function(p){
+                                    return String(p.id) === String(targetId);
+                                });
                             }
-                        }
-
-                        // 3. Find all gallery (variant) items for this family
-                        var galleryItems = allProducts.filter(function(p){
-                            return p.image_type === 'gallery' && String(p.parent_product_id) === String(familyMain.id);
-                        });
-
-                        // ── Update Product Text Details ──
-                        var nameEl = document.getElementById('detail-product-name');
-                        if (nameEl) nameEl.textContent = currentProduct.product_title || nameEl.textContent;
-
-                        var catEl = document.getElementById('detail-product-category');
-                        if (catEl) catEl.textContent = (currentProduct.product_type || '') + (currentProduct.product_category ? ' · ' + currentProduct.product_category : '');
-
-                        var priceEl = document.getElementById('detail-product-price');
-                        if (priceEl) priceEl.textContent = currentProduct.selling_price ? '₹' + parseFloat(currentProduct.selling_price).toLocaleString('en-IN') : priceEl.textContent;
-
-                        var oldPriceEl = document.getElementById('detail-product-old-price');
-                        if (oldPriceEl) {
-                            if (currentProduct.mrp && parseFloat(currentProduct.mrp) > parseFloat(currentProduct.selling_price || 0)) {
-                                oldPriceEl.textContent = '₹' + parseFloat(currentProduct.mrp).toLocaleString('en-IN');
-                                oldPriceEl.style.display = '';
-                            } else {
-                                oldPriceEl.style.display = 'none';
+                            if (!currentProduct) {
+                                currentProduct = allProducts.find(function(p){ return p.image_type === 'main'; }) || allProducts[0];
                             }
-                        }
-
-                        var discountEl = document.getElementById('detail-product-discount');
-                        if (discountEl && currentProduct.mrp && currentProduct.selling_price) {
-                            var mrp  = parseFloat(currentProduct.mrp);
-                            var sell = parseFloat(currentProduct.selling_price);
-                            if (!isNaN(mrp) && !isNaN(sell) && mrp > sell) {
-                                discountEl.textContent = '-' + Math.round((1 - sell / mrp) * 100) + '%';
-                                discountEl.style.display = '';
-                            } else { discountEl.style.display = 'none'; }
-                        }
-
-                        var descEl = document.getElementById('detail-product-description');
-                        if (descEl) descEl.innerHTML = currentProduct.description || currentProduct.features || '';
-
-                        var skuEl = document.querySelector('.meta_prd_code span:last-child');
-                        if (skuEl) skuEl.textContent = currentProduct.product_code || '-';
-
-                        // ── Image Helper ──
-                        var formatImgUrl = function(img) { 
-                            return img ? BASE + img.split('/').map(encodeURIComponent).join('/') : ''; 
-                        };
-                        var escapeHtml = function(value) {
-                            return String(value || '').replace(/[&<>"']/g, function(ch) {
-                                return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
-                            });
-                        };
-                        var variantLabel = function(product, fallback) {
-                            return product.colors || fallback || 'Selected';
-                        };
-
-                        // Build image list for swiper: start with current product's image, then add others in family to allow swiping
-                        var allFamilyMembers = [familyMain].concat(galleryItems);
-                        var orderedFamilyMembers = [currentProduct];
-                        allFamilyMembers.forEach(function(member) {
-                            if (String(member.id) !== String(currentProduct.id)) {
-                                orderedFamilyMembers.push(member);
-                            }
-                        });
-
-                        // ── Main image swiper (left) ──
-                        var mainSwiperWrapper = document.querySelector('.tf-product-media-main .swiper-wrapper');
-                        if (mainSwiperWrapper) {
-                            mainSwiperWrapper.innerHTML = orderedFamilyMembers.map(function(member){
-                                var imgUrl = formatImgUrl(member.main_image);
-                                var colorLabel = variantLabel(member, member.product_title);
-                                return '<div class="swiper-slide" data-product-id="' + escapeHtml(member.id) + '" data-color="' + escapeHtml(colorLabel) + '">'
-                                    + '<a href="' + imgUrl + '" target="_blank" class="item" data-pswp-width="576px" data-pswp-height="768px">'
-                                    + '<img loading="lazy" width="576" height="768" class="tf-image-zoom"'
-                                    + ' data-zoom="' + imgUrl + '"'
-                                    + ' src="' + imgUrl + '" alt="' + escapeHtml(colorLabel) + '">'
-                                    + '</a></div>';
-                            }).join('');
-                        }
-
-                        // ── Thumbs swiper (left vertical strip) ──
-                        var thumbsWrapper = document.querySelector('.tf-product-media-thumbs .swiper-wrapper');
-                        if (thumbsWrapper) {
-                            thumbsWrapper.innerHTML = orderedFamilyMembers.map(function(member){
-                                var imgUrl = formatImgUrl(member.main_image);
-                                var colorLabel = variantLabel(member, member.product_title);
-                                return '<div class="swiper-slide stagger-item">'
-                                    + '<div class="item"><img loading="lazy" width="82" height="110" src="' + imgUrl + '" alt="' + escapeHtml(colorLabel) + '"></div>'
-                                    + '</div>';
-                            }).join('');
-                        }
-
-                        // ── Color/Variant swatches (right side) ──
-                        var colorValuesEl = document.querySelector('.variant-picker-item.variant-color .variant-picker-values');
-                        var colorLabelVal = document.querySelector('.variant-picker-label-value.value-currentColor');
-
-                        if (colorValuesEl && allFamilyMembers.length > 0) {
-                            if (colorLabelVal) colorLabelVal.textContent = variantLabel(currentProduct);
-
-                            colorValuesEl.innerHTML = allFamilyMembers.map(function(g, idx){
-                                var imgUrl = formatImgUrl(g.main_image);
-                                var label  = variantLabel(g, 'Variant ' + (idx + 1));
-                                var isActive = (String(g.id) === String(currentProduct.id)) ? ' active' : '';
-                                
-                                // On click, store the selected variant ID for cart and redirect
-                                var clickHandler = "window.krishloomSelectedVariantId = " + g.id + "; window.location.href = 'product-detail.html?id=" + g.id + "';";
-                                
-                                return '<div class="hover-tooltip tooltip-bot color-btn style-image' + isActive + '"'
-                                    + ' data-product-id="' + escapeHtml(g.id) + '"'
-                                    + ' data-color="' + escapeHtml(label) + '"'
-                                    + ' onclick="' + clickHandler + '"'
-                                    + ' style="cursor:pointer">'
-                                    + '<div class="img"><img loading="lazy" width="60" height="60" src="' + imgUrl + '" alt="' + escapeHtml(label) + '" style="object-fit:cover;border-radius:4px;"></div>'
-                                    + '<span class="tooltip">' + escapeHtml(label) + '</span>'
-                                    + '</div>';
-                            }).join('');
+                            if (!currentProduct) return;
+                            window.krishloomCurrentProductId = currentProduct.id;
                             
-                            var colorPickerItem = document.querySelector('.variant-picker-item.variant-color');
-                            if (colorPickerItem) colorPickerItem.style.display = '';
-                        } else if (colorValuesEl) {
-                            var colorPickerItem = document.querySelector('.variant-picker-item.variant-color');
-                            if (colorPickerItem) colorPickerItem.style.display = 'none';
-                        }
-
-                        // ── Size buttons ──
-                        var syncColorFromActiveSlide = function() {
-                            var mainSwiper = document.querySelector('.tf-product-media-main');
-                            var swiper = mainSwiper && mainSwiper.swiper;
-                            var activeSlide = swiper && swiper.slides ? swiper.slides[swiper.activeIndex] : document.querySelector('.tf-product-media-main .swiper-slide');
-                            if (!activeSlide) return;
-                            var activeColor = activeSlide.getAttribute('data-color');
-                            var activeProductId = activeSlide.getAttribute('data-product-id');
-                            if (colorLabelVal && activeColor) colorLabelVal.textContent = activeColor;
-                            document.querySelectorAll('.variant-picker-item.variant-color .color-btn').forEach(function(btn) {
-                                btn.classList.toggle('active', !!activeProductId && String(btn.getAttribute('data-product-id')) === String(activeProductId));
+                            // ── Store the cart product ID globally (use the current/selected product - could be variant) ──
+                            window.krishloomCartProductId = currentProduct.id;
+                            
+                            // Update all cart buttons with the current product ID
+                            document.querySelectorAll('.btn-action-price,.tf-product-total-quantity .tf-btn,.product-action_bot .tf-btn').forEach(function(el) {
+                                el.setAttribute('data-product-id', currentProduct.id);
                             });
-                        };
 
-                        var sizeValuesEl = document.querySelector('.variant-picker-item.variant-size .variant-picker-values');
-                        if (sizeValuesEl && currentProduct.sizes) {
-                            var sizeArr = currentProduct.sizes.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
-                            if (sizeArr.length > 0) {
-                                sizeValuesEl.innerHTML = sizeArr.map(function(sz, i){
-                                    return '<span class="size-btn' + (i === 0 ? ' active' : '') + '" data-size="' + sz + '">' + sz + '</span>';
+                            // 2. Find the "Main" parent of the family
+                            var familyMain = currentProduct;
+                            var cartProductId = currentProduct.id;  // Default to current product (which is the variant)
+                            
+                            if (currentProduct.image_type === 'gallery' && currentProduct.parent_product_id) {
+                                var parent = allProducts.find(function(p) { return String(p.id) === String(currentProduct.parent_product_id); });
+                                if (parent) {
+                                    familyMain = parent;
+                                }
+                            }
+
+                            // 3. Find all gallery (variant) items for this family
+                            var galleryItems = allProducts.filter(function(p){
+                                return p.image_type === 'gallery' && String(p.parent_product_id) === String(familyMain.id);
+                            });
+
+                            // ── Update Product Text Details ──
+                            var nameEl = document.getElementById('detail-product-name');
+                            if (nameEl) nameEl.textContent = currentProduct.product_title || nameEl.textContent;
+
+                            var catEl = document.getElementById('detail-product-category');
+                            if (catEl) catEl.textContent = (currentProduct.product_type || '') + (currentProduct.product_category ? ' · ' + currentProduct.product_category : '');
+
+                            var priceEl = document.getElementById('detail-product-price');
+                            if (priceEl) priceEl.textContent = currentProduct.selling_price ? '₹' + parseFloat(currentProduct.selling_price).toLocaleString('en-IN') : priceEl.textContent;
+
+                            var oldPriceEl = document.getElementById('detail-product-old-price');
+                            if (oldPriceEl) {
+                                if (currentProduct.mrp && parseFloat(currentProduct.mrp) > parseFloat(currentProduct.selling_price || 0)) {
+                                    oldPriceEl.textContent = '₹' + parseFloat(currentProduct.mrp).toLocaleString('en-IN');
+                                    oldPriceEl.style.display = '';
+                                } else {
+                                    oldPriceEl.style.display = 'none';
+                                }
+                            }
+
+                            var discountEl = document.getElementById('detail-product-discount');
+                            if (discountEl && currentProduct.mrp && currentProduct.selling_price) {
+                                var mrp  = parseFloat(currentProduct.mrp);
+                                var sell = parseFloat(currentProduct.selling_price);
+                                if (!isNaN(mrp) && !isNaN(sell) && mrp > sell) {
+                                    discountEl.textContent = '-' + Math.round((1 - sell / mrp) * 100) + '%';
+                                    discountEl.style.display = '';
+                                } else { discountEl.style.display = 'none'; }
+                            }
+
+                            var descEl = document.getElementById('detail-product-description');
+                            if (descEl) descEl.innerHTML = currentProduct.description || currentProduct.features || '';
+
+                            var skuEl = document.querySelector('.meta_prd_code span:last-child');
+                            if (skuEl) skuEl.textContent = currentProduct.product_code || '-';
+
+                            // ── Image Helper ──
+                            var formatImgUrl = function(img) { 
+                                return img ? BASE + img.split('/').map(encodeURIComponent).join('/') : ''; 
+                            };
+                            var escapeHtml = function(value) {
+                                return String(value || '').replace(/[&<>"']/g, function(ch) {
+                                    return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+                                });
+                            };
+                            var variantLabel = function(product, fallback) {
+                                return product.colors || fallback || 'Selected';
+                            };
+
+                            // Build image list for swiper: start with current product's image, then add others in family to allow swiping
+                            var allFamilyMembers = [familyMain].concat(galleryItems);
+                            var orderedFamilyMembers = [currentProduct];
+                            allFamilyMembers.forEach(function(member) {
+                                if (String(member.id) !== String(currentProduct.id)) {
+                                    orderedFamilyMembers.push(member);
+                                }
+                            });
+
+                            // ── Main image swiper (left) ──
+                            var mainSwiperWrapper = document.querySelector('.tf-product-media-main .swiper-wrapper');
+                            if (mainSwiperWrapper) {
+                                mainSwiperWrapper.innerHTML = orderedFamilyMembers.map(function(member){
+                                    var imgUrl = formatImgUrl(member.main_image);
+                                    var colorLabel = variantLabel(member, member.product_title);
+                                    return '<div class="swiper-slide" data-product-id="' + escapeHtml(member.id) + '" data-color="' + escapeHtml(colorLabel) + '">'
+                                        + '<a href="' + imgUrl + '" target="_blank" class="item" data-pswp-width="576px" data-pswp-height="768px">'
+                                        + '<img loading="lazy" width="576" height="768" class="tf-image-zoom"'
+                                        + ' data-zoom="' + imgUrl + '"'
+                                        + ' src="' + imgUrl + '" alt="' + escapeHtml(colorLabel) + '">'
+                                        + '</a></div>';
                                 }).join('');
-                                var sizeLabelVal = document.querySelector('.variant-picker-label-value.value-currentSize');
-                                if (sizeLabelVal) sizeLabelVal.textContent = sizeArr[0];
                             }
-                        } else if (sizeValuesEl) {
-                             var sizePickerItem = document.querySelector('.variant-picker-item.variant-size');
-                             if (sizePickerItem) sizePickerItem.style.display = 'none';
-                        }
-                        
-                        // Re-initialize swipers so the new HTML images are displayed
-                        setTimeout(function() {
-                            var mainSwiper = document.querySelector('.tf-product-media-main');
-                            if (mainSwiper && mainSwiper.swiper) {
-                                mainSwiper.swiper.update();
-                                mainSwiper.swiper.off('slideChange', syncColorFromActiveSlide);
-                                mainSwiper.swiper.on('slideChange', syncColorFromActiveSlide);
-                            }
-                            var thumbSwiper = document.querySelector('.tf-product-media-thumbs');
-                            if (thumbSwiper && thumbSwiper.swiper) {
-                                thumbSwiper.swiper.update();
-                            }
-                            syncColorFromActiveSlide();
-                        }, 100);
 
+                            // ── Thumbs swiper (left vertical strip) ──
+                            var thumbsWrapper = document.querySelector('.tf-product-media-thumbs .swiper-wrapper');
+                            if (thumbsWrapper) {
+                                thumbsWrapper.innerHTML = orderedFamilyMembers.map(function(member){
+                                    var imgUrl = formatImgUrl(member.main_image);
+                                    var colorLabel = variantLabel(member, member.product_title);
+                                    return '<div class="swiper-slide stagger-item">'
+                                        + '<div class="item"><img loading="lazy" width="82" height="110" src="' + imgUrl + '" alt="' + escapeHtml(colorLabel) + '"></div>'
+                                        + '</div>';
+                                }).join('');
+                            }
+
+                            // ── Color/Variant swatches (right side) ──
+                            var colorValuesEl = document.querySelector('.variant-picker-item.variant-color .variant-picker-values');
+                            var colorLabelVal = document.querySelector('.variant-picker-label-value.value-currentColor');
+
+                            if (colorValuesEl && allFamilyMembers.length > 0) {
+                                if (colorLabelVal) colorLabelVal.textContent = variantLabel(currentProduct);
+
+                                colorValuesEl.innerHTML = allFamilyMembers.map(function(g, idx){
+                                    var imgUrl = formatImgUrl(g.main_image);
+                                    var label  = variantLabel(g, 'Variant ' + (idx + 1));
+                                    var isActive = (String(g.id) === String(currentProduct.id)) ? ' active' : '';
+                                    
+                                    // On click, store the selected variant ID for cart and redirect
+                                    var clickHandler = "window.krishloomSelectedVariantId = " + g.id + "; window.location.href = 'product-detail.html?id=" + g.id + "';";
+                                    
+                                    return '<div class="hover-tooltip tooltip-bot color-btn style-image' + isActive + '"'
+                                        + ' data-product-id="' + escapeHtml(g.id) + '"'
+                                        + ' data-color="' + escapeHtml(label) + '"'
+                                        + ' onclick="' + clickHandler + '"'
+                                        + ' style="cursor:pointer">'
+                                        + '<div class="img"><img loading="lazy" width="60" height="60" src="' + imgUrl + '" alt="' + escapeHtml(label) + '" style="object-fit:cover;border-radius:4px;"></div>'
+                                        + '<span class="tooltip">' + escapeHtml(label) + '</span>'
+                                        + '</div>';
+                                }).join('');
+                                
+                                var colorPickerItem = document.querySelector('.variant-picker-item.variant-color');
+                                if (colorPickerItem) colorPickerItem.style.display = '';
+                            } else if (colorValuesEl) {
+                                var colorPickerItem = document.querySelector('.variant-picker-item.variant-color');
+                                if (colorPickerItem) colorPickerItem.style.display = 'none';
+                            }
+
+                            // ── Size buttons ──
+                            var syncColorFromActiveSlide = function() {
+                                var mainSwiper = document.querySelector('.tf-product-media-main');
+                                var swiper = mainSwiper && mainSwiper.swiper;
+                                var activeSlide = swiper && swiper.slides ? swiper.slides[swiper.activeIndex] : document.querySelector('.tf-product-media-main .swiper-slide');
+                                if (!activeSlide) return;
+                                var activeColor = activeSlide.getAttribute('data-color');
+                                var activeProductId = activeSlide.getAttribute('data-product-id');
+                                if (colorLabelVal && activeColor) colorLabelVal.textContent = activeColor;
+                                document.querySelectorAll('.variant-picker-item.variant-color .color-btn').forEach(function(btn) {
+                                    btn.classList.toggle('active', !!activeProductId && String(btn.getAttribute('data-product-id')) === String(activeProductId));
+                                });
+                            };
+
+                            var sizeValuesEl = document.querySelector('.variant-picker-item.variant-size .variant-picker-values');
+                            if (sizeValuesEl && currentProduct.sizes) {
+                                var sizeArr = currentProduct.sizes.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+                                if (sizeArr.length > 0) {
+                                    sizeValuesEl.innerHTML = sizeArr.map(function(sz, i){
+                                        return '<span class="size-btn' + (i === 0 ? ' active' : '') + '" data-size="' + sz + '">' + sz + '</span>';
+                                    }).join('');
+                                    var sizeLabelVal = document.querySelector('.variant-picker-label-value.value-currentSize');
+                                    if (sizeLabelVal) sizeLabelVal.textContent = sizeArr[0];
+                                }
+                            } else if (sizeValuesEl) {
+                                var sizePickerItem = document.querySelector('.variant-picker-item.variant-size');
+                                if (sizePickerItem) sizePickerItem.style.display = 'none';
+                            }
+                            
+                            // Re-initialize swipers so the new HTML images are displayed
+                            setTimeout(function() {
+                                var mainSwiper = document.querySelector('.tf-product-media-main');
+                                if (mainSwiper && mainSwiper.swiper) {
+                                    mainSwiper.swiper.update();
+                                    mainSwiper.swiper.off('slideChange', syncColorFromActiveSlide);
+                                    mainSwiper.swiper.on('slideChange', syncColorFromActiveSlide);
+                                }
+                                var thumbSwiper = document.querySelector('.tf-product-media-thumbs');
+                                if (thumbSwiper && thumbSwiper.swiper) {
+                                    thumbSwiper.swiper.update();
+                                }
+                                syncColorFromActiveSlide();
+                            }, 100);
+
+                        })
+                        .catch(function(e){ console.error('Product load error:', e); });
+
+                } catch(e) {
+                    console.error('Unable to load product detail', e);
+                }
+            });
+        </script>
+
+    <!-- ===== Review System ===== -->
+    <script>
+    (function () {
+        'use strict';
+
+        var REVIEW_API = 'http://localhost/krishloom-vastram/backend/routes/reviewApi.php';
+        var selectedRating = 0;
+        var allReviews = [];
+
+        /* ---------- helpers ---------- */
+        function esc(str) {
+            return String(str || '')
+                .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+                .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+
+        function starsHtml(rating) {
+            var html = '';
+            for (var i = 1; i <= 5; i++) {
+                html += '<i class="icon icon-Star fs-14 ' + (i <= rating ? 'cl-text-yellow' : 'cl-text-3') + '"></i>';
+            }
+            return html;
+        }
+
+        function timeAgo(dateStr) {
+            var d = new Date(dateStr);
+            if (isNaN(d.getTime())) return dateStr || '';
+            var diff = Math.floor((Date.now() - d.getTime()) / 1000);
+            if (diff < 60)   return diff + ' seconds ago';
+            if (diff < 3600) return Math.floor(diff/60) + ' minutes ago';
+            if (diff < 86400) return Math.floor(diff/3600) + ' hours ago';
+            if (diff < 2592000) return Math.floor(diff/86400) + ' days ago';
+            return d.toLocaleDateString('en-IN');
+        }
+
+        function avatarInitials(name) {
+            var parts = (name || 'U').split(' ').filter(Boolean);
+            return parts.map(function(p){ return p[0].toUpperCase(); }).join('').slice(0,2);
+        }
+
+        /* ---------- render star picker ---------- */
+        function initStarPicker() {
+            var picker = document.getElementById('reviewStarPicker');
+            if (!picker) return;
+            var stars = picker.querySelectorAll('i[data-rating]');
+
+            function highlight(n) {
+                stars.forEach(function(s){
+                    var r = parseInt(s.getAttribute('data-rating'), 10);
+                    s.style.color = r <= n ? '#f4c430' : '';
+                    s.style.textShadow = r <= n ? '0 0 4px rgba(244,196,48,.4)' : '';
+                });
+            }
+
+            stars.forEach(function(star) {
+                star.style.cursor = 'pointer';
+                star.style.fontSize = '24px';
+                star.style.transition = 'color .15s, text-shadow .15s';
+                star.addEventListener('mouseenter', function(){
+                    highlight(parseInt(star.getAttribute('data-rating'), 10));
+                });
+                star.addEventListener('mouseleave', function(){
+                    highlight(selectedRating);
+                });
+                star.addEventListener('click', function(){
+                    selectedRating = parseInt(star.getAttribute('data-rating'), 10);
+                    highlight(selectedRating);
+                });
+            });
+            highlight(0);
+        }
+
+        /* ---------- update stats ---------- */
+        function updateStats(reviews) {
+            var total = reviews.length;
+            var sum = 0;
+            var counts = {1:0,2:0,3:0,4:0,5:0};
+
+            reviews.forEach(function(r){
+                var rt = parseInt(r.rating, 10) || 0;
+                sum += rt;
+                if (counts[rt] !== undefined) counts[rt]++;
+            });
+
+            var avg = total ? (sum / total).toFixed(1) : '—';
+            var avgEl = document.getElementById('reviewAvgRating');
+            if (avgEl) avgEl.textContent = avg;
+            var cntEl = document.getElementById('reviewTotalCount');
+            if (cntEl) cntEl.textContent = '(' + total + ' Rating' + (total === 1 ? '' : 's') + ')';
+
+            for (var star = 1; star <= 5; star++) {
+                var pct = total ? Math.round((counts[star] / total) * 100) : 0;
+                var barEl = document.getElementById('progress' + star);
+                var pctEl = document.getElementById('percent' + star);
+                if (barEl) barEl.style.width = pct + '%';
+                if (pctEl) pctEl.textContent = pct + '%';
+            }
+        }
+
+        /* ---------- render comments ---------- */
+        function sortReviews(reviews, order) {
+            var sorted = reviews.slice();
+            if (order === 'oldest') {
+                sorted.sort(function(a,b){ return new Date(a.created_at) - new Date(b.created_at); });
+            } else if (order === 'highest') {
+                sorted.sort(function(a,b){ return b.rating - a.rating; });
+            } else if (order === 'lowest') {
+                sorted.sort(function(a,b){ return a.rating - b.rating; });
+            } else {
+                sorted.sort(function(a,b){ return new Date(b.created_at) - new Date(a.created_at); });
+            }
+            return sorted;
+        }
+
+        function renderComments(reviews, order) {
+            var list = document.getElementById('reviewCommentList');
+            var countEl = document.getElementById('reviewCommentCount');
+            if (!list) return;
+
+            if (countEl) countEl.textContent = reviews.length + ' Comment' + (reviews.length === 1 ? '' : 's');
+
+            if (!reviews.length) {
+                list.innerHTML = '<div class="text-center py-5 cl-text-3"><i class="icon icon-Star fs-32 mb-2 d-block"></i><p>No reviews yet. Be the first to review!</p></div>';
+                return;
+            }
+
+            var sorted = sortReviews(reviews, order || 'newest');
+
+            list.innerHTML = sorted.map(function(r) {
+                var name = esc(r.user_name || 'Anonymous');
+                var initials = avatarInitials(r.user_name || '');
+                var rating = parseInt(r.rating, 10) || 0;
+                var title = r.title ? '<p class="h6 fw-medium mb-4">' + esc(r.title) + '</p>' : '';
+                return '<div class="box-comment" style="padding:16px 0;border-bottom:1px solid var(--line,#eee)">' +
+                    '<div class="comment_info d-flex align-items-center gap-12" style="margin-bottom:8px">' +
+                    '<div class="info_image" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#8B5CF6,#D97706);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;flex-shrink:0">' + initials + '</div>' +
+                    '<div class="info_author">' +
+                    '<p class="h6 author__name fw-semibold" style="margin:0;line-height:1.3">' + name + '</p>' +
+                    '<div class="d-flex align-items-center gap-8" style="margin-top:2px">' +
+                    '<div class="d-flex">' + starsHtml(rating) + '</div>' +
+                    '<span class="author_date text-caption-01 cl-text-3">' + timeAgo(r.created_at) + '</span>' +
+                    '</div></div></div>' +
+                    title +
+                    '<p class="comment_text text-body-1 cl-text-2">' + esc(r.comment) + '</p>' +
+                    '</div>';
+            }).join('');
+        }
+
+        /* ---------- load reviews from API ---------- */
+        function loadReviews(productId) {
+            var list = document.getElementById('reviewCommentList');
+            var loadingMsg = document.getElementById('reviewLoadingMsg');
+
+            if (loadingMsg) loadingMsg.style.display = '';
+            if (list && list.children.length && !loadingMsg) {
+                list.innerHTML = '<div class="text-center py-4 cl-text-3" id="reviewLoadingMsg">Loading reviews...</div>';
+            }
+
+            fetch(REVIEW_API + '?route=getReviews&product_id=' + encodeURIComponent(productId))
+                .then(function(res){ return res.json(); })
+                .then(function(data) {
+                    var reviews = (data && data.reviews) ? data.reviews : [];
+                    allReviews = reviews;
+                    var sortEl = document.getElementById('reviewSortSelect');
+                    var order = sortEl ? sortEl.value : 'newest';
+                    updateStats(reviews);
+                    renderComments(reviews, order);
+                })
+                .catch(function(e) {
+                    console.warn('Review load error', e);
+                    var list2 = document.getElementById('reviewCommentList');
+                    if (list2) list2.innerHTML = '<div class="text-center py-4 cl-text-3">Unable to load reviews.</div>';
+                });
+        }
+
+        /* ---------- submit review ---------- */
+        function initReviewForm(productId) {
+            var form = document.getElementById('reviewSubmitForm');
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Check login
+                var userId = window.KrishloomStore && window.KrishloomStore.getUserId
+                    ? window.KrishloomStore.getUserId()
+                    : (function(){
+                        try { var u = JSON.parse(sessionStorage.getItem('user') || 'null'); return u && (u.id || u.user_id); } catch(_){ return null; }
+                      })();
+
+                if (!userId) {
+                    sessionStorage.setItem('redirectAfterLogin', window.location.href);
+                    alert('Please login to submit a review.');
+                    window.location.href = 'user_login_sign.html';
+                    return;
+                }
+
+                if (!selectedRating) {
+                    alert('Please select a star rating before submitting.');
+                    return;
+                }
+
+                var comment = (document.getElementById('reviewComment') || {}).value || '';
+                if (!comment.trim()) {
+                    alert('Please write your review comment.');
+                    return;
+                }
+
+                var title = (document.getElementById('reviewTitle') || {}).value || '';
+                var submitBtn = document.getElementById('reviewSubmitBtn');
+                if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting…'; }
+
+                fetch(REVIEW_API + '?route=addReview', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        product_id: parseInt(productId, 10),
+                        user_id:    parseInt(userId, 10),
+                        rating:     selectedRating,
+                        title:      title.trim() || null,
+                        comment:    comment.trim()
                     })
-                    .catch(function(e){ console.error('Product load error:', e); });
+                })
+                .then(function(res){ return res.json(); })
+                .then(function(data) {
+                    if (data && data.success) {
+                        // Reset form
+                        form.reset();
+                        selectedRating = 0;
+                        var picker = document.getElementById('reviewStarPicker');
+                        if (picker) picker.querySelectorAll('i').forEach(function(s){ s.style.color = ''; s.style.textShadow = ''; });
 
-            } catch(e) {
-                console.error('Unable to load product detail', e);
+                        // Show success
+                        var snackbar = document.getElementById('globalSnackbar');
+                        if (snackbar) {
+                            snackbar.textContent = data.message || 'Review submitted! It will appear after approval.';
+                            snackbar.className = 'show success';
+                            setTimeout(function(){ snackbar.className = snackbar.className.replace('show','').trim(); }, 3500);
+                        } else {
+                            alert(data.message || 'Review submitted! It will appear after approval.');
+                        }
+
+                        // Reload reviews
+                        loadReviews(productId);
+
+                        // Hide write review, show comments
+                        var cancelBtn = document.querySelector('.btn-cancel-review');
+                        if (cancelBtn) cancelBtn.click();
+                    } else {
+                        throw new Error((data && data.message) || 'Unable to submit review.');
+                    }
+                })
+                .catch(function(err) {
+                    var msg = (err && err.message) || 'Unable to submit review.';
+                    var snackbar = document.getElementById('globalSnackbar');
+                    if (snackbar) {
+                        snackbar.textContent = msg;
+                        snackbar.className = 'show error';
+                        setTimeout(function(){ snackbar.className = snackbar.className.replace('show','').trim(); }, 3500);
+                    } else {
+                        alert(msg);
+                    }
+                })
+                .finally(function() {
+                    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit Review'; }
+                });
+            });
+        }
+
+        /* ---------- sort change ---------- */
+        function initSort() {
+            var sortEl = document.getElementById('reviewSortSelect');
+            if (!sortEl) return;
+            sortEl.addEventListener('change', function() {
+                renderComments(allReviews, sortEl.value);
+            });
+        }
+
+        /* ---------- init ---------- */
+        document.addEventListener('DOMContentLoaded', function() {
+            initStarPicker();
+            initSort();
+
+            // Get product ID from URL, same as the product-detail loader uses
+            var params = new URLSearchParams(window.location.search);
+            var productId = params.get('id') || (window.krishloomCurrentProductId) || null;
+
+            if (productId) {
+                loadReviews(productId);
+                initReviewForm(productId);
+            } else {
+                // Wait for the product loader to set the ID (it fires later)
+                var waited = 0;
+                var poll = setInterval(function() {
+                    waited += 300;
+                    var pid = window.krishloomCurrentProductId || window.krishloomCartProductId;
+                    if (pid || waited > 5000) {
+                        clearInterval(poll);
+                        if (pid) {
+                            loadReviews(pid);
+                            initReviewForm(pid);
+                        }
+                    }
+                }, 300);
             }
         });
+
+        /* ---------- checkout intercept ---------- */
+   document.addEventListener('click', function (e) {
+    var target = e.target.closest('a');
+
+    if (
+        target &&
+        (
+            target.getAttribute('href').includes('checkout.html') ||
+            target.getAttribute('href').includes('view-cart.html')
+        )
+    ) {
+        var termsCheckbox = document.getElementById('agree-term');
+
+        if (termsCheckbox && !termsCheckbox.checked) {
+            e.preventDefault();
+            alert('Please agree with the Terms & Conditions first.');
+        }
+    }
+});
+    })();
     </script>
 </body>
 

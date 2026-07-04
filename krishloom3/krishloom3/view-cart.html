@@ -879,7 +879,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="checkout.html" class="sub-menu_link has-text">
+                                                <a href="../../User dashboard/checkout.html" class="sub-menu_link has-text">
                                                     <span class="cus-text">
                                                         Quick Checkout
                                                     </span>
@@ -2275,7 +2275,7 @@
                                 <span class="price-add d-none d-sm-block d-md-none d-lg-block">₹79.99</span>
                             </a>
                         </div>
-                        <a href="checkout.html" class="tf-btn type-xl btn-primary animate-btn w-100">
+                        <a href="../../User dashboard/checkout.html" class="tf-btn type-xl btn-primary animate-btn w-100">
                             Buy It Now
                         </a>
                     </div>
@@ -2471,7 +2471,7 @@
                                     <span class="price-add d-none d-sm-block d-md-none d-lg-block">₹59.99</span>
                                 </a>
                             </div>
-                            <a href="checkout.html" class="tf-btn type-xl btn-primary animate-btn w-100">
+                            <a href="../../User dashboard/checkout.html" class="tf-btn type-xl btn-primary animate-btn w-100">
                                 Buy It Now
                             </a>
                         </div>
@@ -2821,7 +2821,7 @@
                                 <a href="view-cart.html" class="tf-btn btn-stroke">
                                     View cart
                                 </a>
-                                <a href="checkout.html" class="tf-btn animate-btn">
+                                <a href="../../User dashboard/checkout.html" class="tf-btn animate-btn">
                                     Check Out
                                 </a>
                             </div>
@@ -3469,6 +3469,12 @@
             event.stopImmediatePropagation();
 
             try {
+                const termsCheckbox = document.getElementById('checkOutAgree');
+                if (termsCheckbox && !termsCheckbox.checked) {
+                    alert('Please agree with the terms and conditions to proceed.');
+                    return;
+                }
+
                 const userId = sessionStorage.getItem('user_id');
                 let cart = [];
 

@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Delivery Charge – KrishLoom Admin</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --c: #b01a3a;
+      --c2: #8a1230;
+      --g: #c8860a;
+      --g2: #f0c040;
+      --ivory: #fdf8f2;
+      --card: #fff;
+      --border: #e8ddd4;
+      --muted: #7a6e79;
+      --text: #1a0a10;
+      --r: 10px;
+      --sw: 260px;
+      --nh: 58px;
+
+      --sb-bg: #fff5f0;
+      --sb-border: #f0ddd5;
+      --sb-section: #b5876a;
+      --sb-link: rgba(80, 20, 30, .45);
+      --sb-link-hover: #7a1228;
+      --sb-active-bg: rgba(176, 26, 58, .07);
+      --sb-active-txt: #b01a3a;
+      --sb-active-bar: #b01a3a;
+      --sb-footer: #fdeee8;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      background: var(--ivory);
+      color: var(--text)
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh
+    }
+
+    /* PROMO */
+    .promo {
+      background: var(--c);
+      color: #fff;
+      text-align: center;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .6px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 300
+    }
+
+    .promo strong {
+      color: var(--g2)
+    }
+
+    /* NAV */
+    .nav {
+      position: fixed;
+      top: 30px;
+      left: 0;
+      right: 0;
+      height: var(--nh);
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px 0 0;
+      z-index: 200;
+    }
+
+    .nav-brand {
+      width: var(--sw);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 18px;
+      flex-shrink: 0;
+      text-decoration: none;
+      border-right: 1px solid var(--border);
+    }
+
+    .nav-logo-ring {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      display: grid;
+      place-items: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(176, 26, 58, .25);
+    }
+
+    .nav-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--c);
+      letter-spacing: -.1px;
+      line-height: 1
+    }
+
+    .nav-wordmark span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-top: 2px
+    }
+
+    .nav-search-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 20px
+    }
+
+    .nav-search {
+      position: relative;
+      max-width: 340px;
+      width: 100%
+    }
+
+    .nav-search input {
+      width: 100%;
+      padding: 8px 14px 8px 36px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 14.5px;
+      background: var(--ivory);
+      outline: none;
+      font-family: inherit;
+      color: var(--text);
+      transition: border .15s
+    }
+
+    .nav-search input:focus {
+      border-color: var(--c);
+      background: #fff
+    }
+
+    .nav-search i {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto
+    }
+
+    .nav-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--text);
+      font-size: 18px;
+      transition: background .15s
+    }
+
+    .nav-btn:hover {
+      background: var(--ivory)
+    }
+
+    .nav-pip {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 15px;
+      height: 15px;
+      background: var(--c);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 2px solid #fff
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 22px;
+      background: var(--border);
+      margin: 0 6px
+    }
+
+    .nav-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      border: 2px solid var(--sb-border);
+      transition: border-color .15s
+    }
+
+    .nav-avatar:hover {
+      border-color: var(--c)
+    }
+
+    .nav-user-info {
+      margin-left: 8px;
+      line-height: 1.25;
+      cursor: pointer
+    }
+
+    .nav-user-info .aname {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .nav-user-info .arole {
+      font-size: 11.5px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .nav-user-info .arole::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      place-items: center;
+      color: var(--text);
+      font-size: 20px
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: fixed;
+      top: calc(30px + var(--nh));
+      left: 0;
+      width: var(--sw);
+      height: calc(100vh - 30px - var(--nh));
+      background: var(--sb-bg);
+      border-right: 1px solid var(--sb-border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 100;
+      scrollbar-width: thin;
+      scrollbar-color: var(--sb-border) transparent;
+      transition: transform .2s ease;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 3px
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--sb-border);
+      border-radius: 2px
+    }
+
+    .sb-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .35);
+      z-index: 99;
+      pointer-events: none
+    }
+
+    .sb-overlay.active {
+      pointer-events: all
+    }
+
+    .sb-admin {
+      padding: 16px 16px 14px;
+      border-bottom: 1px solid var(--sb-border);
+      background: #fff;
+    }
+
+    .sb-admin-inner {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .sb-admin-av {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--c), var(--g));
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      border: 2px solid rgba(176, 26, 58, .2);
+    }
+
+    .sb-admin-name {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .sb-admin-role {
+      font-size: .68rem;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    .sb-admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      background: rgba(176, 26, 58, .07);
+      color: var(--c);
+      font-size: .62rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      border: 1px solid rgba(176, 26, 58, .14);
+      letter-spacing: .3px;
+    }
+
+    .sb-admin-badge i {
+      font-size: 10px
+    }
+
+    .sb-section {
+      padding: 14px 18px 5px;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: var(--sb-section);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sb-section::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--sb-border)
+    }
+
+    .sb-nav {
+      list-style: none;
+      padding: 0 10px
+    }
+
+    .sb-item {
+      position: relative;
+      margin-bottom: 1px
+    }
+
+    .sb-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: var(--r);
+      text-decoration: none;
+      color: var(--sb-link);
+      font-size: .82rem;
+      font-weight: 400;
+      transition: background 150ms ease, color 150ms ease;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+    }
+
+    .sb-link:hover {
+      background: rgba(176, 26, 58, .05);
+      color: var(--sb-link-hover)
+    }
+
+    .sb-link.active {
+      background: var(--sb-active-bg);
+      color: var(--sb-active-txt);
+      font-weight: 500
+    }
+
+    .sb-link.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 22%;
+      height: 56%;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background: var(--sb-active-bar);
+    }
+
+    .sb-link i.icon {
+      font-size: 17px;
+      flex-shrink: 0;
+      opacity: .65;
+      transition: opacity 150ms
+    }
+
+    .sb-link:hover i.icon,
+    .sb-link.active i.icon {
+      opacity: 1
+    }
+
+    .sb-link .lbl {
+      flex: 1;
+      line-height: 1.2
+    }
+
+    .chev {
+      font-size: 13px;
+      color: rgba(80, 20, 30, .3);
+      transition: transform 180ms ease, color 150ms;
+      flex-shrink: 0;
+    }
+
+    .sb-link:hover .chev {
+      color: rgba(80, 20, 30, .5)
+    }
+
+    .sb-item.open>.sb-link .chev {
+      transform: rotate(180deg);
+      color: var(--c)
+    }
+
+    .sb-badge {
+      background: var(--c);
+      color: #fff;
+      font-size: .57rem;
+      font-weight: 700;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 4px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+    }
+
+    .sb-badge.green {
+      background: #16a34a
+    }
+
+    .sb-badge.amber {
+      background: var(--g);
+      color: #3a1a00
+    }
+
+    .sb-dropdown {
+      list-style: none;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height .26s cubic-bezier(.4, 0, .2, 1), opacity .18s;
+      padding: 0 0 0 28px;
+    }
+
+    .sb-item.open>.sb-dropdown {
+      max-height: 500px;
+      opacity: 1
+    }
+
+    .sb-sub {
+      position: relative;
+      margin-bottom: 1px
+    }
+
+    .sb-sub-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7.5px 10px 7.5px 12px;
+      border-radius: 7px;
+      text-decoration: none;
+      color: rgba(80, 20, 30, .38);
+      font-size: .79rem;
+      font-weight: 400;
+      transition: background 140ms, color 140ms;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .sb-sub-link::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(176, 26, 58, .2);
+      transition: background 140ms;
+    }
+
+    .sb-sub-link:hover {
+      background: rgba(176, 26, 58, .05);
+      color: var(--c2)
+    }
+
+    .sb-sub-link:hover::before {
+      background: var(--c)
+    }
+
+    .sb-sub-link.active {
+      color: var(--c);
+      font-weight: 500
+    }
+
+    .sb-sub-link.active::before {
+      background: var(--c);
+      width: 5px;
+      height: 5px
+    }
+
+    .sb-sub-link i {
+      font-size: 14px;
+      opacity: .6;
+      flex-shrink: 0
+    }
+
+    .sb-sub-link:hover i,
+    .sb-sub-link.active i {
+      opacity: 1
+    }
+
+    .sb-sub-link .lbl {
+      flex: 1
+    }
+
+    .sb-link.logout {
+      color: rgba(176, 26, 58, .45)
+    }
+
+    .sb-link.logout:hover {
+      background: rgba(176, 26, 58, .07);
+      color: var(--c)
+    }
+
+    .sb-footer {
+      margin-top: auto;
+      padding: 14px 16px;
+      border-top: 1px solid var(--sb-border);
+      background: var(--sb-footer);
+      flex-shrink: 0;
+    }
+
+    .sb-footer-pill {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--sb-border);
+    }
+
+    .sb-footer-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgba(200, 134, 10, .1);
+      display: grid;
+      place-items: center;
+      color: var(--g);
+      font-size: 15px;
+      flex-shrink: 0
+    }
+
+    .sb-footer-text {
+      font-size: .7rem;
+      color: var(--muted);
+      line-height: 1.45
+    }
+
+    .sb-footer-text strong {
+      color: var(--text);
+      font-weight: 600;
+      display: block;
+      font-size: .75rem
+    }
+
+    /* MAIN */
+    .main {
+      margin-left: var(--sw);
+      padding-top: calc(30px + var(--nh));
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh
+    }
+
+    .content {
+      padding: 32px 28px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .76rem;
+      color: var(--muted)
+    }
+
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none
+    }
+
+    .breadcrumb a:hover {
+      color: var(--c)
+    }
+
+    .breadcrumb i {
+      font-size: 12px
+    }
+
+    .breadcrumb span:last-child {
+      color: var(--c);
+      font-weight: 500
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: .82rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .15s;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+
+    .btn i {
+      font-size: 15px
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--c), var(--c2));
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(176, 26, 58, .25);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 5px 16px rgba(176, 26, 58, .35);
+      transform: translateY(-1px)
+    }
+
+    .btn-ghost {
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--c);
+      color: var(--c)
+    }
+
+    .btn-danger-ghost {
+      background: #fff;
+      color: #c0392b;
+      border: 1px solid #f3c9c2;
+    }
+
+    .btn-danger-ghost:hover {
+      background: #fdf1ef;
+      border-color: #e74c3c
+    }
+
+    .btn-sm {
+      padding: 7px 12px;
+      font-size: .76rem
+    }
+
+    .btn-block {
+      width: 100%
+    }
+
+    /* TWO COLUMN GRID */
+    .ts-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    /* FORM CARD (left) */
+    .form-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      position: sticky;
+      top: 26px;
+    }
+
+    .form-card-head {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-card-ico {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: rgba(176, 26, 58, .09);
+      color: var(--c);
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+      flex-shrink: 0
+    }
+
+    .form-card-head h3 {
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .form-card-head p {
+      font-size: .72rem;
+      color: var(--muted);
+      margin-top: 1px
+    }
+
+    .form-card-body {
+      padding: 18px
+    }
+
+    .field-group {
+      margin-bottom: 16px
+    }
+
+    .field-group label {
+      display: block;
+      font-size: .76rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px
+    }
+
+    .field-group label .req {
+      color: var(--c)
+    }
+
+    .input-prefix-wrap {
+      position: relative
+    }
+
+    .input-prefix-wrap .prefix {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: .85rem;
+      color: var(--muted);
+      font-weight: 600;
+      pointer-events: none
+    }
+
+    .input-prefix-wrap input[type="text"] {
+      padding-left: 30px
+    }
+
+    .field-group input[type="text"] {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .85rem;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--ivory);
+      outline: none;
+      transition: border .15s, background .15s
+    }
+
+    .field-group input[type="text"]:focus {
+      border-color: var(--c);
+      background: #fff
+    }
+
+    .field-hint {
+      font-size: .68rem;
+      color: var(--muted);
+      margin-top: 5px
+    }
+
+    .field-error {
+      font-size: .68rem;
+      color: #c0392b;
+      margin-top: 5px;
+      display: none;
+      align-items: center;
+      gap: 4px
+    }
+
+    .field-error.show {
+      display: flex
+    }
+
+    .field-group.has-error input {
+      border-color: #e74c3c;
+      background: #fdf1ef
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px
+    }
+
+    .edit-flag {
+      display: none;
+      align-items: center;
+      gap: 7px;
+      background: rgba(200, 134, 10, .09);
+      border: 1px solid rgba(200, 134, 10, .25);
+      color: #8a6108;
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 8px 11px;
+      border-radius: 8px;
+      margin-bottom: 14px
+    }
+
+    .edit-flag.show {
+      display: flex
+    }
+
+    .edit-flag i {
+      font-size: 14px
+    }
+
+    /* TABLE CARD (right) */
+    .table-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .tb-search {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+      max-width: 320px
+    }
+
+    .tb-search input {
+      width: 100%;
+      padding: 9px 14px 9px 36px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .85rem;
+      background: var(--ivory);
+      outline: none;
+      font-family: inherit;
+      color: var(--text);
+      transition: border .15s
+    }
+
+    .tb-search input:focus {
+      border-color: var(--c);
+      background: #fff
+    }
+
+    .tb-search i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    .tb-spacer {
+      flex: 1
+    }
+
+    .tb-count {
+      font-size: .76rem;
+      color: var(--muted);
+      white-space: nowrap
+    }
+
+    .tb-count strong {
+      color: var(--text)
+    }
+
+    .table-scroll {
+      overflow-x: auto
+    }
+
+    table.tstable {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .tstable thead th {
+      position: sticky;
+      top: 0;
+      background: #fbf6f1;
+      text-align: left;
+      font-size: .67rem;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .tstable tbody td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: .84rem;
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    .tstable tbody tr {
+      transition: background .12s
+    }
+
+    .tstable tbody tr:hover {
+      background: var(--ivory)
+    }
+
+    .tstable tbody tr:last-child td {
+      border-bottom: none
+    }
+
+    .tstable tbody tr.editing-row {
+      background: rgba(200, 134, 10, .06)
+    }
+
+    .col-sl {
+      width: 60px;
+      color: var(--muted);
+      font-weight: 600
+    }
+
+    .col-pk {
+      width: 90px
+    }
+
+    .col-charge,
+    .col-pkg {
+      width: 160px
+    }
+
+    .col-action {
+      width: 92px
+    }
+
+    .pk-pill {
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: .78rem;
+      color: var(--muted);
+      font-weight: 600
+    }
+
+    .amt-pill {
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: .84rem;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .amt-pill.charge {
+      color: var(--c)
+    }
+
+    .act-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .icon-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 14px;
+      transition: all .15s
+    }
+
+    .icon-btn.edit:hover {
+      border-color: #2563eb;
+      color: #2563eb;
+      background: rgba(37, 99, 235, .06)
+    }
+
+    .icon-btn.del:hover {
+      border-color: #e74c3c;
+      color: #e74c3c;
+      background: rgba(231, 76, 60, .06)
+    }
+
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--muted)
+    }
+
+    .empty-state i {
+      font-size: 40px;
+      color: var(--border);
+      margin-bottom: 10px;
+      display: block
+    }
+
+    .empty-state strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 4px;
+      font-size: .9rem
+    }
+
+    .empty-state p {
+      font-size: .8rem
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+    }
+
+    .pg-info {
+      font-size: .76rem;
+      color: var(--muted)
+    }
+
+    .pg-info strong {
+      color: var(--text)
+    }
+
+    .pg-btns {
+      display: flex;
+      gap: 6px;
+      align-items: center
+    }
+
+    .pg-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: .76rem;
+      color: var(--text);
+      font-weight: 600;
+      transition: all .15s
+    }
+
+    .pg-btn:hover:not(:disabled) {
+      border-color: var(--c);
+      color: var(--c)
+    }
+
+    .pg-btn.active {
+      background: var(--c);
+      border-color: var(--c);
+      color: #fff
+    }
+
+    .pg-btn:disabled {
+      opacity: .35;
+      cursor: not-allowed
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 5, 10, .45);
+      z-index: 500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.show {
+      display: flex
+    }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 380px;
+      padding: 26px 24px 22px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+    }
+
+    .modal-ico {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(231, 76, 60, .1);
+      color: #e74c3c;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      margin: 0 auto 14px
+    }
+
+    .modal-box h3 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      color: var(--text)
+    }
+
+    .modal-box p {
+      font-size: .82rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.5
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center
+    }
+
+    .modal-actions .btn {
+      flex: 1
+    }
+
+    @media(max-width:900px) {
+      .main {
+        margin-left: 0;
+      }
+
+      .ts-grid {
+        grid-template-columns: 1fr
+      }
+
+      .form-card {
+        position: static
+      }
+    }
+
+    @media(max-width:640px) {
+      .content {
+        padding: 18px 16px
+      }
+
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- PROMO BAR -->
+  <div class="promo">✦ <strong>20% Off</strong> — Auto Applied at Checkout &nbsp;·&nbsp; Limited Time Only ✦</div>
+
+  <!-- TOP NAVBAR -->
+  <nav class="nav">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><i class="ti ti-menu-2"></i></button>
+    <a class="nav-brand" href="index.html">
+      <div class="nav-logo-ring">KL</div>
+      <div class="nav-wordmark">KrishLoom<span>Admin Panel</span></div>
+    </a>
+    <div class="nav-search-wrap">
+      <div class="nav-search">
+        <i class="ti ti-search"></i>
+        <input type="text" placeholder="Search orders, products, users…" />
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" aria-label="Notifications"><i class="ti ti-bell"></i><span
+          class="nav-pip">7</span></button>
+      <button class="nav-btn" aria-label="Settings"><i class="ti ti-settings"></i></button>
+      <div class="nav-divider"></div>
+      <div class="nav-avatar">AD</div>
+      <div class="nav-user-info">
+        <div class="aname">Admin User</div>
+        <div class="arole">Super Admin</div>
+      </div>
+      <button class="nav-btn" aria-label="More"><i class="ti ti-chevron-down"></i></button>
+    </div>
+  </nav>
+
+  <!-- OVERLAY -->
+  <div class="sb-overlay" id="overlay"></div>
+
+  <!-- ══════════════════════════════
+     SIDEBAR
+══════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Admin card -->
+    <div class="sb-admin">
+      <div class="sb-admin-inner">
+        <div class="sb-admin-av">AD</div>
+        <div>
+          <div class="sb-admin-name">Admin User</div>
+          <div class="sb-admin-role">admin@krishloom.com</div>
+        </div>
+      </div>
+      <div class="sb-admin-badge"><i class="ti ti-shield-check"></i> Super Admin</div>
+    </div>
+
+    <!-- ── MAIN ── -->
+    <div class="sb-section">Main</div>
+    <ul class="sb-nav">
+
+      <!-- Dashboard -->
+      <li class="sb-item">
+        <a class="sb-link active" onclick="setActive(this)" href="index.html">
+          <i class="ti ti-layout-dashboard icon"></i>
+          <span class="lbl">Dashboard</span>
+        </a>
+      </li>
+
+      <!-- Role & Rights -->
+      <li class="sb-item">
+        <a class="sb-link" onclick="setActive(this)" href="#">
+          <i class="ti ti-shield-lock icon"></i>
+          <span class="lbl">Role &amp; Rights</span>
+          <span class="sb-badge">4</span>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- ── AFFILIATE ── -->
+    <div class="sb-section">Affiliate</div>
+    <ul class="sb-nav">
+
+      <!-- Affiliate (dropdown) -->
+      <li class="sb-item" id="aff">
+        <a class="sb-link" onclick="toggle('aff',this)" href="#">
+          <i class="ti ti-users icon"></i>
+          <span class="lbl">Affiliate</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-list"></i><span class="lbl">All Affiliate</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-circle-check"></i><span class="lbl">Active</span>
+              <span class="sb-badge green" style="font-size:.54rem">12</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-circle-x"></i><span class="lbl">Inactive</span>
+              <span class="sb-badge" style="font-size:.54rem">3</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Affiliate KYC (dropdown) -->
+      <li class="sb-item" id="kyc">
+        <a class="sb-link" onclick="toggle('kyc',this)" href="#">
+          <i class="ti ti-id-badge icon"></i>
+          <span class="lbl">Affiliate KYC</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-clock"></i><span class="lbl">All KYC</span>
+              <span class="sb-badge amber" style="font-size:.54rem">8</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-clock"></i><span class="lbl">Pending Requests</span>
+              <span class="sb-badge amber" style="font-size:.54rem">8</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-circle-check"></i><span class="lbl">Accepted Requests</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-circle-x"></i><span class="lbl">Rejected Requests</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+
+    <!-- ── CONTENT ── -->
+    <div class="sb-section">Content</div>
+    <ul class="sb-nav">
+
+      <!-- Review (Dropdown) -->
+      <li class="sb-item" id="review">
+        <a class="sb-link" onclick="toggle('review',this)" href="#">
+          <i class="ti ti-star icon"></i>
+          <span class="lbl">Review</span>
+          <span class="sb-badge amber">5</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="allreviews.html?status=all">
+              <i class="ti ti-list"></i>
+              <span class="lbl">All Reviews</span>
+            </a>
+          </li>
+
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="allreviews.html?status=pending">
+              <i class="ti ti-clock"></i>
+              <span class="lbl">Pending Reviews</span>
+            </a>
+          </li>
+
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="allreviews.html?status=accepted">
+              <i class="ti ti-check"></i>
+              <span class="lbl">Accepted Reviews</span>
+            </a>
+          </li>
+
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="allreviews.html?status=rejected">
+              <i class="ti ti-x"></i>
+              <span class="lbl">Rejected Reviews</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- All Users -->
+      <li class="sb-item">
+        <a class="sb-link" onclick="setActive(this)" href="#">
+          <i class="ti ti-users-group icon"></i>
+          <span class="lbl">All Users</span>
+        </a>
+      </li>
+
+      <!-- Slider (dropdown) -->
+      <li class="sb-item" id="slider">
+        <a class="sb-link" onclick="toggle('slider',this)" href="#">
+          <i class="ti ti-slideshow icon"></i>
+          <span class="lbl">Slider</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-plus"></i><span class="lbl">Slider</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+    </ul>
+
+    <!-- ── MASTER ── -->
+    <div class="sb-section">Master</div>
+    <ul class="sb-nav">
+
+      <!-- Master (dropdown) -->
+      <li class="sb-item" id="master">
+        <a class="sb-link" onclick="toggle('master',this)" href="#">
+          <i class="ti ti-adjustments-horizontal icon"></i>
+          <span class="lbl">Master</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="top-scroll.html">
+              <i class="ti ti-separator-horizontal"></i><span class="lbl">Top Scroll</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="master-type.html">
+              <i class="ti ti-tag"></i><span class="lbl">Type</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="master-category.html">
+              <i class="ti ti-category"></i><span class="lbl">Category</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="master-manufacturer.html">
+              <i class="ti ti-building-factory"></i><span class="lbl">Manufacturer</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="delivery-charge.html">
+              <i class="ti ti-truck-delivery"></i><span class="lbl">Delivery Charge</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+
+    <!-- ── STORE ── -->
+    <div class="sb-section">Store</div>
+    <ul class="sb-nav">
+
+      <!-- Products (dropdown) -->
+      <li class="sb-item" id="products">
+        <a class="sb-link" onclick="toggle('products',this)" href="#">
+          <i class="ti ti-package icon"></i>
+          <span class="lbl">Products</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" href="addproduct.html">
+              <i class="ti ti-circle-plus"></i><span class="lbl">Add Product</span>
+            </a>
+          </li>
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="manageproduct.html">
+              <i class="ti ti-table"></i><span class="lbl">Manage Products</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Orders (dropdown) -->
+      <li class="sb-item" id="orders">
+        <a class="sb-link" onclick="toggle('orders',this)" href="#">
+          <i class="ti ti-receipt icon"></i>
+          <span class="lbl">Orders</span>
+          <span class="sb-badge">24</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="order.html">
+              <i class="ti ti-list"></i><span class="lbl">All Orders</span>
+            </a>
+          </li>
+         
+        </ul>
+      </li>
+
+    </ul>
+
+    <!-- ── ACCOUNT ── -->
+    <div class="sb-section">Account</div>
+    <ul class="sb-nav" style="margin-bottom:6px">
+
+      <!-- Password (dropdown) -->
+      <li class="sb-item" id="password">
+        <a class="sb-link" onclick="toggle('password',this)" href="#">
+          <i class="ti ti-lock icon"></i>
+          <span class="lbl">Password</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </a>
+        <ul class="sb-dropdown">
+          <li class="sb-sub">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="#">
+              <i class="ti ti-key"></i><span class="lbl">Change Password</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Logout -->
+      <li class="sb-item">
+        <a class="sb-link logout" href="#" onclick="return false">
+          <i class="ti ti-logout icon"></i>
+          <span class="lbl">Logout</span>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- Footer -->
+    <div class="sb-footer">
+      <div class="sb-footer-pill">
+        <div class="sb-footer-icon"><i class="ti ti-shield-check"></i></div>
+        <div class="sb-footer-text">
+          <strong>KrishLoom Admin</strong>
+          v2.0 · © 2026
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ══════════════════════════════
+     MAIN CONTENT (sample)
+══════════════════════════════ -->
+<!-- MAIN -->
+  <div class="main">
+    <div class="content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <div class="page-title">Delivery Charge</div>
+          <div class="breadcrumb">
+            <a href="index.html">Dashboard</a>
+            <i class="ti ti-chevron-right"></i>
+            <span>Settings</span>
+            <i class="ti ti-chevron-right"></i>
+            <span>Delivery Charge</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two column: left form / right table -->
+      <div class="ts-grid">
+
+        <!-- LEFT: Add Delivery Charge form -->
+        <div class="form-card">
+          <div class="form-card-head">
+            <div class="form-card-ico"><i class="ti ti-truck-delivery"></i></div>
+            <div>
+              <h3 id="formTitle">Add Delivery Charge</h3>
+              <p>Charge slab based on minimum package amount</p>
+            </div>
+          </div>
+          <div class="form-card-body">
+
+            <div class="edit-flag" id="editFlag">
+              <i class="ti ti-pencil"></i>
+              <span>Editing <strong id="editFlagPk">#--</strong> — submit to update</span>
+            </div>
+
+            <form id="tsForm" onsubmit="return handleSubmit(event)">
+
+              <div class="field-group" id="chargeGroup">
+                <label>Delivery Charge <span class="req">*</span></label>
+                <div class="input-prefix-wrap">
+                  <span class="prefix">₹</span>
+                  <input type="text" id="tsCharge" placeholder="e.g. 60" autocomplete="off" inputmode="decimal" />
+                </div>
+                <div class="field-error" id="chargeError"><i class="ti ti-alert-circle"></i> Enter a valid delivery charge</div>
+              </div>
+
+              <div class="field-group" id="pkgGroup">
+                <label>Minimum Package <span class="req">*</span></label>
+                <div class="input-prefix-wrap">
+                  <span class="prefix">₹</span>
+                  <input type="text" id="tsPackage" placeholder="e.g. 999" autocomplete="off" inputmode="decimal" />
+                </div>
+                <div class="field-hint">Minimum order amount this charge applies to</div>
+                <div class="field-error" id="pkgError"><i class="ti ti-alert-circle"></i> Enter a valid minimum package amount</div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
+                  <i class="ti ti-circle-plus"></i> Submit
+                </button>
+                <button type="button" class="btn btn-ghost" onclick="resetForm()">
+                  <i class="ti ti-refresh"></i> Reset
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+        <!-- RIGHT: Table -->
+        <div class="table-card">
+
+          <div class="toolbar">
+            <div class="tb-search">
+              <i class="ti ti-search"></i>
+              <input type="text" id="searchInput" placeholder="Search by charge, package or PK…" oninput="applyFilters()" />
+            </div>
+            <div class="tb-spacer"></div>
+            <div class="tb-count"><strong id="resultCount">0</strong> slabs</div>
+          </div>
+
+          <div class="table-scroll">
+            <table class="tstable">
+              <thead>
+                <tr>
+                  <th class="col-sl">SL No.</th>
+                  <th class="col-pk">PK</th>
+                  <th class="col-charge">Delivery Charge</th>
+                  <th class="col-pkg">Minimum Package</th>
+                  <th class="col-action">Action</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="empty-state" id="emptyState" style="display:none">
+            <i class="ti ti-truck-delivery"></i>
+            <strong>No delivery charges found</strong>
+            <p>Use the form on the left to add your first slab.</p>
+          </div>
+
+          <div class="pagination">
+            <div class="pg-info">Showing <strong id="pgFrom">0</strong>–<strong id="pgTo">0</strong> of <strong
+                id="pgTotal">0</strong></div>
+            <div class="pg-btns" id="pgBtns"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRM MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box">
+      <div class="modal-ico"><i class="ti ti-trash"></i></div>
+      <h3>Delete this delivery charge?</h3>
+      <p>This will permanently remove this slab. This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" style="background:#e74c3c;box-shadow:none" onclick="doDelete()">Yes,
+          Delete</button>
+      </div>
+    </div>
+  </div>
+
+    <script>
+    function toggle(id, link) {
+      const item = document.getElementById(id);
+      if (!item) return false;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.sb-item.open').forEach(el => { if (el.id !== id) el.classList.remove('open'); });
+      item.classList.toggle('open', !isOpen);
+      return false;
+    }
+
+    function setActive(el) {
+      document.querySelectorAll('.sb-link.active, .sb-sub-link.active').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      closeSidebarOnMobile();
+      return true;
+    }
+
+    function setSubActive(el) {
+      document.querySelectorAll('.sb-link.active, .sb-sub-link.active').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      const parent = el.closest('.sb-item');
+      if (parent) {
+        parent.classList.add('open');
+        const parentLink = parent.querySelector(':scope > .sb-link');
+        if (parentLink) parentLink.classList.add('active');
+      }
+      closeSidebarOnMobile();
+      return true;
+    }
+
+    function closeSidebarOnMobile() {
+      if (window.innerWidth <= 900) {
+        document.getElementById('sidebar')?.classList.remove('open');
+        document.getElementById('overlay')?.classList.remove('active');
+      }
+    }
+
+    function markCurrentSidebarItem() {
+      const current = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+      document.querySelectorAll('.sb-link.active, .sb-sub-link.active').forEach(a => a.classList.remove('active'));
+      const currentLink = Array.from(document.querySelectorAll('.sidebar a[href]')).find(a => a.getAttribute('href').split('?')[0].toLowerCase() === current);
+      if (!currentLink) return;
+      currentLink.classList.add('active');
+      const parentItem = currentLink.closest('.sb-item');
+      if (parentItem) {
+        parentItem.classList.add('open');
+        const parentLink = parentItem.querySelector(':scope > .sb-link');
+        if (parentLink && currentLink.classList.contains('sb-sub-link')) parentLink.classList.add('active');
+      }
+    }
+
+    const ham = document.getElementById('hamburger');
+    const ov = document.getElementById('overlay');
+    const sb = document.getElementById('sidebar');
+    if (ham && ov && sb) {
+      ham.addEventListener('click', () => { const o = sb.classList.toggle('open'); ov.classList.toggle('active', o); });
+      ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('active'); });
+      function checkMob() { ham.style.display = window.innerWidth <= 900 ? 'grid' : 'none'; }
+      window.addEventListener('resize', checkMob);
+      checkMob();
+    }
+    markCurrentSidebarItem();
+  </script>
+<script>
+    /* ───────────── Sample data (fallback until backend responds) ───────────── */
+    let charges = [
+      { pk: 1, charge: 60, package: 499 },
+      { pk: 2, charge: 40, package: 999 },
+      { pk: 3, charge: 0, package: 1999 },
+    ];
+    let nextPk = 4;
+
+    /* ───────────── State ───────────── */
+    let state = { search: '', page: 1, perPage: 8 };
+    let editingPk = null;
+    let pendingDeletePk = null;
+
+    function getFiltered() {
+      const q = state.search.toLowerCase();
+      if (!q) return charges;
+      return charges.filter(c =>
+        String(c.pk).includes(q) ||
+        String(c.charge).includes(q) ||
+        String(c.package).includes(q)
+      );
+    }
+
+    function render() {
+      const filtered = getFiltered();
+      const total = filtered.length;
+      const totalPages = Math.max(1, Math.ceil(total / state.perPage));
+      if (state.page > totalPages) state.page = totalPages;
+      const start = (state.page - 1) * state.perPage;
+      const pageItems = filtered.slice(start, start + state.perPage);
+
+      const tbody = document.getElementById('tbody');
+      const emptyState = document.getElementById('emptyState');
+
+      if (pageItems.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'block';
+      } else {
+        emptyState.style.display = 'none';
+        tbody.innerHTML = pageItems.map((c, i) => {
+          const sl = start + i + 1;
+          const rowCls = editingPk === c.pk ? 'editing-row' : '';
+          return `
+          <tr class="${rowCls}">
+            <td class="col-sl">${sl}</td>
+            <td class="col-pk"><span class="pk-pill">#${c.pk}</span></td>
+            <td class="col-charge"><span class="amt-pill charge">₹ ${formatAmount(c.charge)}</span></td>
+            <td class="col-pkg"><span class="amt-pill">₹ ${formatAmount(c.package)}</span></td>
+            <td class="col-action">
+              <div class="act-icons">
+                <button class="icon-btn edit" title="Edit" onclick="editEntry(${c.pk})"><i class="ti ti-pencil"></i></button>
+                <button class="icon-btn del" title="Delete" onclick="confirmDelete(${c.pk})"><i class="ti ti-trash"></i></button>
+              </div>
+            </td>
+          </tr>`;
+        }).join('');
+      }
+
+      document.getElementById('resultCount').textContent = total;
+      document.getElementById('pgFrom').textContent = total === 0 ? 0 : start + 1;
+      document.getElementById('pgTo').textContent = Math.min(start + state.perPage, total);
+      document.getElementById('pgTotal').textContent = total;
+
+      renderPagination(totalPages);
+    }
+
+    function formatAmount(n) {
+      const num = Number(n) || 0;
+      return num % 1 === 0 ? num.toString() : num.toFixed(2);
+    }
+
+    function renderPagination(totalPages) {
+      const wrap = document.getElementById('pgBtns');
+      let html = `<button class="pg-btn" ${state.page === 1 ? 'disabled' : ''} onclick="goPage(${state.page - 1})"><i class="ti ti-chevron-left"></i></button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        if (totalPages > 7 && i !== 1 && i !== totalPages && Math.abs(i - state.page) > 1) {
+          if (i === 2 || i === totalPages - 1) html += `<span style="padding:0 4px;color:var(--muted)">…</span>`;
+          continue;
+        }
+        html += `<button class="pg-btn ${i === state.page ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+      }
+      html += `<button class="pg-btn" ${state.page === totalPages ? 'disabled' : ''} onclick="goPage(${state.page + 1})"><i class="ti ti-chevron-right"></i></button>`;
+      wrap.innerHTML = html;
+    }
+
+    /* ───────────── Interactions ───────────── */
+    function applyFilters() {
+      state.search = document.getElementById('searchInput').value.trim();
+      state.page = 1;
+      render();
+    }
+
+    function goPage(p) { if (p < 1) return; state.page = p; render(); }
+
+    function validateForm() {
+      const chargeInput = document.getElementById('tsCharge');
+      const pkgInput = document.getElementById('tsPackage');
+
+      const chargeVal = chargeInput.value.trim();
+      const pkgVal = pkgInput.value.trim();
+
+      const chargeGroup = document.getElementById('chargeGroup');
+      const chargeError = document.getElementById('chargeError');
+      const pkgGroup = document.getElementById('pkgGroup');
+      const pkgError = document.getElementById('pkgError');
+
+      const numRe = /^\d+(\.\d{1,2})?$/;
+      let firstInvalid = null;
+      let valid = true;
+
+      if (!numRe.test(chargeVal)) {
+        chargeGroup.classList.add('has-error');
+        chargeError.classList.add('show');
+        firstInvalid = firstInvalid || chargeInput;
+        valid = false;
+      } else {
+        chargeGroup.classList.remove('has-error');
+        chargeError.classList.remove('show');
+      }
+
+      if (!numRe.test(pkgVal)) {
+        pkgGroup.classList.add('has-error');
+        pkgError.classList.add('show');
+        firstInvalid = firstInvalid || pkgInput;
+        valid = false;
+      } else {
+        pkgGroup.classList.remove('has-error');
+        pkgError.classList.remove('show');
+      }
+
+      if (!valid) {
+        if (firstInvalid) firstInvalid.focus();
+        return null;
+      }
+      return { charge: parseFloat(chargeVal), package: parseFloat(pkgVal) };
+    }
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const data = validateForm();
+      if (!data) return false;
+
+      if (editingPk !== null) {
+        await updateEntry(editingPk, data);
+      } else {
+        await addEntry(data);
+      }
+      return false;
+    }
+
+    async function addEntry(data) {
+      try {
+        const formData = new FormData();
+        formData.append('delivery_charge', data.charge);
+        formData.append('minimum_package', data.package);
+        const response = await fetch(
+          'http://localhost/krishloom-vastram/backend/routes/deliveryChargeApi.php?route=addDeliveryCharge',
+          { method: 'POST', body: formData }
+        );
+        const result = await response.json();
+        if (result.status) {
+          const pk = result.data && result.data.id ? result.data.id : nextPk++;
+          charges.unshift({ pk, charge: data.charge, package: data.package });
+          showGlobalSnackbar('Delivery charge added.', 'success');
+        } else {
+          charges.unshift({ pk: nextPk++, charge: data.charge, package: data.package });
+          showGlobalSnackbar(result.message || 'Added locally (server did not confirm).', 'success');
+        }
+      } catch (err) {
+        charges.unshift({ pk: nextPk++, charge: data.charge, package: data.package });
+        showGlobalSnackbar('Added locally — network error reaching server.', 'error');
+      }
+      resetForm();
+      state.page = 1;
+      render();
+    }
+
+    function editEntry(pk) {
+      const c = charges.find(x => x.pk === pk);
+      if (!c) return;
+      editingPk = pk;
+      document.getElementById('tsCharge').value = c.charge;
+      document.getElementById('tsPackage').value = c.package;
+      document.getElementById('formTitle').textContent = 'Edit Delivery Charge';
+      document.getElementById('submitBtn').innerHTML = '<i class="ti ti-device-floppy"></i> Update';
+      document.getElementById('editFlag').classList.add('show');
+      document.getElementById('editFlagPk').textContent = '#' + pk;
+      clearErrors();
+      render();
+      document.getElementById('tsCharge').focus();
+    }
+
+    async function updateEntry(pk, data) {
+      try {
+        const formData = new FormData();
+        formData.append('id', pk);
+        formData.append('delivery_charge', data.charge);
+        formData.append('minimum_package', data.package);
+        const response = await fetch(
+          'http://localhost/krishloom-vastram/backend/routes/deliveryChargeApi.php?route=updateDeliveryCharge',
+          { method: 'POST', body: formData }
+        );
+        const result = await response.json();
+        const idx = charges.findIndex(x => x.pk === pk);
+        if (idx >= 0) {
+          charges[idx].charge = data.charge;
+          charges[idx].package = data.package;
+        }
+        if (result.status) {
+          showGlobalSnackbar('Delivery charge updated.', 'success');
+        } else {
+          showGlobalSnackbar(result.message || 'Updated locally (server did not confirm).', 'success');
+        }
+      } catch (err) {
+        const idx = charges.findIndex(x => x.pk === pk);
+        if (idx >= 0) {
+          charges[idx].charge = data.charge;
+          charges[idx].package = data.package;
+        }
+        showGlobalSnackbar('Updated locally — network error reaching server.', 'error');
+      }
+      resetForm();
+      render();
+    }
+
+    function clearErrors() {
+      document.getElementById('chargeGroup').classList.remove('has-error');
+      document.getElementById('chargeError').classList.remove('show');
+      document.getElementById('pkgGroup').classList.remove('has-error');
+      document.getElementById('pkgError').classList.remove('show');
+    }
+
+    function resetForm() {
+      editingPk = null;
+      document.getElementById('tsForm').reset();
+      document.getElementById('formTitle').textContent = 'Add Delivery Charge';
+      document.getElementById('submitBtn').innerHTML = '<i class="ti ti-circle-plus"></i> Submit';
+      document.getElementById('editFlag').classList.remove('show');
+      clearErrors();
+      render();
+    }
+
+    function confirmDelete(pk) {
+      pendingDeletePk = pk;
+      document.getElementById('modalOverlay').classList.add('show');
+    }
+    function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); pendingDeletePk = null; }
+
+    async function doDelete() {
+      if (pendingDeletePk === null) { closeModal(); return; }
+      try {
+        const formData = new FormData();
+        formData.append('id', pendingDeletePk);
+        const response = await fetch(
+          'http://localhost/krishloom-vastram/backend/routes/deliveryChargeApi.php?route=deleteDeliveryCharge',
+          { method: 'POST', body: formData }
+        );
+        const result = await response.json();
+        charges = charges.filter(c => c.pk !== pendingDeletePk);
+        if (editingPk === pendingDeletePk) resetForm();
+        showGlobalSnackbar(result.status ? 'Delivery charge deleted successfully.' : (result.message || 'Deleted locally.'), 'success');
+      } catch (err) {
+        charges = charges.filter(c => c.pk !== pendingDeletePk);
+        if (editingPk === pendingDeletePk) resetForm();
+        showGlobalSnackbar('Deleted locally — network error reaching server.', 'error');
+      }
+      closeModal();
+      render();
+    }
+
+    /* ───────────── Snackbar ───────────── */
+    function showGlobalSnackbar(message, type = 'success') {
+      const snackbar = document.getElementById('globalSnackbar');
+      if (!snackbar) return;
+      snackbar.textContent = message;
+      snackbar.className = 'show ' + type;
+      setTimeout(() => { snackbar.className = snackbar.className.replace('show', '').trim(); }, 3500);
+    }
+
+    /* ───────────── Init ───────────── */
+    render();
+    window.onload = loadDeliveryCharges;
+
+    async function loadDeliveryCharges() {
+      try {
+        const response = await fetch(
+          'http://localhost/krishloom-vastram/backend/routes/deliveryChargeApi.php?route=getDeliveryCharge'
+        );
+        const result = await response.json();
+        if (result.status && Array.isArray(result.data)) {
+          charges = result.data.map(c => ({
+            pk: c.id,
+            charge: c.delivery_charge !== undefined ? c.delivery_charge : (c.charge || 0),
+            package: c.minimum_package !== undefined ? c.minimum_package : (c.package || 0)
+          }));
+          nextPk = charges.reduce((m, c) => Math.max(m, c.pk), 0) + 1;
+          render();
+        }
+      } catch (err) {
+        console.log('Error loading delivery charges, using sample data:', err);
+      }
+    }
+  </script>
+
+  <!-- GLOBAL SNACKBAR -->
+  <div id="globalSnackbar"></div>
+  <style>
+    #globalSnackbar {
+      visibility: hidden;
+      min-width: 280px;
+      background-color: #333;
+      color: #fff;
+      text-align: left;
+      border-radius: 8px;
+      padding: 16px 20px;
+      position: fixed;
+      z-index: 1000000;
+      right: 24px;
+      top: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(-20px);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    #globalSnackbar.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #globalSnackbar.success {
+      background-color: #fff;
+      color: #1e8449;
+      border-left: 6px solid #2ecc71;
+    }
+
+    #globalSnackbar.error {
+      background-color: #fff;
+      color: #c0392b;
+      border-left: 6px solid #e74c3c;
+    }
+  </style>
+
+</body>
+</html>
