@@ -2063,7 +2063,7 @@
         formData.append('name', name);
         if (selectedImageFile) formData.append('image', selectedImageFile);
         const response = await fetch(
-          'http://localhost/krishloom-vastram/backend/routes/typeApi.php?route=addType',
+          'http://localhost/krishloom-vastram/backend/routes/masterTypeApi.php?route=addMasterType',
           { method: 'POST', body: formData }
         );
         const result = await response.json();
@@ -2111,7 +2111,7 @@
         formData.append('name', name);
         if (selectedImageFile) formData.append('image', selectedImageFile);
         const response = await fetch(
-          'http://localhost/krishloom-vastram/backend/routes/typeApi.php?route=updateType',
+          'http://localhost/krishloom-vastram/backend/routes/masterTypeApi.php?route=updateMasterType',
           { method: 'POST', body: formData }
         );
         const result = await response.json();
@@ -2160,7 +2160,7 @@
         const formData = new FormData();
         formData.append('id', pendingDeletePk);
         const response = await fetch(
-          'http://localhost/krishloom-vastram/backend/routes/typeApi.php?route=deleteType',
+          'http://localhost/krishloom-vastram/backend/routes/masterTypeApi.php?route=deleteMasterType',
           { method: 'POST', body: formData }
         );
         const result = await response.json();
@@ -2192,7 +2192,7 @@
     async function loadTypes() {
       try {
         const response = await fetch(
-          'http://localhost/krishloom-vastram/backend/routes/typeApi.php?route=getType'
+          'http://localhost/krishloom-vastram/backend/routes/masterTypeApi.php?route=getMasterTypes'
         );
         const result = await response.json();
         if (result.status && Array.isArray(result.data)) {

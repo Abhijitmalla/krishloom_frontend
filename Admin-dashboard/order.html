@@ -1758,7 +1758,7 @@ mobile: o.user_phone ? String(o.user_phone) : 'N/A',
             orderAmount: parseFloat(o.total_amount || 0),
             trackingNo: o.trackingNo || '-',
               invoiceUrl: o.invoice_number
-  ? `http://localhost/krishloom-vastram/backend/uploads/invoices/${o.invoice_number}.pdf`
+  ? `http://localhost/krishloom-vastram/backend/routes/OrderApi.php?route=downloadInvoice&order_id=${o.id}&download=0`
     : null,
             acceptedDate: null,
             shippedDate: null,
@@ -1967,31 +1967,32 @@ mobile: o.user_phone ? String(o.user_phone) : 'N/A',
           `).join('');
 
           const order = orders.find(o => o.dbId == id);
-const invoiceUrl = order?.invoiceUrl;
-         document.getElementById('viewOrderItems').innerHTML = `
+          const invoiceViewUrl = order?.invoiceUrl;
+          const invoiceDownloadUrl = invoiceViewUrl ? `${invoiceViewUrl.replace('download=0', 'download=1')}` : null;
+          document.getElementById('viewOrderItems').innerHTML = `
   ${itemsHtml}
 
   ${
-    invoiceUrl
+    invoiceViewUrl
       ? `
       <div style="margin-top:20px;border-top:1px solid #ddd;padding-top:20px;">
         <h4>Invoice</h4>
-
-      <iframe
-  src="${invoiceUrl}"
-  width="100%"
-  height="500"
-  style="border:1px solid #ddd;border-radius:10px;">
-</iframe>
-
-<a
-  href="${invoiceUrl}"
-  download
-  class="btn btn-primary"
-  style="margin-top:15px;">
-  <i class="ti ti-download"></i>
-  Download Invoice
-</a>
+        <object
+          data="${invoiceViewUrl}"
+          type="application/pdf"
+          width="100%"
+          height="500"
+          style="border:1px solid #ddd;border-radius:10px;">
+          <p>Your browser does not support inline PDFs. <a href="${invoiceDownloadUrl}">Download the invoice</a> instead.</p>
+        </object>
+        <a
+          href="${invoiceDownloadUrl}"
+          class="btn btn-primary"
+          style="margin-top:15px;"
+          download>
+          <i class="ti ti-download"></i>
+          Download Invoice
+        </a>
       </div>
       `
       : ''

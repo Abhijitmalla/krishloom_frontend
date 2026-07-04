@@ -838,7 +838,8 @@
       color: var(--c)
     }
 
-    .field-group input[type="text"] {
+    .field-group input[type="text"],
+    .field-group select {
       width: 100%;
       padding: 10px 13px;
       border: 1px solid var(--border);
@@ -848,12 +849,25 @@
       color: var(--text);
       background: var(--ivory);
       outline: none;
-      transition: border .15s, background .15s
+      transition: border .15s, background .15s;
     }
 
-    .field-group input[type="text"]:focus {
+    .field-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, var(--text) 50%),
+                        linear-gradient(135deg, var(--text) 50%, transparent 50%),
+                        linear-gradient(to right, var(--ivory), var(--ivory));
+      background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 13px) calc(50% - 3px), 0 0;
+      background-size: 6px 6px, 6px 6px, 100% 100%;
+      background-repeat: no-repeat;
+    }
+
+    .field-group input[type="text"]:focus,
+    .field-group select:focus {
       border-color: var(--c);
-      background: #fff
+      background: #fff;
     }
 
     .field-hint {
@@ -1585,7 +1599,7 @@
           </li>
           <li class="sb-sub">
             <a class="sb-sub-link" onclick="setSubActive(this)" href="master-type.html">
-              <i class="ti ti-tag"></i><span class="lbl">Category</span>
+              <i class="ti ti-tag"></i><span class="lbl">Type</span>
             </a>
           </li>
           <li class="sb-sub">
@@ -1762,6 +1776,14 @@
                 <div class="field-error" id="nameError"><i class="ti ti-alert-circle"></i> Name is required</div>
               </div>
 
+              <div class="field-group" id="typeGroup">
+                <label>Type <span class="req">*</span></label>
+                <select id="tsType">
+                  <option value="">Select a type</option>
+                </select>
+                <div class="field-error" id="typeError"><i class="ti ti-alert-circle"></i> Type is required</div>
+              </div>
+
               <div class="form-actions">
                 <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
                   <i class="ti ti-circle-plus"></i> Submit
@@ -1795,6 +1817,7 @@
                   <th class="col-pk">PK</th>
                   <th class="col-img">Image</th>
                   <th>Name</th>
+                  <th>Type</th>
                   <th class="col-action">Action</th>
                 </tr>
               </thead>
@@ -1899,10 +1922,10 @@
 <script>
     /* ───────────── Sample data (fallback until backend responds) ───────────── */
     let categories = [
-      { pk: 1, name: 'Saree', img: 'https://images.unsplash.com/photo-1610189844315-1d3e5c905c4f?w=120&q=60' },
-      { pk: 2, name: 'Kurti', img: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=120&q=60' },
-      { pk: 3, name: 'Lehenga', img: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=120&q=60' },
-      { pk: 4, name: 'Dupatta', img: 'https://images.unsplash.com/photo-1597983073493-88cd35cf6bcb?w=120&q=60' },
+      { pk: 1, name: 'Saree', typeName: 'Our Saree Collection', img: 'https://images.unsplash.com/photo-1610189844315-1d3e5c905c4f?w=120&q=60' },
+      { pk: 2, name: 'Kurti', typeName: 'New Arrivals', img: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=120&q=60' },
+      { pk: 3, name: 'Lehenga', typeName: 'Ready To Wear Sarees', img: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=120&q=60' },
+      { pk: 4, name: 'Dupatta', typeName: 'Best seller', img: 'https://images.unsplash.com/photo-1597983073493-88cd35cf6bcb?w=120&q=60' },
       { pk: 5, name: 'Dress Material', img: 'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=120&q=60' },
     ];
     let nextPk = 6;
@@ -1913,6 +1936,7 @@
     let pendingDeletePk = null;
     let selectedImageFile = null;
     let selectedImageDataUrl = null;
+    let masterTypes = [];
 
     function getFiltered() {
       const q = state.search.toLowerCase();
@@ -1948,6 +1972,7 @@
             <td class="col-pk"><span class="pk-pill">#${t.pk}</span></td>
             <td class="col-img">${imgCell}</td>
             <td class="ts-name">${escapeHtml(t.name)}</td>
+            <td>${escapeHtml(t.typeName || '—')}</td>
             <td class="col-action">
               <div class="act-icons">
                 <button class="icon-btn edit" title="Edit" onclick="editEntry(${t.pk})"><i class="ti ti-pencil"></i></button>
@@ -1984,6 +2009,27 @@
       const div = document.createElement('div');
       div.textContent = str;
       return div.innerHTML;
+    }
+
+    function populateTypeOptions() {
+      const typeSelect = document.getElementById('tsType');
+      typeSelect.innerHTML = '<option value="">Select a type</option>';
+      masterTypes.forEach(type => {
+        typeSelect.innerHTML += `<option value="${type.id}">${escapeHtml(type.name)}</option>`;
+      });
+    }
+
+    async function loadMasterTypes() {
+      try {
+        const response = await fetch('http://localhost/krishloom-vastram/backend/routes/masterTypeApi.php?route=getMasterTypes');
+        const result = await response.json();
+        if (result.status && Array.isArray(result.data)) {
+          masterTypes = result.data.map(type => ({ id: type.id, name: type.name }));
+          populateTypeOptions();
+        }
+      } catch (err) {
+        console.error('Error loading master types:', err);
+      }
     }
 
     /* ───────────── Image upload ───────────── */
@@ -2058,9 +2104,13 @@
 
     async function addEntry(name) {
       const imgForRow = selectedImageDataUrl || null;
+      const selectedTypeId = document.getElementById('tsType').value;
+      const selectedType = masterTypes.find(type => String(type.id) === selectedTypeId);
       try {
         const formData = new FormData();
         formData.append('name', name);
+        formData.append('type_id', selectedTypeId);
+        if (selectedType) formData.append('type_name', selectedType.name);
         if (selectedImageFile) formData.append('image', selectedImageFile);
         const response = await fetch(
           'http://localhost/krishloom-vastram/backend/routes/categoryApi.php?route=addCategory',
@@ -2070,10 +2120,10 @@
         if (result.status) {
           const pk = result.data && result.data.id ? result.data.id : nextPk++;
           const img = (result.data && result.data.image) ? result.data.image : imgForRow;
-          categories.unshift({ pk, name, img });
+          categories.unshift({ pk, name, typeId: selectedTypeId, typeName: selectedType ? selectedType.name : '', img });
           showGlobalSnackbar('Category added.', 'success');
         } else {
-          categories.unshift({ pk: nextPk++, name, img: imgForRow });
+          categories.unshift({ pk: nextPk++, name, typeId: selectedTypeId, typeName: selectedType ? selectedType.name : '', img: imgForRow });
           showGlobalSnackbar(result.message || 'Added locally (server did not confirm).', 'success');
         }
       } catch (err) {
@@ -2090,6 +2140,7 @@
       if (!t) return;
       editingPk = pk;
       document.getElementById('tsName').value = t.name;
+      document.getElementById('tsType').value = t.typeId || t.type_id || '';
       selectedImageFile = null;
       selectedImageDataUrl = t.img || null;
       renderImagePreview();
@@ -2110,7 +2161,9 @@
         formData.append('id', pk);
         formData.append('name', name);
         if (selectedImageFile) formData.append('image', selectedImageFile);
-        const response = await fetch(
+        const typeId = document.getElementById('tsType').value;
+      const type = masterTypes.find(type => String(type.id) === typeId);
+      const response = await fetch(
           'http://localhost/krishloom-vastram/backend/routes/categoryApi.php?route=updateCategory',
           { method: 'POST', body: formData }
         );
@@ -2118,6 +2171,8 @@
         const idx = categories.findIndex(x => x.pk === pk);
         if (idx >= 0) {
           categories[idx].name = name;
+          categories[idx].typeId = typeId;
+          categories[idx].typeName = type ? type.name : '';
           categories[idx].img = (result.data && result.data.image) ? result.data.image : imgForRow;
         }
         if (result.status) {
@@ -2137,6 +2192,7 @@
     function resetForm() {
       editingPk = null;
       document.getElementById('tsForm').reset();
+      document.getElementById('tsType').value = '';
       selectedImageFile = null;
       selectedImageDataUrl = null;
       renderImagePreview();
@@ -2187,7 +2243,10 @@
 
     /* ───────────── Init ───────────── */
     render();
-    window.onload = loadCategories;
+    window.onload = async () => {
+      await loadMasterTypes();
+      await loadCategories();
+    };
 
     async function loadCategories() {
       try {
@@ -2199,6 +2258,8 @@
           categories = result.data.map(t => ({
             pk: t.id,
             name: t.name || t.category_name || '',
+            typeId: t.type_id || t.typeId || null,
+            typeName: t.type_name || t.typeName || '',
             img: t.image ? 'http://localhost/krishloom-vastram/backend/' + t.image : (t.image_url || null)
           }));
           nextPk = categories.reduce((m, t) => Math.max(m, t.pk), 0) + 1;

@@ -52,27 +52,18 @@
                     </div>
                     <div class="col-sm-10 col-md-8 col-lg-6">
                         <div class="text-center">
-                            <div dir="ltr" class="swiper tf-swiper" data-auto="true" data-loop="true" data-speed="1500"
-                                data-delay="1500">
-                                <div class="swiper-wrapper">
-                                    <!-- slide 1 -->
-                                    <div class="swiper-slide">
-                                        <div class="d-flex align-items-center justify-content-center gap-8">
-                                            <i class="icon icon-SealPercent text-primary fs-20"></i>
-                                            <p class="text-white text-start text-line-clamp-1">
-                                                Midseason Sale: 20% Off - Auto Applied at
-                                                Checkout - Limited Time Only
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!-- slide 2 -->
-                                    <div class="swiper-slide">
-                                        <p class="text-white text-line-clamp-1">
-                                            20% Off - Auto Applied at Checkout - Limited Time Only
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                           <div class="col-sm-10 col-md-8 col-lg-6">
+    <div class="text-center">
+        <div dir="ltr" class="swiper tf-swiper" data-auto="true"
+            data-loop="true" data-speed="1500" data-delay="1500">
+
+            <div class="swiper-wrapper" id="topScrollWrapper">
+                <!-- Dynamic slides will be added here -->
+            </div>
+
+        </div>
+    </div>
+</div>
                         </div>
                     </div>
                     <div class="col-sm-1 me-auto d-none d-sm-block">
@@ -2803,6 +2794,37 @@
 
     <script src="assets/js/carousel.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('http://localhost/krishloom-vastram/backend/routes/topScrollApi.php?route=getTopScroll')
+        .then(res => res.json())
+        .then(result => {
+            if (!result.status) return;
+
+            const wrapper = document.getElementById('topScrollWrapper');
+            wrapper.innerHTML = '';
+
+            result.data.forEach(item => {
+                wrapper.innerHTML += `
+                    <div class="swiper-slide">
+                        <div class="d-flex align-items-center justify-content-center gap-8">
+                            <i class="icon icon-SealPercent text-primary fs-20"></i>
+                            <p class="text-white text-start text-line-clamp-1">
+                                ${item.name}
+                            </p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const swiperEl = document.querySelector('.tf-swiper');
+            if (swiperEl && swiperEl.swiper) {
+                swiperEl.swiper.update();
+            }
+        })
+        .catch(err => console.error('Top Scroll Error:', err));
+});
+</script>
 </body>
 
 </html>

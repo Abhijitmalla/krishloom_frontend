@@ -1769,14 +1769,8 @@
   </script>
 <script>
     /* ───────────── Sample data (fallback until backend responds) ───────────── */
-    let topScrolls = [
-      { pk: 1, name: 'Free shipping on orders above ₹999' },
-      { pk: 2, name: 'New Kanjivaram Silk collection just dropped' },
-      { pk: 3, name: 'Flat 20% off — auto applied at checkout' },
-      { pk: 4, name: 'Cash on Delivery available across India' },
-      { pk: 5, name: 'Easy 7-day returns on all products' },
-    ];
-    let nextPk = 6;
+  let topScrolls = [];
+let nextPk = 1;
 
     /* ───────────── State ───────────── */
     let state = { search: '', page: 1, perPage: 8 };
