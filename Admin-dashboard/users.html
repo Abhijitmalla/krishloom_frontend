@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>KrishLoom – Admin Dashboard</title>
+  <title>KrishLoom – All Users</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
@@ -989,7 +989,7 @@
         </a>
         <ul class="sb-dropdown">
           <li class="sb-sub">
-            <a class="sb-sub-link active" onclick="setSubActive(this)" href="affiliates.html">
+            <a class="sb-sub-link" onclick="setSubActive(this)" href="affiliates.html">
               <i class="ti ti-list"></i><span class="lbl">All Affiliate</span>
             </a>
           </li>
@@ -1089,7 +1089,7 @@
 
       <!-- All Users -->
       <li class="sb-item">
-        <a class="sb-link" onclick="setActive(this)" href="users.html">
+        <a class="sb-link active" onclick="setActive(this)" href="users.html">
           <i class="ti ti-users-group icon"></i>
           <span class="lbl">All Users</span>
         </a>
@@ -1250,7 +1250,7 @@
   <div class="main">
     <div class="content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2>All Affiliates</h2>
+        <h2>All Users</h2>
       </div>
 
       <div class="table-container" style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border); overflow-x: auto;">
@@ -1260,15 +1260,15 @@
               <th style="padding: 12px; color: var(--muted); font-size: 13px;">SL No.</th>
               <th style="padding: 12px; color: var(--muted); font-size: 13px;">Login</th>
               <th style="padding: 12px; color: var(--muted); font-size: 13px;">Username</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Sponsor Id</th>
               <th style="padding: 12px; color: var(--muted); font-size: 13px;">Password</th>
               <th style="padding: 12px; color: var(--muted); font-size: 13px;">Name</th>
               <th style="padding: 12px; color: var(--muted); font-size: 13px;">Phone</th>
-              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Shopping Wallet</th>
-              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Profile</th>
-              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Action</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Shipping Address</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Status</th>
             </tr>
           </thead>
-          <tbody id="affiliateTableBody">
+          <tbody id="userTableBody">
             <!-- Data will be populated here -->
           </tbody>
         </table>
@@ -1277,61 +1277,41 @@
   </div>
 
   <script>
-    async function loadAffiliates() {
+    async function loadUsers() {
       try {
-        const response = await fetch('http://localhost/krishloom-vastram/backend/routes/api.php?route=getAllAffiliates');
+        const response = await fetch('http://localhost/krishloom-vastram/backend/routes/api.php?route=getAllUsers');
         const data = await response.json();
-        const tbody = document.getElementById('affiliateTableBody');
+        const tbody = document.getElementById('userTableBody');
         tbody.innerHTML = '';
         
         if (data.status && data.data) {
-          data.data.forEach((affiliate, index) => {
+          data.data.forEach((user, index) => {
             const tr = document.createElement('tr');
             tr.style.borderBottom = '1px solid var(--border)';
             tr.innerHTML = `
               <td style="padding: 12px; font-size: 14px;">${index + 1}</td>
-              <td style="padding: 12px; font-size: 14px;">${affiliate.membership_id || affiliate.email || 'N/A'}</td>
-              <td style="padding: 12px; font-size: 14px;">${affiliate.membership_id || 'N/A'}</td>
+              <td style="padding: 12px; font-size: 14px;">${user.email || user.phone || 'N/A'}</td>
+              <td style="padding: 12px; font-size: 14px;">${user.email || user.phone || 'N/A'}</td>
+              <td style="padding: 12px; font-size: 14px;">N/A</td>
               <td style="padding: 12px; font-size: 14px;">********</td>
-              <td style="padding: 12px; font-size: 14px;">${affiliate.name || 'N/A'}</td>
-              <td style="padding: 12px; font-size: 14px;">${affiliate.mobile_no || 'N/A'}</td>
-              <td style="padding: 12px; font-size: 14px;">₹0</td>
-              <td style="padding: 12px; font-size: 14px;">-</td>
-              <td style="padding: 12px; font-size: 14px;">
-                <button onclick="loginAsAffiliate('${affiliate.membership_id || affiliate.mobile_no}')" style="background: var(--c); color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">Login</button>
-              </td>
+              <td style="padding: 12px; font-size: 14px;">${user.name || 'N/A'}</td>
+              <td style="padding: 12px; font-size: 14px;">${user.phone || 'N/A'}</td>
+              <td style="padding: 12px; font-size: 14px;">${user.address || 'N/A'}</td>
+              <td style="padding: 12px; font-size: 14px;"><span style="background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">Active</span></td>
             `;
             tbody.appendChild(tr);
           });
+        } else {
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 20px;">No users found</td></tr>';
         }
       } catch (e) {
-        console.error('Error fetching affiliates:', e);
+        console.error('Error fetching users:', e);
       }
     }
     
-    async function loginAsAffiliate(membershipId) {
-      try {
-        const res = await fetch('http://localhost/krishloom-vastram/backend/routes/api.php?route=adminLoginAsAffiliate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ affiliate_id: membershipId })
-        });
-        const data = await res.json();
-        if (data.status) {
-          localStorage.setItem('affiliate_user', JSON.stringify(data.user));
-          localStorage.setItem('user', JSON.stringify(data.user));
-          window.location.href = '../Affiliate dashboard/template/index.html';
-        } else {
-          showGlobalSnackbar(data.message || 'Login failed', 'error');
-        }
-      } catch (err) {
-        showGlobalSnackbar('Error logging in as affiliate', 'error');
-      }
-    }
+    document.addEventListener('DOMContentLoaded', loadUsers);
     
-    document.addEventListener('DOMContentLoaded', loadAffiliates);
-    
-    
+
     function toggle(id, link) {
       const item = document.getElementById(id);
       const isOpen = item.classList.contains('open');

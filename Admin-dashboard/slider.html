@@ -203,7 +203,7 @@
   <!-- TOP NAVBAR -->
   <nav class="nav">
     <button class="hamburger" id="hamburger" aria-label="Toggle menu"><i class="ti ti-menu-2"></i></button>
-    <a class="nav-brand" href="index.html">
+    <a class="nav-brand" href="http://127.0.0.1:5500/krishloom3/krishloom3/index.html">
       <div class="nav-logo-ring">KL</div>
       <div class="nav-wordmark">KrishLoom<span>Admin Panel</span></div>
     </a>
@@ -253,7 +253,9 @@
       <li class="sb-item" id="aff">
         <a class="sb-link" onclick="toggle('aff',this)" href="#"><i class="ti ti-users icon"></i><span class="lbl">Affiliate</span><i class="ti ti-chevron-down chev"></i></a>
         <ul class="sb-dropdown">
-          <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i class="ti ti-list"></i><span class="lbl">All Affiliate</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="affiliates.html">
+              <i class="ti ti-list"></i><span class="lbl">All Affiliate</span>
+            </a></li>
           <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i class="ti ti-circle-check"></i><span class="lbl">Active</span><span class="sb-badge green" style="font-size:.54rem">12</span></a></li>
           <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i class="ti ti-circle-x"></i><span class="lbl">Inactive</span><span class="sb-badge" style="font-size:.54rem">3</span></a></li>
         </ul>
@@ -280,7 +282,10 @@
           <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="allreviews.html?status=rejected"><i class="ti ti-x"></i><span class="lbl">Rejected Reviews</span></a></li>
         </ul>
       </li>
-      <li class="sb-item"><a class="sb-link" onclick="setActive(this)" href="#"><i class="ti ti-users-group icon"></i><span class="lbl">All Users</span></a></li>
+      <li class="sb-item"><a class="sb-link" onclick="setActive(this)" href="users.html">
+          <i class="ti ti-users-group icon"></i>
+          <span class="lbl">All Users</span>
+        </a></li>
       <li class="sb-item" id="slider">
         <a class="sb-link active" onclick="toggle('slider',this)" href="#"><i class="ti ti-slideshow icon"></i><span class="lbl">Slider</span><i class="ti ti-chevron-down chev"></i></a>
         <ul class="sb-dropdown">
@@ -325,10 +330,12 @@
       <li class="sb-item" id="password">
         <a class="sb-link" onclick="toggle('password',this)" href="#"><i class="ti ti-lock icon"></i><span class="lbl">Password</span><i class="ti ti-chevron-down chev"></i></a>
         <ul class="sb-dropdown">
-          <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="#"><i class="ti ti-key"></i><span class="lbl">Change Password</span></a></li>
+          <li class="sb-sub"><a class="sb-sub-link" onclick="setSubActive(this)" href="change-password.html">
+               <i class="ti ti-key"></i><span class="lbl">Change Password</span>
+             </a></li>
         </ul>
       </li>
-      <li class="sb-item"><a class="sb-link logout" href="#" onclick="return false"><i class="ti ti-logout icon"></i><span class="lbl">Logout</span></a></li>
+      <li class="sb-item"><a class="sb-link logout" href="#" onclick="adminLogout(); return false;"><i class="ti ti-logout icon"></i><span class="lbl">Logout</span></a></li>
     </ul>
 
     <div class="sb-footer">
@@ -703,6 +710,12 @@
 
     render();
     window.addEventListener('load',function(){loadSliders()});
+  
+    function adminLogout() {
+      sessionStorage.clear();
+      localStorage.removeItem('admin');
+      window.location.href = 'http://127.0.0.1:5500/krishloom3/krishloom3/index.html';
+    }
   </script>
 
 </body>
