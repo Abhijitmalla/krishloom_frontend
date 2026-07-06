@@ -959,7 +959,7 @@
 
       <!-- Dashboard -->
       <li class="sb-item">
-        <a class="sb-link active" onclick="setActive(this)" href="index.html">
+        <a class="sb-link" onclick="setActive(this)" href="index.html">
           <i class="ti ti-layout-dashboard icon"></i>
           <span class="lbl">Dashboard</span>
         </a>
@@ -989,7 +989,7 @@
         </a>
         <ul class="sb-dropdown">
           <li class="sb-sub">
-            <a class="sb-sub-link" onclick="setSubActive(this)" href="affiliates.html">
+            <a class="sb-sub-link active" onclick="setSubActive(this)" href="affiliates.html">
               <i class="ti ti-list"></i><span class="lbl">All Affiliate</span>
             </a>
           </li>
@@ -1249,47 +1249,89 @@
 ══════════════════════════════ -->
   <div class="main">
     <div class="content">
-      <div class="welcome-card">
-        <div class="wc-text">
-          <h2>Welcome back, Admin 👋</h2>
-          <p>Here's your store's performance at a glance.</p>
-        </div>
-        <div class="wc-badge">20% OFF Live</div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>All Affiliates</h2>
       </div>
-      <div class="stat-row">
-        <div class="stat-c">
-          <div class="sc-ico r"><i class="ti ti-receipt"></i></div>
-          <div>
-            <div class="sc-val">1,284</div>
-            <div class="sc-lbl">Total Orders</div>
-          </div>
-        </div>
-        <div class="stat-c">
-          <div class="sc-ico g"><i class="ti ti-users"></i></div>
-          <div>
-            <div class="sc-val">3,492</div>
-            <div class="sc-lbl">All Users</div>
-          </div>
-        </div>
-        <div class="stat-c">
-          <div class="sc-ico b"><i class="ti ti-package"></i></div>
-          <div>
-            <div class="sc-val">487</div>
-            <div class="sc-lbl">Products</div>
-          </div>
-        </div>
-        <div class="stat-c">
-          <div class="sc-ico a"><i class="ti ti-currency-rupee"></i></div>
-          <div>
-            <div class="sc-val">₹8.4L</div>
-            <div class="sc-lbl">Revenue</div>
-          </div>
-        </div>
+
+      <div class="table-container" style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border); overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">SL No.</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Login</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Username</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Password</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Name</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Phone</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Shopping Wallet</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Profile</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="affiliateTableBody">
+            <!-- Data will be populated here -->
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
   <script>
+    async function loadAffiliates() {
+      try {
+        const response = await fetch('http://localhost/krishloom-vastram/backend/routes/api.php?route=getAllAffiliates');
+        const data = await response.json();
+        const tbody = document.getElementById('affiliateTableBody');
+        tbody.innerHTML = '';
+        
+        if (data.status && data.data) {
+          data.data.forEach((affiliate, index) => {
+            const tr = document.createElement('tr');
+            tr.style.borderBottom = '1px solid var(--border)';
+            tr.innerHTML = `
+              <td style="padding: 12px; font-size: 14px;">${index + 1}</td>
+              <td style="padding: 12px; font-size: 14px;">${affiliate.membership_id || affiliate.email || 'N/A'}</td>
+              <td style="padding: 12px; font-size: 14px;">${affiliate.membership_id || 'N/A'}</td>
+              <td style="padding: 12px; font-size: 14px;">********</td>
+              <td style="padding: 12px; font-size: 14px;">${affiliate.name || 'N/A'}</td>
+              <td style="padding: 12px; font-size: 14px;">${affiliate.mobile_no || 'N/A'}</td>
+              <td style="padding: 12px; font-size: 14px;">₹0</td>
+              <td style="padding: 12px; font-size: 14px;">-</td>
+              <td style="padding: 12px; font-size: 14px;">
+                <button onclick="loginAsAffiliate('${affiliate.membership_id || affiliate.mobile_no}')" style="background: var(--c); color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">Login</button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (e) {
+        console.error('Error fetching affiliates:', e);
+      }
+    }
+    
+    async function loginAsAffiliate(membershipId) {
+      try {
+        const res = await fetch('http://localhost/krishloom-vastram/backend/routes/api.php?route=adminLoginAsAffiliate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ affiliate_id: membershipId })
+        });
+        const data = await res.json();
+        if (data.status) {
+          localStorage.setItem('affiliate_user', JSON.stringify(data.user));
+          localStorage.setItem('user', JSON.stringify(data.user));
+          window.location.href = '../Affiliate dashboard/template/index.html';
+        } else {
+          showGlobalSnackbar(data.message || 'Login failed', 'error');
+        }
+      } catch (err) {
+        showGlobalSnackbar('Error logging in as affiliate', 'error');
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', loadAffiliates);
+    
+    
     function toggle(id, link) {
       const item = document.getElementById(id);
       const isOpen = item.classList.contains('open');
