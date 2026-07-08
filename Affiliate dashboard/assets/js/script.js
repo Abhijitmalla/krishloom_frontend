@@ -347,3 +347,43 @@ function copyTextToClipboard(text) {
     document.execCommand('copy');
     document.body.removeChild(textarea);
 }
+
+// >>-- 16 Global Profile Sync --<<
+$(document).ready(function() {
+    const userStr = localStorage.getItem('affiliate_user');
+    if (userStr) {
+        try {
+            const user = JSON.parse(userStr);
+            const defaultAvatar = '../assets/images/users/avatar-1.jpg';
+            const profilePic = user.profile_pic || defaultAvatar;
+            
+            // 1. Update Sidebar Name and Image
+            const sidebarNameEl = document.querySelector('.nav-profile h6.text-primary');
+            const sidebarRoleEl = document.querySelector('.nav-profile p.text-muted');
+            const sidebarImgEl = document.querySelector('.nav-profile img');
+            
+            if (sidebarNameEl) sidebarNameEl.textContent = user.name || 'Affiliate';
+            if (sidebarRoleEl) sidebarRoleEl.textContent = 'Affiliate';
+            if (sidebarImgEl) sidebarImgEl.src = profilePic;
+
+            // 2. Inject Navbar Profile Avatar (if not already present)
+            const navbarRightUl = document.querySelector('.header-right ul.d-flex.align-items-center');
+            if (navbarRightUl && !document.getElementById('navProfileLink')) {
+                const li = document.createElement('li');
+                li.className = 'ms-3';
+                li.innerHTML = `
+                    <a href="personal_details.html" id="navProfileLink" title="My Profile"
+                        style="display:inline-block;width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid #80032f;cursor:pointer;">
+                        <img id="navProfilePicGlobal" src="${profilePic}" alt="Profile"
+                            style="width:100%;height:100%;object-fit:cover;">
+                    </a>
+                `;
+                navbarRightUl.appendChild(li);
+            } else if (document.getElementById('navProfilePic')) {
+                document.getElementById('navProfilePic').src = profilePic;
+            }
+        } catch (e) {
+            console.error('Error parsing affiliate_user', e);
+        }
+    }
+});

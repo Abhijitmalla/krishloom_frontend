@@ -9,6 +9,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
     rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     *,
     *::before,
@@ -1105,8 +1106,8 @@
         <ul class="sb-dropdown">
           <li class="sb-sub">
             <a class="sb-sub-link" onclick="setSubActive(this)" href="slider.html">
-               <i class="ti ti-plus"></i><span class="lbl">Slider</span>
-             </a>
+              <i class="ti ti-plus"></i><span class="lbl">Slider</span>
+            </a>
           </li>
 
         </ul>
@@ -1195,7 +1196,7 @@
               <i class="ti ti-list"></i><span class="lbl">All Orders</span>
             </a>
           </li>
-         
+
         </ul>
       </li>
 
@@ -1215,8 +1216,8 @@
         <ul class="sb-dropdown">
           <li class="sb-sub">
             <a class="sb-sub-link" onclick="setSubActive(this)" href="change-password.html">
-               <i class="ti ti-key"></i><span class="lbl">Change Password</span>
-             </a>
+              <i class="ti ti-key"></i><span class="lbl">Change Password</span>
+            </a>
           </li>
         </ul>
       </li>
@@ -1253,7 +1254,8 @@
         <h2>All Users</h2>
       </div>
 
-      <div class="table-container" style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border); overflow-x: auto;">
+      <div class="table-container"
+        style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border); overflow-x: auto;">
         <table style="width: 100%; border-collapse: collapse; text-align: left;">
           <thead>
             <tr style="border-bottom: 1px solid var(--border);">
@@ -1266,6 +1268,7 @@
               <th style="padding: 12px; color: var(--muted); font-size: 13px;">Phone</th>
               <th style="padding: 12px; color: var(--muted); font-size: 13px;">Shipping Address</th>
               <th style="padding: 12px; color: var(--muted); font-size: 13px;">Status</th>
+              <th style="padding: 12px; color: var(--muted); font-size: 13px;">Action</th>
             </tr>
           </thead>
           <tbody id="userTableBody">
@@ -1283,34 +1286,39 @@
         const data = await response.json();
         const tbody = document.getElementById('userTableBody');
         tbody.innerHTML = '';
-        
+
         if (data.status && data.data) {
           data.data.forEach((user, index) => {
             const tr = document.createElement('tr');
             tr.style.borderBottom = '1px solid var(--border)';
             tr.innerHTML = `
               <td style="padding: 12px; font-size: 14px;">${index + 1}</td>
-              <td style="padding: 12px; font-size: 14px;">${user.email || user.phone || 'N/A'}</td>
+              <td style="padding: 12px; font-size: 14px;">
+                <button onclick="window.location.href='../krishloom3/krishloom3/user_login_sign.html'" style="background: var(--c); color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">Login</button>
+              </td>
               <td style="padding: 12px; font-size: 14px;">${user.email || user.phone || 'N/A'}</td>
               <td style="padding: 12px; font-size: 14px;">N/A</td>
-              <td style="padding: 12px; font-size: 14px;">********</td>
+              <td style="padding: 12px; font-size: 14px;">${user.password || 'N/A'}</td>
               <td style="padding: 12px; font-size: 14px;">${user.name || 'N/A'}</td>
               <td style="padding: 12px; font-size: 14px;">${user.phone || 'N/A'}</td>
               <td style="padding: 12px; font-size: 14px;">${user.address || 'N/A'}</td>
               <td style="padding: 12px; font-size: 14px;"><span style="background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">Active</span></td>
+              <td style="padding: 12px; font-size: 14px;">
+                <button onclick="window.location.href='../User dashboard/user-dashboard.html/profile.html'" style="background: #16a34a; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">Profile</button>
+              </td>
             `;
             tbody.appendChild(tr);
           });
         } else {
-            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 20px;">No users found</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding: 20px;">No users found</td></tr>';
         }
       } catch (e) {
         console.error('Error fetching users:', e);
       }
     }
-    
+
     document.addEventListener('DOMContentLoaded', loadUsers);
-    
+
 
     function toggle(id, link) {
       const item = document.getElementById(id);
@@ -1358,11 +1366,23 @@
         sessionStorage.removeItem('snackbar');
       } catch (e) { }
     }
-  
+
     function adminLogout() {
-      sessionStorage.clear();
-      localStorage.removeItem('admin');
-      window.location.href = 'http://127.0.0.1:5500/krishloom3/krishloom3/index.html';
+      Swal.fire({
+        title: 'Logout',
+        text: 'Are you sure you want to logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#b01a3a',
+        cancelButtonColor: '#7a6e79',
+        confirmButtonText: 'Yes, logout'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          sessionStorage.clear();
+          localStorage.removeItem('admin');
+          window.location.href = '../krishloom3/krishloom3/admin-login.html';
+        }
+      });
     }
   </script>
 

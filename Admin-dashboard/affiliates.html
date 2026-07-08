@@ -9,6 +9,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
     rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     *,
     *::before,
@@ -1292,7 +1293,7 @@
               <td style="padding: 12px; font-size: 14px;">${index + 1}</td>
               <td style="padding: 12px; font-size: 14px;">${affiliate.membership_id || affiliate.email || 'N/A'}</td>
               <td style="padding: 12px; font-size: 14px;">${affiliate.membership_id || 'N/A'}</td>
-              <td style="padding: 12px; font-size: 14px;">********</td>
+              <td style="padding: 12px; font-size: 14px;">${affiliate.password || 'N/A'}</td>
               <td style="padding: 12px; font-size: 14px;">${affiliate.name || 'N/A'}</td>
               <td style="padding: 12px; font-size: 14px;">${affiliate.mobile_no || 'N/A'}</td>
               <td style="padding: 12px; font-size: 14px;">₹0</td>
@@ -1380,9 +1381,21 @@
     }
   
     function adminLogout() {
-      sessionStorage.clear();
-      localStorage.removeItem('admin');
-      window.location.href = 'http://127.0.0.1:5500/krishloom3/krishloom3/index.html';
+      Swal.fire({
+        title: 'Logout',
+        text: 'Are you sure you want to logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#b01a3a',
+        cancelButtonColor: '#7a6e79',
+        confirmButtonText: 'Yes, logout'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          sessionStorage.clear();
+          localStorage.removeItem('admin');
+          window.location.href = '../krishloom3/krishloom3/admin-login.html';
+        }
+      });
     }
   </script>
 

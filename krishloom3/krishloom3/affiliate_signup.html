@@ -41,6 +41,120 @@
     border-color: #e74c3c;
     box-shadow: 0 0 0 0.15rem rgba(231, 76, 60, 0.15);
 }
+
+/* OTP Section Styles */
+#otpSection {
+    display: none;
+    margin-top: 18px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(255,245,230,0.9));
+    border: 1.5px solid #e8b86d;
+    border-radius: 14px;
+    padding: 22px 20px;
+    box-shadow: 0 4px 18px rgba(184,120,30,0.10);
+    animation: fadeSlideIn 0.4s ease;
+}
+@keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+#otpSection h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #7a4a00;
+    margin-bottom: 6px;
+}
+#otpSection p.otp-hint {
+    font-size: 0.82rem;
+    color: #8a6a30;
+    margin-bottom: 14px;
+}
+.otp-input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+#otpInput {
+    flex: 1;
+    min-width: 140px;
+    padding: 10px 14px;
+    border: 1.5px solid #d4a044;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    letter-spacing: 6px;
+    text-align: center;
+    outline: none;
+    background: #fffdf7;
+    transition: border-color 0.2s;
+}
+#otpInput:focus {
+    border-color: #b07a00;
+    box-shadow: 0 0 0 3px rgba(184,120,0,0.13);
+}
+#verifyOtpBtn {
+    padding: 10px 22px;
+    background: linear-gradient(135deg, #c98a00, #f5b800);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+}
+#verifyOtpBtn:hover { opacity: 0.88; transform: scale(1.03); }
+#verifyOtpBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+.resend-row {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: #8a6a30;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+#resendOtpBtn {
+    background: none;
+    border: none;
+    color: #b07a00;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.82rem;
+    padding: 0;
+    text-decoration: underline;
+}
+#resendOtpBtn:disabled { color: #bbb; cursor: default; text-decoration: none; }
+#resendTimer { font-size: 0.82rem; color: #a07040; }
+
+/* SMS Fallback OTP display box */
+#otpFallbackBox {
+    display: none;
+    margin-top: 14px;
+    background: linear-gradient(135deg, #fff8e1, #fff3cd);
+    border: 2px dashed #f0a500;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+}
+#otpFallbackBox p {
+    font-size: 0.78rem;
+    color: #7a5a00;
+    margin-bottom: 6px;
+}
+#otpFallbackBox .otp-display {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 10px;
+    color: #b07a00;
+    font-family: monospace;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+#otpFallbackBox .otp-warning {
+    font-size: 0.72rem;
+    color: #c0392b;
+    margin-top: 6px;
+    font-style: italic;
+}
 </style>
     <!-- Favicon and Touch Icons  -->
     <link rel="shortcut icon" href="assets/images/logo/favicon.png">
@@ -1010,6 +1124,31 @@
 <button type="button" class="btn" id="registerBtn">
     CREATE ACCOUNT
 </button>
+
+<!-- OTP Verification Section -->
+<div id="otpSection">
+    <h4>📱 Enter OTP</h4>
+    <p class="otp-hint" id="otpHintText">A 6-digit OTP has been sent to your registered mobile number. It is valid for <strong>5 minutes</strong>.</p>
+
+    <!-- SMS Fallback: shown when SMS delivery fails -->
+    <div id="otpFallbackBox">
+        <p>⚠️ SMS could not be delivered. Use this OTP to complete your registration:</p>
+        <div class="otp-display" id="otpDisplayValue">------</div>
+        <p class="otp-warning">This is a development fallback. Remove once SMS is configured.</p>
+    </div>
+
+    <div class="otp-input-row">
+        <input type="text" id="otpInput" maxlength="6" placeholder="_ _ _ _ _ _"
+               oninput="this.value = this.value.replace(/\D/g,'').slice(0,6)" autocomplete="one-time-code">
+        <button type="button" id="verifyOtpBtn">VERIFY OTP</button>
+    </div>
+    <div class="resend-row">
+        Didn't receive? 
+        <button type="button" id="resendOtpBtn" disabled>Resend OTP</button>
+        <span id="resendTimer"></span>
+    </div>
+</div>
+
     <div class="toggle">
         Already have account? <span class="signup-link"> <a href="affiliate_login_sign.html">Login Now</a></span>
     </div>
@@ -2896,58 +3035,190 @@
     <script src="assets/js/carousel.js"></script>
     <script src="assets/js/main.js"></script>
     <script>
+// ─── OTP Flow ──────────────────────────────────────────────────────────────
+const API_BASE = "http://localhost/krishloom-vastram/backend/routes/api.php";
+let resendTimerInterval = null;
+
+// Collect form data
+function getFormData() {
+    return {
+        membership_id:    document.getElementById("membershipId").value.trim(),
+        name:             document.getElementById("name").value.trim(),
+        mobile_no:        document.getElementById("mobile").value.trim(),
+        email:            document.getElementById("email").value.trim(),
+        shipping_address: document.getElementById("address").value.trim(),
+        state:            document.getElementById("state").value,
+        city:             document.getElementById("city").value.trim(),
+        pin_code:         document.getElementById("pincode").value.trim(),
+        password:         document.getElementById("password").value
+    };
+}
+
+// Start 30-second resend cooldown timer
+function startResendTimer() {
+    const btn   = document.getElementById("resendOtpBtn");
+    const timer = document.getElementById("resendTimer");
+    btn.disabled = true;
+    let seconds = 30;
+    timer.textContent = `(${seconds}s)`;
+    clearInterval(resendTimerInterval);
+    resendTimerInterval = setInterval(() => {
+        seconds--;
+        if (seconds <= 0) {
+            clearInterval(resendTimerInterval);
+            btn.disabled = false;
+            timer.textContent = "";
+        } else {
+            timer.textContent = `(${seconds}s)`;
+        }
+    }, 1000);
+}
+
+// Show OTP section
+function showOtpSection() {
+    document.getElementById("otpSection").style.display = "block";
+    document.getElementById("otpInput").value = "";
+    document.getElementById("otpInput").focus();
+    startResendTimer();
+}
+
+// ─── STEP 1: Send OTP ──────────────────────────────────────────────────────
 document.getElementById("registerBtn").addEventListener("click", async function () {
     const termsCheckbox = document.getElementById("registerTerms");
-    const termsError = document.getElementById("termsError");
+    const termsError    = document.getElementById("termsError");
 
     if (!termsCheckbox.checked) {
         termsError.style.display = "block";
-        return; // Prevent form submission
+        return;
     } else {
         termsError.style.display = "none";
     }
 
- const data = {
-    membership_id: document.getElementById("membershipId").value,
-    name: document.getElementById("name").value,
-    mobile_no: document.getElementById("mobile").value,
-    email: document.getElementById("email").value,
-    state: document.getElementById("state").value,
-    city: document.getElementById("city").value,
-    pin_code: document.getElementById("pincode").value,
-    password: document.getElementById("password").value
-};
+    const data = getFormData();
+
+    // Basic client-side validation
+    if (!data.membership_id || !data.name || !data.mobile_no || !data.email ||
+        !data.state || data.state === "Select State" || !data.city || !data.pin_code || !data.password) {
+        showSnackbar("Please fill in all required fields.", false);
+        return;
+    }
+
+    const registerBtn = document.getElementById("registerBtn");
+    registerBtn.disabled = true;
+    registerBtn.textContent = "Sending OTP...";
 
     try {
         const response = await fetch(
-            "http://localhost/krishloom-vastram/backend/routes/api.php?route=affiliateRegister",
+            `${API_BASE}?route=sendAffiliateOTP`,
             {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
+                method:  "POST",
+                headers: { "Content-Type": "application/json" },
+                body:    JSON.stringify(data)
             }
-        
         );
-        console.log(response);
         const result = await response.json();
 
         if (result.status) {
-            showSnackbar("Affiliate Registered Successfully!", true);
-            setTimeout(() => {
-                window.location.href = "affiliate_login_sign.html";
-            }, 1000);
+            if (result.sms_fallback) {
+                // SMS failed but OTP was saved — show OTP on screen
+                const fallbackBox = document.getElementById("otpFallbackBox");
+                document.getElementById("otpDisplayValue").textContent = result.otp;
+                fallbackBox.style.display = "block";
+                document.getElementById("otpHintText").textContent = "SMS delivery failed. Please use the OTP shown below to continue:";
+                // Auto-fill the input for convenience
+                document.getElementById("otpInput").value = result.otp;
+                showSnackbar("OTP generated — check the yellow box below!", true);
+            } else {
+                showSnackbar("OTP sent to your mobile number!", true);
+            }
+            showOtpSection();
+            registerBtn.textContent = "CREATE ACCOUNT";
         } else {
-            showSnackbar(result.message, false);
+            showSnackbar(result.message || "Failed to send OTP.", false);
+            registerBtn.textContent = "CREATE ACCOUNT";
         }
-
     } catch (error) {
         console.error(error);
-        showSnackbar("Server Error", false);
+        showSnackbar("Server error. Please try again.", false);
+        registerBtn.textContent = "CREATE ACCOUNT";
+    } finally {
+        registerBtn.disabled = false;
     }
 });
 
+// ─── Resend OTP ────────────────────────────────────────────────────────────
+document.getElementById("resendOtpBtn").addEventListener("click", async function () {
+    const data = getFormData();
+    this.disabled = true;
+    try {
+        const response = await fetch(
+            `${API_BASE}?route=sendAffiliateOTP`,
+            {
+                method:  "POST",
+                headers: { "Content-Type": "application/json" },
+                body:    JSON.stringify(data)
+            }
+        );
+        const result = await response.json();
+        if (result.status) {
+            showSnackbar("OTP resent successfully!", true);
+            startResendTimer();
+        } else {
+            showSnackbar(result.message || "Failed to resend OTP.", false);
+            this.disabled = false;
+        }
+    } catch (error) {
+        console.error(error);
+        showSnackbar("Server error. Please try again.", false);
+        this.disabled = false;
+    }
+});
+
+// ─── STEP 2: Verify OTP ────────────────────────────────────────────────────
+document.getElementById("verifyOtpBtn").addEventListener("click", async function () {
+    const otp      = document.getElementById("otpInput").value.trim();
+    const mobile   = document.getElementById("mobile").value.trim();
+
+    if (otp.length !== 6) {
+        showSnackbar("Please enter the 6-digit OTP.", false);
+        return;
+    }
+
+    const verifyBtn = document.getElementById("verifyOtpBtn");
+    verifyBtn.disabled = true;
+    verifyBtn.textContent = "Verifying...";
+
+    try {
+        const response = await fetch(
+            `${API_BASE}?route=verifyAffiliateOTP`,
+            {
+                method:  "POST",
+                headers: { "Content-Type": "application/json" },
+                body:    JSON.stringify({ mobile_no: mobile, otp: otp })
+            }
+        );
+        const result = await response.json();
+
+        if (result.status) {
+            showSnackbar("Registration Successful! Redirecting to login...", true);
+            clearInterval(resendTimerInterval);
+            setTimeout(() => {
+                window.location.href = "affiliate_login_sign.html";
+            }, 1500);
+        } else {
+            showSnackbar(result.message || "Invalid OTP. Please try again.", false);
+            verifyBtn.disabled = false;
+            verifyBtn.textContent = "VERIFY OTP";
+        }
+    } catch (error) {
+        console.error(error);
+        showSnackbar("Server error. Please try again.", false);
+        verifyBtn.disabled = false;
+        verifyBtn.textContent = "VERIFY OTP";
+    }
+});
+
+// ─── Snackbar ──────────────────────────────────────────────────────────────
 function showSnackbar(message, isSuccess = true) {
     let snackbar = document.getElementById("custom-snackbar");
     if (!snackbar) {

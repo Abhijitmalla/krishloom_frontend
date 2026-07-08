@@ -849,6 +849,16 @@
                                         </div>
 
                                     </li>
+
+                                    <!-- Profile Avatar -->
+                                    <li class="ms-3">
+                                        <a href="personal_details.html" id="navProfileLink" title="My Profile"
+                                            style="display:inline-block;width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid #80032f;cursor:pointer;">
+                                            <img id="navProfilePic" src="../assets/images/users/avatar-1.jpg" alt="Profile"
+                                                style="width:100%;height:100%;object-fit:cover;">
+                                        </a>
+                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -882,37 +892,43 @@
                                 </div>
 
                             </div>
-                            <form>
+                            <form id="personalDetailsForm">
 
                                 <div class="row g-3">
 
                                     <div class="col-md-6">
+                                        <label>Membership ID</label>
+                                        <input type="text" class="form-control" id="membershipId" readonly
+                                            style="background:#f0f0f0; cursor:not-allowed;">
+                                    </div>
+
+                                    <div class="col-md-6">
                                         <label>Name <span class="req">*</span></label>
-                                        <input type="text" class="form-control" placeholder="Enter your full name"
+                                        <input type="text" class="form-control" id="pdName" placeholder="Enter your full name"
                                             required>
                                     </div>
 
                                     <div class="col-md-6">
                                         <label>Email Id <span class="req">*</span></label>
-                                        <input type="email" class="form-control" placeholder="Enter your email address"
+                                        <input type="email" class="form-control" id="pdEmail" placeholder="Enter your email address"
                                             required>
                                     </div>
 
                                     <div class="col-md-6">
                                         <label>Mobile No. <span class="req">*</span></label>
-                                        <input type="text" class="form-control" placeholder="Enter your mobile number"
-                                            required>
+                                        <input type="text" class="form-control" id="pdMobile" readonly
+                                            style="background:#f0f0f0; cursor:not-allowed;">
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label>Alternate Mobile No <span class="req">*</span></label>
-                                        <input type="text" class="form-control"
-                                            placeholder="Enter alternate mobile number" required>
+                                        <label>Alternate Mobile No</label>
+                                        <input type="text" class="form-control" id="pdAltMobile"
+                                            placeholder="Enter alternate mobile number">
                                     </div>
 
                                     <div class="col-md-6">
                                         <label>Gender <span class="req">*</span></label>
-                                        <select class="form-control" required>
+                                        <select class="form-control" id="pdGender" required>
                                             <option value="">Select Gender</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -922,7 +938,7 @@
 
                                     <div class="col-md-6">
                                         <label>Date of Birth <span class="req">*</span></label>
-                                        <input type="date" class="form-control" required>
+                                        <input type="date" class="form-control" id="pdDob" required>
                                     </div>
 
                                     <div class="col-md-6">
@@ -932,7 +948,7 @@
 
                                     <div class="col-md-6">
                                         <label>State <span class="req">*</span></label>
-                                        <select class="form-control" required>
+                                        <select class="form-control" id="pdState" required>
                                             <option value="">Select State</option>
                                             <option>Andhra Pradesh</option>
                                             <option>Arunachal Pradesh</option>
@@ -968,25 +984,25 @@
 
                                     <div class="col-md-6">
                                         <label>City <span class="req">*</span></label>
-                                        <input type="text" class="form-control" placeholder="Enter your city" required>
+                                        <input type="text" class="form-control" id="pdCity" placeholder="Enter your city" required>
                                     </div>
 
                                     <div class="col-md-6">
                                         <label>Pin No. <span class="req">*</span></label>
-                                        <input type="text" class="form-control" placeholder="Enter your PIN code"
+                                        <input type="text" class="form-control" id="pdPin" placeholder="Enter your PIN code"
                                             required>
                                     </div>
 
                                     <div class="col-12">
                                         <label>Complete Address <span class="req">*</span></label>
-                                        <textarea class="form-control" rows="3"
+                                        <textarea class="form-control" id="pdAddress" rows="3"
                                             placeholder="Enter your complete address" required></textarea>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label>Profile Picture <span class="req">*</span></label>
+                                        <label>Profile Picture</label>
                                         <input type="file" class="form-control" accept="image/*"
-                                            onchange="previewImage(event)" required>
+                                            onchange="previewImage(event)">
                                     </div>
 
                                     <div class="col-md-6 text-center">
@@ -998,7 +1014,7 @@
                                 </div>
 
                                 <div class="mt-4">
-                                    <button type="submit" class="btn custom-btn px-4">Update</button>
+                                    <button type="button" class="btn custom-btn px-4" id="updateProfileBtn">Update</button>
                                     <button type="reset" class="btn btn-outline-secondary px-4 ms-2">Cancel</button>
                                 </div>
 
@@ -1009,24 +1025,24 @@
                             <!-- Change Password -->
                             <h4 class="section-title mb-4">Change Password</h4>
 
-                            <form>
+                            <form id="changePasswordForm">
                                 <div class="row g-3">
 
                                     <div class="col-md-4">
                                         <label>Old Password <span class="req">*</span></label>
-                                        <input type="password" class="form-control" placeholder="Enter old password"
+                                        <input type="password" class="form-control" id="oldPassword" placeholder="Enter old password"
                                             required>
                                     </div>
 
                                     <div class="col-md-4">
                                         <label>New Password <span class="req">*</span></label>
-                                        <input type="password" class="form-control" placeholder="Enter new password"
+                                        <input type="password" class="form-control" id="newPassword" placeholder="Enter new password"
                                             required>
                                     </div>
 
                                     <div class="col-md-4">
                                         <label>Confirm Password <span class="req">*</span></label>
-                                        <input type="password" class="form-control" placeholder="Confirm new password"
+                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password"
                                             required>
                                     </div>
 
@@ -1043,6 +1059,9 @@
                         </div>
                     </div>
                     <script>
+                        const API = "http://localhost/krishloom-vastram/backend/routes/api.php";
+                        const DEFAULT_AVATAR = "../assets/images/users/avatar-1.jpg";
+
                         function previewImage(event) {
                             const reader = new FileReader();
                             reader.onload = function () {
@@ -1051,6 +1070,163 @@
                             }
                             reader.readAsDataURL(event.target.files[0]);
                         }
+
+                        function setNavbarPic(url) {
+                            const navPic = document.getElementById('navProfilePic');
+                            if (navPic) navPic.src = url || DEFAULT_AVATAR;
+                            
+                            const globalNavPic = document.getElementById('navProfilePicGlobal');
+                            if (globalNavPic) globalNavPic.src = url || DEFAULT_AVATAR;
+
+                            const sidebarImg = document.querySelector('.nav-profile img');
+                            if (sidebarImg) sidebarImg.src = url || DEFAULT_AVATAR;
+                        }
+
+                        function fillForm(data) {
+                            document.getElementById('membershipId').value = data.membership_id || '';
+                            document.getElementById('pdName').value = data.name || '';
+                            document.getElementById('pdEmail').value = data.email || '';
+                            document.getElementById('pdMobile').value = data.mobile_no || '';
+                            document.getElementById('pdAltMobile').value = data.alternate_mobile || '';
+                            document.getElementById('pdDob').value = data.dob || '';
+                            document.getElementById('pdCity').value = data.city || '';
+                            document.getElementById('pdPin').value = data.pin_code || '';
+                            document.getElementById('pdAddress').value = data.shipping_address || '';
+
+                            const genderSel = document.getElementById('pdGender');
+                            for (let opt of genderSel.options) {
+                                if (opt.value === data.gender) { opt.selected = true; break; }
+                            }
+
+                            const stateSel = document.getElementById('pdState');
+                            for (let opt of stateSel.options) {
+                                if (opt.value === data.state || opt.text === data.state) { opt.selected = true; break; }
+                            }
+
+                            const kycEl = document.getElementById('kycStatus');
+                            if (data.kyc_verified == 1) {
+                                kycEl.textContent = 'KYC Verified ✅';
+                                kycEl.style.cssText = 'background:#d4edda;color:#155724;border:1px solid #c3e6cb;padding:6px 16px;border-radius:8px;font-weight:600;';
+                            } else {
+                                kycEl.textContent = 'KYC Pending ⚠️';
+                                kycEl.style.cssText = 'background:#fff3cd;color:#856404;border:1px solid #ffeeba;padding:6px 16px;border-radius:8px;font-weight:600;';
+                            }
+
+                            if (data.profile_pic) {
+                                document.getElementById('imagePreview').src = data.profile_pic;
+                                setNavbarPic(data.profile_pic);
+                            } else {
+                                setNavbarPic(null);
+                            }
+                        }
+
+                        async function loadProfile() {
+                            const userStr = localStorage.getItem('affiliate_user');
+                            if (!userStr) {
+                                alert("Please login first.");
+                                window.location.href = "../../krishloom3/krishloom3/affiliate_login_sign.html";
+                                return;
+                            }
+                            const user = JSON.parse(userStr);
+
+                            // Set navbar pic immediately from localStorage if available
+                            if (user.profile_pic) setNavbarPic(user.profile_pic);
+
+                            try {
+                                const res = await fetch(API + "?route=getAffiliateProfile", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({ id: user.id })
+                                });
+                                const result = await res.json();
+                                if (result.status) {
+                                    fillForm(result.data);
+                                    localStorage.setItem('affiliate_user', JSON.stringify(result.data));
+                                } else {
+                                    alert(result.message);
+                                }
+                            } catch (e) {
+                                console.error(e);
+                                alert("Failed to load profile.");
+                            }
+                        }
+
+                        document.getElementById('updateProfileBtn').addEventListener('click', async function () {
+                            const userStr = localStorage.getItem('affiliate_user');
+                            if (!userStr) return;
+                            const user = JSON.parse(userStr);
+
+                            // Handle profile pic upload first if a file is selected
+                            const picFileInput = document.querySelector('input[type="file"][accept="image/*"]');
+                            if (picFileInput && picFileInput.files.length > 0) {
+                                const formData = new FormData();
+                                formData.append('id', user.id);
+                                formData.append('profile_pic', picFileInput.files[0]);
+
+                                try {
+                                    const picRes = await fetch(API + "?route=uploadProfilePic", {
+                                        method: "POST",
+                                        body: formData
+                                    });
+                                    const picResult = await picRes.json();
+                                    if (picResult.status) {
+                                        setNavbarPic(picResult.pic_url);
+                                        document.getElementById('imagePreview').src = picResult.pic_url;
+                                        // Update localStorage with new pic
+                                        const updatedUser = JSON.parse(localStorage.getItem('affiliate_user') || '{}');
+                                        updatedUser.profile_pic = picResult.pic_url;
+                                        localStorage.setItem('affiliate_user', JSON.stringify(updatedUser));
+                                    } else {
+                                        alert("Profile pic upload failed: " + picResult.message);
+                                    }
+                                } catch (e) {
+                                    console.error(e);
+                                    alert("Error uploading profile picture.");
+                                }
+                            }
+
+                            const payload = {
+                                id: user.id,
+                                name: document.getElementById('pdName').value.trim(),
+                                email: document.getElementById('pdEmail').value.trim(),
+                                alternate_mobile: document.getElementById('pdAltMobile').value.trim(),
+                                gender: document.getElementById('pdGender').value,
+                                dob: document.getElementById('pdDob').value,
+                                state: document.getElementById('pdState').value,
+                                city: document.getElementById('pdCity').value.trim(),
+                                pin_code: document.getElementById('pdPin').value.trim(),
+                                shipping_address: document.getElementById('pdAddress').value.trim()
+                            };
+
+                            if (!payload.name || !payload.email || !payload.gender || !payload.dob || !payload.state || !payload.city || !payload.pin_code || !payload.shipping_address) {
+                                alert("Please fill all required fields.");
+                                return;
+                            }
+
+                            try {
+                                const res = await fetch(API + "?route=updateAffiliateProfile", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify(payload)
+                                });
+                                const result = await res.json();
+                                if (result.status) {
+                                    alert("✅ Profile updated successfully!");
+                                    // Preserve the profile_pic from current localStorage
+                                    const currentUser = JSON.parse(localStorage.getItem('affiliate_user') || '{}');
+                                    result.data.profile_pic = result.data.profile_pic || currentUser.profile_pic;
+                                    localStorage.setItem('affiliate_user', JSON.stringify(result.data));
+                                    fillForm(result.data);
+                                } else {
+                                    alert(result.message || "Failed to update.");
+                                }
+                            } catch (e) {
+                                console.error(e);
+                                alert("Server error while updating profile.");
+                            }
+                        });
+
+                        loadProfile();
                     </script>
                 </main>
 

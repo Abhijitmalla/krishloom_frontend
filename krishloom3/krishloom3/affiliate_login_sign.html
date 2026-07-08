@@ -2803,8 +2803,15 @@ document.getElementById("loginBtn").addEventListener("click", async function () 
 
         if (result.status) {
             showSnackbar("Login Successful!", true);
+            // Save user info to localStorage
+            localStorage.setItem('affiliate_user', JSON.stringify(result.user));
+
             setTimeout(() => {
-                window.location.href = "../../Affiliate dashboard/template/index.html";
+                if (result.user.kyc_verified == 1) {
+                    window.location.href = "../../Affiliate dashboard/template/index.html";
+                } else {
+                    window.location.href = "../../agency-verification/index.html";
+                }
             }, 1000);
         } else {
             showSnackbar(result.message || "Invalid Member ID/Mobile Number or Password", false);

@@ -1,234 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>KYC Verification</title>
+  <meta charset="UTF-8">
+  <title>KYC Verification</title>
 
-<!-- Bootstrap 5 CDN -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<style>
-body{
-  margin:0;
-  font-family: "Segoe UI", sans-serif;
-  background:#fff6dc;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #fff6dc;
+    }
 
-/* MAIN WRAPPER */
-.kyc-wrapper{
-  min-height:100vh;
-  display:flex;
-}
+    /* MAIN WRAPPER */
+    .kyc-wrapper {
+      min-height: 100vh;
+      display: flex;
+    }
 
-/* LEFT PANEL */
-.kyc-left{
-  width:45%;
-  background:linear-gradient(180deg,#80032f,#46021a);
-  color:#fff;
-  padding:60px 40px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items: center;
-}
+    /* LEFT PANEL */
+    .kyc-left {
+      width: 45%;
+      background: linear-gradient(180deg, #80032f, #46021a);
+      color: #fff;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-.kyc-left h2{
-  font-size:34px;
-  font-weight:700;
-  margin-bottom:30px;
-}
+    .kyc-left h2 {
+      font-size: 34px;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
 
-.logo-box{
-  width:130px;
-  height:130px;
-  background:#fff;
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:30px;
-}
+    .logo-box {
+      width: 130px;
+      height: 130px;
+      background: #fff;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
 
-.logo-box img{
-  max-width:150px;
-}
+    .logo-box img {
+      max-width: 150px;
+    }
 
-.kyc-left p{
-  font-size:18px;
-  margin-top:20px;
-  line-height:1.6;
-}
+    .kyc-left p {
+      font-size: 18px;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
 
-/* RIGHT PANEL */
-.kyc-right{
-  width:55%;
-  background:#fdf3d8;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:40px;
-}
+    /* RIGHT PANEL */
+    .kyc-right {
+      width: 55%;
+      background: #fdf3d8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
 
-.kyc-card{
-  background:#fff;
-  width:100%;
-  max-width:550px;
-  border-radius:20px;
-  padding:40px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.1);
-}
+    .kyc-card {
+      background: #fff;
+      width: 100%;
+      max-width: 550px;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
 
-.kyc-card h1{
-  font-size:32px;
-  font-weight:700;
-  text-align:center;
-}
+    .kyc-card h1 {
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+    }
 
-.kyc-card h6{
-  text-align:center;
-  color:#555;
-  margin-bottom:20px;
-}
+    .kyc-card h6 {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
 
-.kyc-title{
-  text-align:center;
-  color:#80032f;
-  font-weight:700;
-  margin-bottom:30px;
-}
+    .kyc-title {
+      text-align: center;
+      color: #80032f;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
 
-.form-label{
-  font-weight:600;
-}
+    .form-label {
+      font-weight: 600;
+    }
 
-.btn-validate{
-  background:#80032f;
-  color:#fff;
-  border:none;
-  padding:8px 22px;
-  border-radius:8px;
-}
+    .btn-validate {
+      background: #80032f;
+      color: #fff;
+      border: none;
+      padding: 8px 22px;
+      border-radius: 8px;
+    }
 
-.btn-validate:hover{
-  background:#46021a;
-}
+    .btn-validate:hover {
+      background: #46021a;
+    }
 
-/* RESPONSIVE */
-@media(max-width:991px){
-  .kyc-wrapper{
-    flex-direction:column;
-  }
-  .kyc-left,.kyc-right{
-    width:100%;
-  }
-}
-</style>
+    /* RESPONSIVE */
+    @media(max-width:991px) {
+      .kyc-wrapper {
+        flex-direction: column;
+      }
+
+      .kyc-left,
+      .kyc-right {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="kyc-wrapper">
+  <div class="kyc-wrapper">
 
-  <!-- LEFT SIDE -->
-  <div class="kyc-left">
-    <h2>Agency Verification</h2>
+    <!-- LEFT SIDE -->
+    <div class="kyc-left">
+      <h2>Agency Verification</h2>
 
-    <div class="logo-box">
-      <img src="./image/KRISHLOOM (2).png" alt="Logo">
+      <div class="logo-box">
+        <img src="../Affiliate dashboard/assets/images/logo/KRISHLOOM (2).png" alt="Logo">
+      </div>
+
+      <h5><i>KYC: The First Step Towards Growth.</i></h5>
+
+      <p>
+        Once all details are validated, then you can start your affiliate journey safely.
+      </p>
     </div>
 
-    <h5><i>KYC: The First Step Towards Growth.</i></h5>
+    <!-- RIGHT SIDE -->
+    <div class="kyc-right">
+      <div class="kyc-card">
 
-    <p>
-      Once all details are validated, then you can start your affiliate journey safely.
-    </p>
-  </div>
+        <h1>Thank you for Registering</h1>
+        <h6>Complete your Onboarding Today</h6>
 
-  <!-- RIGHT SIDE -->
-  <div class="kyc-right">
-    <div class="kyc-card">
-
-      <h1>Thank you for Registering</h1>
-      <h6>Complete your Onboarding Today</h6>
-
-      <div class="kyc-title" style="color:#7b0022;">KYC Verification</div>
+        <div class="kyc-title" style="color:#7b0022;">KYC Verification</div>
 
 
-      <!-- AADHAR -->
-      <div class="mb-3">
-        <label class="form-label">Aadhar Verification :</label>
-        <div class="d-flex gap-2">
-          <input type="text" class="form-control" id="aadhar" placeholder="Aadhar Number (12 digits)">
-          
-        </div>
-        <div class="mt-2 text-end">
-          <button class="btn btn-validate" onclick="validateAadhar()">Validate</button>
-        </div>
-      </div>
-
-      <!-- PAN -->
-      <div class="mb-3">
-        <label class="form-label">PAN Verification :</label>
-        <div class="d-flex gap-2">
-          <input type="text" class="form-control" id="pan" placeholder="PAN Number (ABCDE1234F)">
-          
-        </div>
-        <div class="mt-2 text-end">
-          <button class="btn btn-validate" onclick="validatePAN()">Validate</button>
-        </div>
-      </div>
-
-      <!-- BANK -->
-      <div class="mb-3">
-        <label class="form-label">Bank Verification :</label>
-        <div class="row g-2">
-          <div class="col-md-6">
-            <input type="text" class="form-control" id="account" placeholder="Account Number">
+        <!-- AADHAR -->
+        <div class="mb-3">
+          <label class="form-label">Aadhar Verification :</label>
+          <div class="d-flex gap-2">
+            <input type="text" class="form-control" id="aadhar" placeholder="Aadhar Number (12 digits)">
+            <button class="btn btn-validate text-nowrap" id="btnAadhar" type="button">Send OTP</button>
           </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control" id="ifsc" placeholder="IFSC Code">
+          <!-- Hidden OTP field for Aadhar -->
+          <div class="d-flex gap-2 mt-2 d-none" id="aadharOtpContainer">
+            <input type="text" class="form-control" id="aadharOtp" placeholder="Enter OTP">
+            <button class="btn btn-validate text-nowrap" id="btnVerifyAadharOtp" type="button">Verify OTP</button>
           </div>
         </div>
-        <div class="mt-2 text-end">
-          <button class="btn btn-validate" onclick="validateBank()">Validate</button>
-        </div>
-      </div>
 
+        <!-- PAN -->
+        <div class="mb-3">
+          <label class="form-label">PAN Verification :</label>
+          <div class="d-flex gap-2">
+            <input type="text" class="form-control" id="pan" placeholder="PAN Number (ABCDE1234F)">
+            <button class="btn btn-validate text-nowrap" id="btnPan" type="button">Validate</button>
+          </div>
+        </div>
+
+        <!-- BANK -->
+        <div class="mb-3">
+          <label class="form-label">Bank Verification :</label>
+          <div class="d-flex gap-2 align-items-center">
+            <div class="row g-2 flex-grow-1">
+              <div class="col-md-6">
+                <input type="text" class="form-control" id="account" placeholder="Account Number">
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" id="ifsc" placeholder="IFSC Code">
+              </div>
+            </div>
+            <button class="btn btn-validate text-nowrap" id="btnBank" type="button">Validate</button>
+          </div>
+        </div>
+
+        <div class="mt-4 text-center">
+          <button class="btn btn-validate w-100 fs-5" id="submitKycBtn">Submit KYC Details</button>
+        </div>
+
+      </div>
     </div>
+
   </div>
 
-</div>
+  <!-- JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const userStr = localStorage.getItem('affiliate_user');
+      if (!userStr) {
+        alert("Please login first.");
+        window.location.href = "../krishloom3/krishloom3/affiliate_login_sign.html";
+        return;
+      }
 
-<!-- JS -->
-<script>
-function validateAadhar(){
-  let aadhar=document.getElementById("aadhar").value;
-  if(/^\d{12}$/.test(aadhar)){
-    alert("Aadhar Valid ✅");
-  }else{
-    alert("Invalid Aadhar ❌");
-  }
-}
+      // Individual Validations
+      document.getElementById("btnAadhar").addEventListener("click", async function () {
+        const aadhar = document.getElementById("aadhar").value.trim();
+        if (/^\d{12}$/.test(aadhar)) {
+          const user = JSON.parse(userStr);
+          try {
+             const response = await fetch("http://localhost/krishloom-vastram/backend/routes/api.php?route=sendAadharOTP", {
+                 method: "POST",
+                 headers: { "Content-Type": "application/json" },
+                 body: JSON.stringify({ aadhar_no: aadhar, mobile_no: user.mobile_no || user.membership_id })
+             });
+             const res = await response.json();
+             if(res.status) {
+                 if(res.sms_fallback) {
+                     alert(res.message + "\nOTP is: " + res.otp);
+                 } else {
+                     alert(res.message);
+                 }
+                 document.getElementById("aadharOtpContainer").classList.remove("d-none");
+                 this.textContent = "OTP Sent";
+                 this.disabled = true;
+             } else {
+                 alert(res.message);
+             }
+          } catch(e) {
+             alert("Error sending OTP");
+          }
+        } else {
+          alert("Invalid Aadhar Number (Must be 12 digits)");
+        }
+      });
 
-function validatePAN(){
-  let pan=document.getElementById("pan").value.toUpperCase();
-  if(/[A-Z]{5}[0-9]{4}[A-Z]{1}/.test(pan)){
-    alert("PAN Valid ✅");
-  }else{
-    alert("Invalid PAN ❌");
-  }
-}
+      document.getElementById("btnVerifyAadharOtp").addEventListener("click", async function () {
+          const aadhar = document.getElementById("aadhar").value.trim();
+          const otp = document.getElementById("aadharOtp").value.trim();
+          if(!otp) return alert("Enter OTP");
+          
+          try {
+             const response = await fetch("http://localhost/krishloom-vastram/backend/routes/api.php?route=verifyAadharOTP", {
+                 method: "POST",
+                 headers: { "Content-Type": "application/json" },
+                 body: JSON.stringify({ aadhar_no: aadhar, otp: otp })
+             });
+             const res = await response.json();
+             if(res.status) {
+                 document.getElementById("aadharOtpContainer").classList.add("d-none");
+                 const btnAadhar = document.getElementById("btnAadhar");
+                 btnAadhar.textContent = "Verified ✅";
+                 btnAadhar.classList.replace("btn-validate", "btn-success");
+                 btnAadhar.dataset.verified = "true";
+             } else {
+                 alert(res.message);
+             }
+          } catch(e) {
+             alert("Error verifying OTP");
+          }
+      });
 
-function validateBank(){
-  let acc=document.getElementById("account").value;
-  let ifsc=document.getElementById("ifsc").value.toUpperCase();
-  if(acc!=="" && /^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifsc)){
-    alert("Bank Details Valid ✅");
-  }else{
-    alert("Invalid Bank Details ❌");
-  }
-}
-</script>
+      document.getElementById("btnPan").addEventListener("click", function () {
+        const pan = document.getElementById("pan").value.trim().toUpperCase();
+        if (/[A-Z]{5}[0-9]{4}[A-Z]{1}/.test(pan)) {
+          this.textContent = "Verified ✅";
+          this.classList.replace("btn-validate", "btn-success");
+        } else {
+          alert("Invalid PAN Number");
+          this.textContent = "Validate";
+          this.classList.replace("btn-success", "btn-validate");
+        }
+      });
+
+      document.getElementById("btnBank").addEventListener("click", function () {
+        const account = document.getElementById("account").value.trim();
+        const ifsc = document.getElementById("ifsc").value.trim().toUpperCase();
+        if (account !== "" && /^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifsc)) {
+          this.textContent = "Verified ✅";
+          this.classList.replace("btn-validate", "btn-success");
+        } else {
+          alert("Invalid Account Number or IFSC Code");
+          this.textContent = "Validate";
+          this.classList.replace("btn-success", "btn-validate");
+        }
+      });
+
+      // Submit Final
+      document.getElementById("submitKycBtn").addEventListener("click", async function () {
+        const user = JSON.parse(userStr);
+        const aadhar = document.getElementById("aadhar").value.trim();
+        const pan = document.getElementById("pan").value.trim().toUpperCase();
+        const account = document.getElementById("account").value.trim();
+        const ifsc = document.getElementById("ifsc").value.trim().toUpperCase();
+
+        const aadharVerified = document.getElementById("btnAadhar").dataset.verified === "true";
+        if (!aadharVerified || !/[A-Z]{5}[0-9]{4}[A-Z]{1}/.test(pan) || account === "" || !/^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifsc)) {
+            alert("Please validate all fields correctly before submitting. Ensure Aadhar is verified via OTP.");
+            return;
+        }
+
+        const data = {
+          affiliate_id: user.membership_id || user.mobile_no,
+          aadhar_no: aadhar,
+          pan_no: pan,
+          bank_account: account,
+          ifsc_code: ifsc
+        };
+
+        // Also fallback to user id if membership_id is not set. Wait, login returns user object. We can use user.id
+        data.affiliate_id = user.id; // safer
+
+        try {
+          const response = await fetch("http://localhost/krishloom-vastram/backend/routes/api.php?route=submitAffiliateKYC", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+          });
+
+          const result = await response.json();
+          if (result.status) {
+            alert("KYC Verified and Submitted Successfully!");
+            user.kyc_verified = 1;
+            localStorage.setItem('affiliate_user', JSON.stringify(user));
+            window.location.href = "../Affiliate dashboard/template/index.html";
+          } else {
+            alert(result.message || "Failed to submit KYC");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("Server Error while submitting KYC.");
+        }
+      });
+    });
+  </script>
 
 </body>
+
 </html>
